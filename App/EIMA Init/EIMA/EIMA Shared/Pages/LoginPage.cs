@@ -12,14 +12,16 @@ namespace EIMAMaster
 			Label header = new Label
 			{
 				Text = "EIMA",
-				Font = Font.BoldSystemFontOfSize(50),
+				FontSize = 50,
+				FontAttributes = FontAttributes.Bold,
 				HorizontalOptions = LayoutOptions.Center
 			};
 
 			Label subheader = new Label
 			{
 				Text = "Emergency Incident Management Application",
-				Font = Font.BoldSystemFontOfSize(16),
+				FontSize = 16,
+				FontAttributes = FontAttributes.Bold,
 				HorizontalOptions = LayoutOptions.Center
 			};
 			var usernameEntry = new Entry {Placeholder = "Username"};
@@ -35,7 +37,7 @@ namespace EIMAMaster
 				BorderWidth = 1,
 				HorizontalOptions = LayoutOptions.Center,
 			};
-
+			loginButton.IsEnabled = false;
 
 			Button standAloneButton = new Button
 			{
@@ -66,11 +68,14 @@ namespace EIMAMaster
 					loginButton,
 					standAloneButton
 				}
-				};
+			};
 		}
 		void OnLoginButtonClicked(object sender, EventArgs e)
 		{
-			//Logging in
+			//TODO
+			//if is connection exist
+				//query for correct username password
+
 		}
 	}
 }
