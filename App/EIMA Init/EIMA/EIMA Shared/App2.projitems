@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>a48a3030-5e7f-4e23-9948-aaa9bef1acee</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>EIMA</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RootPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuListView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuListData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuCell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\AlertsPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\HelpPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\LoginPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\LogoutPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\MapPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\SettingsPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\UserProfilePage.cs" />
+  </ItemGroup>
+</Project>
