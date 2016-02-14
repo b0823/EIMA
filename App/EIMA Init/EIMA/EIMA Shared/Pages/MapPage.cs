@@ -3,15 +3,19 @@ using Xamarin.Forms;
 using System.Collections.Generic;
 
 using Xamarin.Forms.Maps;
+using Plugin.Geolocator;
 
 namespace EIMAMaster
 {
 
 	public class MapPage : ContentPage
 	{
+		Map map;
+
 		public MapPage ()
 		{
-			var map = new Map(
+
+			map = new Map(
 				MapSpan.FromCenterAndRadius(
 					new Position(39.80,-84.08711527777777), Distance.FromMiles(0.3))) {
 				IsShowingUser = true,
@@ -22,10 +26,19 @@ namespace EIMAMaster
 			var stack = new StackLayout { Spacing = 0 };
 			stack.Children.Add(map);
 			Content = stack;
-
 			Title = "Map";
 			Icon = "Map.png";
+
+			getLocation ();
+
+
+		}
+		public async void getLocation(){
+			var position = await CrossGeolocator.Current.GetPositionAsync (timeoutMilliseconds: 10000);
+			Position parsed = new Position(position.Latitude,position.Longitude);
+			var curLoc = MapSpan.FromCenterAndRadius(parsed, Distance.FromMiles(5));
+			map.MoveToRegion(curLoc);
 		}
 	}
-	
+
 }
