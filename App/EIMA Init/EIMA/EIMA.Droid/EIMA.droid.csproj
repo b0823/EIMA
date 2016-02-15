@@ -44,10 +44,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidSigningKeyStore>C:\Users\Brad\Desktop\xample.keystore</AndroidSigningKeyStore>
-    <AndroidSigningStorePass>keypassword</AndroidSigningStorePass>
+    <AndroidSigningStorePass>publicpassword</AndroidSigningStorePass>
     <AndroidKeyStore>True</AndroidKeyStore>
     <AndroidSigningKeyAlias>publishingdoc</AndroidSigningKeyAlias>
-    <AndroidSigningKeyPass>keypassword</AndroidSigningKeyPass>
+    <AndroidSigningKeyPass>publicpassword</AndroidSigningKeyPass>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
@@ -152,19 +152,14 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Drawable\Icon.png" />
-    <AndroidResource Include="Resources\drawable\accounts.png" />
     <AndroidResource Include="Resources\drawable\Alerts.png" />
-    <AndroidResource Include="Resources\drawable\contacts.png" />
     <AndroidResource Include="Resources\drawable\Help.png" />
-    <AndroidResource Include="Resources\drawable\leads.png" />
     <AndroidResource Include="Resources\drawable\Logout.png" />
     <AndroidResource Include="Resources\drawable\Map.png" />
-    <AndroidResource Include="Resources\drawable\opportunities.png" />
     <AndroidResource Include="Resources\drawable\Refresh.png" />
     <AndroidResource Include="Resources\drawable\settings.png" />
     <AndroidResource Include="Resources\drawable\SettingsIcon.png" />
     <AndroidResource Include="Resources\drawable\UserProfile.png" />
-    <AndroidResource Include="Resources\drawable\UserProfileAlt.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
