@@ -27,13 +27,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)DataManagement\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Data\" />
     <Folder Include="$(MSBuildThisFileDirectory)SideBarMenu\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Data\eima.jcfg" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)DataManagement\eima_example.jcfg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)Data\default.jcfg" />
+    <None Include="$(MSBuildThisFileDirectory)DataManagement\eima_default.jcfg" />
   </ItemGroup>
 </Project>

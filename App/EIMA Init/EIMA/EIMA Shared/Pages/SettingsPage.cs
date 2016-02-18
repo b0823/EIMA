@@ -19,9 +19,8 @@ namespace EIMAMaster
 
 		public SettingsPage ()
 		{
-			//TODO IDK WHAT WE'RE SETTING
-
-			String currentSpeed = "30 Seconds";
+			Title = "Settings";
+			Icon = "SettingsIcon.png";
 
 			settings = new Label
 			{
@@ -40,8 +39,11 @@ namespace EIMAMaster
 
 			picker = new Picker
 			{
-				Title = currentSpeed,
 				VerticalOptions = LayoutOptions.Center
+			};
+			picker.SelectedIndexChanged += (sender, args) =>
+			{
+				new DataManager().setUpdateSpeed(updateData[picker.SelectedIndex]);
 			};
 
 			foreach (string datamember in updateData) {
@@ -66,9 +68,7 @@ namespace EIMAMaster
 					network
 				}
 			};
-
-			Title = "Settings";
-			Icon = "SettingsIcon.png";
+					
 			setSettings ();
 			//restCall (); This is a sample REST Call for Mark to test/look at
 		}
