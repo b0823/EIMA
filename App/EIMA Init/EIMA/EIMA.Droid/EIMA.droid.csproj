@@ -139,6 +139,7 @@
     <Reference Include="Plugin.Geolocator">
       <HintPath>..\..\packages\Xam.Plugin.Geolocator.3.0.4\lib\MonoAndroid10\Plugin.Geolocator.dll</HintPath>
     </Reference>
+    <Reference Include="System.Json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -160,6 +161,8 @@
     <AndroidResource Include="Resources\drawable\settings.png" />
     <AndroidResource Include="Resources\drawable\SettingsIcon.png" />
     <AndroidResource Include="Resources\drawable\UserProfile.png" />
+    <AndroidResource Include="Resources\drawable\Filter.png" />
+    <AndroidResource Include="Resources\drawable\Plus.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />

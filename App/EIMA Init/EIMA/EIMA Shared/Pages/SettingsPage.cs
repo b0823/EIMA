@@ -2,18 +2,28 @@ using System;
 using Xamarin.Forms;
 using System.Collections.Generic;
 
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace EIMAMaster
 {
 
 	public class SettingsPage : ContentPage
 	{
+		Label settings;
+		string[] updateData = new string[6]{
+			"30 Seconds", "1 Minute", "5 Minutes", "10 Minutes", "30 Minutes", "1 Hour"
+		};
+		Picker picker;
+
 		public SettingsPage ()
 		{
 			//TODO IDK WHAT WE'RE SETTING
 
 			String currentSpeed = "30 Seconds";
 
-			Label settings = new Label
+			settings = new Label
 			{
 				Text = "Settings",
 				FontSize = 50,
@@ -28,19 +38,16 @@ namespace EIMAMaster
 				FontAttributes = FontAttributes.Bold,
 			};
 
-			Picker picker = new Picker
+			picker = new Picker
 			{
 				Title = currentSpeed,
 				VerticalOptions = LayoutOptions.Center
 			};
 
-			picker.Items.Add ("30 Seconds");
-			picker.Items.Add ("1 Minute");
-			picker.Items.Add ("5 Minutes");
-			picker.Items.Add ("10 Minute");
-			picker.Items.Add ("30 Minutes");
-			picker.Items.Add ("1 Hour");
-
+			foreach (string datamember in updateData) {
+				picker.Items.Add (datamember);
+			}
+				
 			//TODO only on standlone, this will have handler that checks network and creates incident
 			Button network = new Button
 			{
@@ -62,6 +69,24 @@ namespace EIMAMaster
 
 			Title = "Settings";
 			Icon = "SettingsIcon.png";
+			setSettings ();
+			//restCall (); This is a sample REST Call for Mark to test/look at
+		}
+		public void setSettings(){
+			string speed = new DataManager ().getUpdateSpeed ();
+			var index = Array.FindIndex(updateData, row => row == speed);
+			picker.SelectedIndex = index;
+		}
+		public void restCall (){
+			Uri url =  new Uri("https://eima-server.herokuapp.com/services/time/");
+			var syncClient = new WebClient ();
+
+			syncClient.DownloadStringCompleted += (sender, e) => 
+			{
+				settings.Text = e.Result;
+			};
+
+			syncClient.DownloadStringAsync(url);
 		}
 	}
 	

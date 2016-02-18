@@ -25,6 +25,7 @@ namespace EIMAMaster
 
 			Page displayPage = (Page)Activator.CreateInstance (menu.TargetType);
 
+
 			Detail = new NavigationPage (displayPage);
 
 			menuPage.Menu.SelectedItem = null;

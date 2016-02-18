@@ -11,19 +11,21 @@ namespace EIMAMaster
 	public class MapPage : ContentPage
 	{
 		Map map;
+		Position defaultLocation = new Position (39.8, -84.08711552);
 
 		public MapPage ()
 		{
 
 			map = new Map(
-				MapSpan.FromCenterAndRadius(
-					new Position(39.80,-84.08711527777777), Distance.FromMiles(0.3))) {
+				MapSpan.FromCenterAndRadius(defaultLocation, Distance.FromMiles(0.3))) {
 				IsShowingUser = true,
 				HeightRequest = 100,
 				WidthRequest = 960,
 				VerticalOptions = LayoutOptions.FillAndExpand
 			};
+
 			var stack = new StackLayout { Spacing = 0 };
+			//stack.Children.Add (button);
 			stack.Children.Add(map);
 			Content = stack;
 			Title = "Map";
@@ -34,7 +36,7 @@ namespace EIMAMaster
 
 		}
 		public async void getLocation(){
-			var position = await CrossGeolocator.Current.GetPositionAsync (timeoutMilliseconds: 10000);
+			var position = await CrossGeolocator.Current.GetPositionAsync (timeoutMilliseconds: 15000);
 			Position parsed = new Position(position.Latitude,position.Longitude);
 			var curLoc = MapSpan.FromCenterAndRadius(parsed, Distance.FromMiles(5));
 			map.MoveToRegion(curLoc);

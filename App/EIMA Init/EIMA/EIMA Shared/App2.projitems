@@ -10,12 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)RootPage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MenuPage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MenuListView.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MenuListData.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MenuCell.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MenuItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AlertsPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\HelpPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\LoginPage.cs" />
@@ -23,5 +17,23 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\MapPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\SettingsPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\UserProfilePage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataManagement\DataManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\MenuCell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\MenuItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\MenuListView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\MenuListData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\RootPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\MenuPage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)DataManagement\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Data\" />
+    <Folder Include="$(MSBuildThisFileDirectory)SideBarMenu\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Data\eima.jcfg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Data\default.jcfg" />
   </ItemGroup>
 </Project>

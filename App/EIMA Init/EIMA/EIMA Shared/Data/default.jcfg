@@ -1,0 +1,21 @@
+﻿{
+  "settings": {
+      "updateSpeed":"1 Minute"
+  },
+  "userProfile": {
+    "unit":"",
+    "organization":"",
+    "status":"",
+    "unitType":""
+  },
+  "incident": {
+    "role": "use1r",
+    "incidentID":"null",
+    "incidentType": "standalone",
+    "mapData":[
+    
+    ],
+    "alerts":[
+    ]
+  }
+}
