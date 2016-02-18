@@ -9,7 +9,7 @@
     "unitType":""
   },
   "incident": {
-    "role": "use1r",
+    "role": "user",
     "incidentID":"null",
     "incidentType": "standalone",
     "mapData":[

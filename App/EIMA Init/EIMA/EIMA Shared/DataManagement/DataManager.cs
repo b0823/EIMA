@@ -10,7 +10,14 @@ namespace EIMAMaster
 	public class DataManager
 	{
 		static string defaultFileName = "eima.jcfg";
-		static string blankData = "{\n  \"settings\": {\n      \"updateSpeed\":\"1 Minute\"\n  },\n  \"userProfile\": {\n    \"unit\":\"\",\n    \"organization\":\"\",\n    \"status\":\"\",\n    \"unitType\":\"\"\n  },\n  \"incident\": {\n    \"role\": \"use1r\",\n    \"incidentID\":\"null\",\n    \"incidentType\": \"standalone\",\n    \"mapData\":[\n    \n    ],\n    \"alerts\":[\n    ]\n  }\n}\n";
+		//This is just a minified version of eima_default.jcfg, I'm saving myself some time by not 
+		//reading it in, and as the data structure is fairly simple, it's easier to do this long term.
+		static string blankData = "{\"settings\":{\"updateSpeed\":\"1 Minute\"},\"userProfile\"" +
+			":{\"unit\":\"\",\"organization\":\"\",\"status\":\"\",\"unitType\":\"\"}" +
+			",\"incident\":{\"role\":\"use1r\",\"incidentID\":\"null\",\"incidentType\"" +
+			":\"standalone\",\"mapData\":[],\"alerts\":[]}}";
+
+
 		private static JsonObject dataStore;
 	
 		public DataManager ()
@@ -23,34 +30,19 @@ namespace EIMAMaster
 		 * Getters just get from the JsonObject in memory.
 		 */
 		public string getUpdateSpeed(){
-			return getSettings ()["updateSpeed"];
+			return dataStore["settings"]["updateSpeed"];
 		}
 		public void setUpdateSpeed(string value){
 			dataStore["settings"]["updateSpeed"] = value;
-			rewriteObject ();
+			rewriteObjectInMemory ();
 		}
-
-
-		/**
-		 * These are private utility functions for getting the three
-		 * core objects within the data file. 
-		 * I'm now questioning if I should remove these. We'll see.
-		 */
-		private JsonObject getIncident(){
-			return (JsonObject) dataStore["incident"];
-		}
-		private JsonObject getSettings(){
-			return (JsonObject) dataStore["settings"];
-		}
-		private JsonObject getUserProfile(){
-			return (JsonObject) dataStore["userProfile"];
-		}
+			
 
 		/**
 		 * This function needs to be called after modification of the JsonObject
 		 * This is so if someone closes right after changing settings they mantain their settings.
 		 */
-		public void rewriteObject(){
+		public void rewriteObjectInMemory(){
 			string text = dataStore.ToString ();
 			var documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
 			var filePath = Path.Combine (documentsPath, defaultFileName);

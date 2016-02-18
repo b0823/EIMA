@@ -77,6 +77,7 @@ namespace EIMAMaster
 			var index = Array.FindIndex(updateData, row => row == speed);
 			picker.SelectedIndex = index;
 		}
+
 		public void restCall (){
 			Uri url =  new Uri("https://eima-server.herokuapp.com/services/time/");
 			var syncClient = new WebClient ();
