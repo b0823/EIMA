@@ -33,6 +33,8 @@ namespace EIMAMaster
 			getLocation ();
 
 
+
+			////TOOLBAR RELATED CODE
 			ToolbarItem plusTBI = null;
 			ToolbarItem refreshTBI = null;
 			ToolbarItem filterTBI = null;

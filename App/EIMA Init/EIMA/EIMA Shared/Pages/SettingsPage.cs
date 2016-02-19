@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace EIMAMaster
 {
@@ -70,7 +71,6 @@ namespace EIMAMaster
 			};
 					
 			setSettings ();
-			//restCall (); This is a sample REST Call for Mark to test/look at
 		}
 		public void setSettings(){
 			string speed = new DataManager ().getUpdateSpeed ();
@@ -78,7 +78,7 @@ namespace EIMAMaster
 			picker.SelectedIndex = index;
 		}
 
-		public void restCall (){
+		public void restGet(){
 			Uri url =  new Uri("https://eima-server.herokuapp.com/services/time/");
 			var syncClient = new WebClient ();
 
@@ -88,6 +88,19 @@ namespace EIMAMaster
 			};
 
 			syncClient.DownloadStringAsync(url);
+		}
+		public void restPost(){
+			var vm = new {
+				title= "C# XAMARIN TEST",
+				body= "http://jsonplaceholder.typicode.com/posts",
+				userId= "please work"
+			};
+			using (var client = new WebClient())
+			{
+				var dataString = JsonConvert.SerializeObject(vm);
+				client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+				client.UploadString(new Uri("http://jsonplaceholder.typicode.com/posts"), "POST", dataString);
+			}
 		}
 	}
 	

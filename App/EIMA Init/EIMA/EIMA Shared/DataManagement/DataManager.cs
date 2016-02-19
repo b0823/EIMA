@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Json;
+using Newtonsoft.Json.Linq;
 using Xamarin.Forms;
 
 namespace EIMAMaster
@@ -11,7 +11,7 @@ namespace EIMAMaster
 	{
 		private static string eimaDataPath = "eima.jcfg";
 		private static string eimaInitalizeDataPath = "EIMA.DataManagement.eima_default.json";
-		private static JsonObject dataStore;
+		private static JObject dataStore;
 	
 		public DataManager ()
 		{
@@ -24,7 +24,7 @@ namespace EIMAMaster
 		 * Getters just get from the JsonObject in memory.
 		 */
 		public string getUpdateSpeed(){
-			return dataStore["settings"]["updateSpeed"];
+			return (string)dataStore["settings"]["updateSpeed"];
 		}
 		public void setUpdateSpeed(string value){
 			dataStore["settings"]["updateSpeed"] = value;
@@ -51,7 +51,7 @@ namespace EIMAMaster
 		public void dataStartup(){
 			verifyOrInitializeData ();	
 			string input = getDataFile ();
-			dataStore = (JsonObject) JsonObject.Parse (input);
+			dataStore = (JObject) JObject.Parse (input);
 		}
 
 		//Checks if datafilepath exists. 
