@@ -165,6 +165,7 @@
     <AndroidResource Include="Resources\drawable\UserProfile.png" />
     <AndroidResource Include="Resources\drawable\Filter.png" />
     <AndroidResource Include="Resources\drawable\Plus.png" />
+    <AndroidResource Include="Resources\drawable\MapChange.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
