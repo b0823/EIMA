@@ -1,7 +1,7 @@
 using System;
 using Xamarin.Forms;
 using System.Collections.Generic;
-
+using XLabs.Forms.Controls;
 using Xamarin.Forms.Maps;
 using Plugin.Geolocator;
 
@@ -12,6 +12,7 @@ namespace EIMAMaster
 	{
 		Map map;
 		Position defaultLocation = new Position (39.8, -84.08711552);
+		SelectMultipleBasePage<FilterModel> multiPage; //Used in Filter function
 
 		public MapPage ()
 		{
@@ -30,11 +31,12 @@ namespace EIMAMaster
 			Title = "Maps";
 			Icon = "Map.png";
 
-			getLocation ();
+			getAndSetLocation ();
 
+			/**
+			 * TOOLBAR RELATED CODE
+			 */
 
-
-			////TOOLBAR RELATED CODE
 			ToolbarItem plusTBI = null;
 			ToolbarItem refreshTBI = null;
 			ToolbarItem filterTBI = null;
@@ -64,9 +66,21 @@ namespace EIMAMaster
 			//https://forums.xamarin.com/discussion/39024/detect-a-tap-and-add-a-pin-to-the-map
 		}
 
-		public void filterMapItems(){
-			//Easiest might be a pop up with a select what you want.. OK/CANCEL
-			//https://developer.xamarin.com/guides/xamarin-forms/user-interface/navigation/pop-ups/
+		public async void filterMapItems(){
+			var items = new List<FilterModel>();
+			items.Add (new FilterModel{ Name="Fire"});
+			items.Add (new FilterModel{ Name="Police"});
+			items.Add (new FilterModel{ Name="Hospital"});
+			items.Add (new FilterModel{ Name="Hazmat"});
+			items.Add (new FilterModel{ Name="Triage"});
+			items.Add (new FilterModel{ Name="Volcano Response"});
+
+
+			if (multiPage == null)
+				multiPage = new SelectMultipleBasePage<FilterModel> (items){ Title = "Filter" };
+			multiPage.SelectAll ();//Just for proof of concept. Would need to make this data driven.
+			await Navigation.PushAsync (multiPage);
+
 		}
 
 		public void refreshData(){
@@ -80,7 +94,7 @@ namespace EIMAMaster
 				map.MapType = MapType.Hybrid;
 		}
 
-		public async void getLocation(){
+		public async void getAndSetLocation(){
 			var position = await CrossGeolocator.Current.GetPositionAsync (timeoutMilliseconds: 15000);
 			Position parsed = new Position(position.Latitude,position.Longitude);
 			var curLoc = MapSpan.FromCenterAndRadius(parsed, Distance.FromMiles(5));

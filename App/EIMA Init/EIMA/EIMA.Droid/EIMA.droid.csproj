@@ -166,6 +166,8 @@
     <AndroidResource Include="Resources\drawable\Filter.png" />
     <AndroidResource Include="Resources\drawable\Plus.png" />
     <AndroidResource Include="Resources\drawable\MapChange.png" />
+    <AndroidResource Include="Resources\drawable\checked.png" />
+    <AndroidResource Include="Resources\drawable\unchecked.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />

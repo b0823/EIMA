@@ -24,10 +24,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\MenuListData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\RootPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\MenuPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\MapUtility\FilterModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\MapUtility\SelectMultipleBagePage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)DataManagement\" />
     <Folder Include="$(MSBuildThisFileDirectory)SideBarMenu\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Pages\MapUtility\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)DataManagement\eima_default.json" />
