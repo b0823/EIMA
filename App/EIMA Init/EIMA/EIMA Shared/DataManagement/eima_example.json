@@ -1,0 +1,34 @@
+﻿This is not being actively used.
+
+This is an example file of what an eima data file might look like in a real situation
+This allows a flexible solution to data management. Administration would be an another object within this
+listing names/privledges levels etc.
+
+{
+  "settings": {
+      "updateSpeed":"30"
+  },
+  "userProfile": {
+    "unit":"731",
+    "organization":"fema",
+    "status":"good",
+    "unitType":"Fire"
+  },
+  "incidentData": {
+    "role": "user",
+    "incidentID":"null",
+    "incidentType": "standalone",
+	"meta-inf":{
+		"center":{"lat":-84.32,"long":39.43},
+		"span":"15"
+	 },
+    "mapData":[
+    	{type:"fire", location:{"lat":-84.32, "long":40.1},"status":"good","unit":"621","organization":"fema"}
+    ],
+    "alerts":[
+      {"alertType":"Danger", "sender":"SYSTEM", "message":"Within .2 Miles of Hazard Spill"},
+      {"alertType":"Message", "sender":"Fire Command", "message":"Fire is now East of 675"},
+      {"alertType":"Message", "sender":"Triage Command", "message":"Triage Stations Overloaded, Go to Dayton Childrens"}
+    ]
+  }
+}

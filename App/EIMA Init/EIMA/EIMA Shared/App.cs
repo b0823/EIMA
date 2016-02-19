@@ -11,7 +11,7 @@ namespace EIMAMaster
 	{
 		public App ()
 		{
-			new DataManager().setData();
+			new DataManager().dataStartup();
 			MainPage = new NavigationPage(new LoginPage ());
 		}
 		public static Page GetMainPage ()

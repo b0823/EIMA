@@ -1,29 +1,23 @@
 ﻿using System;
-using Xamarin.Forms;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Json;
+using Xamarin.Forms;
 
 namespace EIMAMaster
 {
 	public class DataManager
 	{
-		static string defaultFileName = "eima.jcfg";
-		//This is just a minified version of eima_default.jcfg, I'm saving myself some time by not 
-		//reading it in, and as the data structure is fairly simple, it's easier to do this long term.
-		static string blankData = "{\"settings\":{\"updateSpeed\":\"1 Minute\"},\"userProfile\"" +
-			":{\"unit\":\"\",\"organization\":\"\",\"status\":\"\",\"unitType\":\"\"}" +
-			",\"incident\":{\"role\":\"use1r\",\"incidentID\":\"null\",\"incidentType\"" +
-			":\"standalone\",\"mapData\":[],\"alerts\":[]}}";
-
-
+		private static string eimaDataPath = "eima.jcfg";
+		private static string eimaInitalizeDataPath = "EIMA.DataManagement.eima_default.json";
 		private static JsonObject dataStore;
 	
 		public DataManager ()
 		{
 
 		}
+
 		/**
 		 * These are the set of setters and getters for adding and setting data.
 		 * Setters will reset and rewrite the file. 
@@ -38,14 +32,15 @@ namespace EIMAMaster
 		}
 			
 
+
 		/**
 		 * This function needs to be called after modification of the JsonObject
 		 * This is so if someone closes right after changing settings they mantain their settings.
 		 */
-		public void rewriteObjectInMemory(){
+		private void rewriteObjectInMemory(){
 			string text = dataStore.ToString ();
 			var documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
-			var filePath = Path.Combine (documentsPath, defaultFileName);
+			var filePath = Path.Combine (documentsPath, eimaDataPath);
 			System.IO.File.WriteAllText (filePath, text);
 		}
 
@@ -53,24 +48,32 @@ namespace EIMAMaster
 		 * This is the default file setup for the system. It gets called when the app starts.
 		 * It loads the data into datastore, if there is no file, it creates a new blank one.
 		 */
-		public void setData(){
-			SaveText (defaultFileName, blankData);	
-			string input = readIn (defaultFileName);
+		public void dataStartup(){
+			verifyOrInitializeData ();	
+			string input = getDataFile ();
 			dataStore = (JsonObject) JsonObject.Parse (input);
 		}
 
-		public void SaveText (string filename, string text) {
+		//Checks if datafilepath exists. 
+		//If it doesn't pull from eima_default a PCL and create that file.
+		private void verifyOrInitializeData () {
 			var documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
-			var filePath = Path.Combine (documentsPath, filename);
+			var filePath = Path.Combine (documentsPath, eimaDataPath);
 
 			if (!File.Exists (filePath)) { //If there is no data file- Set the default data to filepath
+				var assembly = typeof(DataManager).GetTypeInfo().Assembly;
+				Stream stream = assembly.GetManifestResourceStream(eimaInitalizeDataPath);
+				string text = "";
+				using (var reader = new System.IO.StreamReader (stream)) {
+					text = reader.ReadToEnd ();
+				}				
 				System.IO.File.WriteAllText (filePath, text);
 			}
-
 		}
-		public string readIn(string filename){
+
+		private string getDataFile(){
 			var documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
-			var filePath = Path.Combine (documentsPath, filename);
+			var filePath = Path.Combine (documentsPath, eimaDataPath);
 			return System.IO.File.ReadAllText (filePath);
 		}
 	}

@@ -30,9 +30,9 @@
     <Folder Include="$(MSBuildThisFileDirectory)SideBarMenu\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)DataManagement\eima_example.jcfg" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)DataManagement\eima_default.json" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)DataManagement\eima_default.jcfg" />
+    <None Include="$(MSBuildThisFileDirectory)DataManagement\eima_example.json" />
   </ItemGroup>
 </Project>

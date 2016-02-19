@@ -12,6 +12,10 @@
     "role": "user",
     "incidentID":"null",
     "incidentType": "standalone",
+	"meta-inf":{
+		"center":"default",
+		"span":"5"
+	},
     "mapData":[
     
     ],

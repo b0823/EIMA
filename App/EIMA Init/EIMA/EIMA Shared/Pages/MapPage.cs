@@ -25,7 +25,6 @@ namespace EIMAMaster
 			};
 
 			var stack = new StackLayout { Spacing = 0 };
-			//stack.Children.Add (button);
 			stack.Children.Add(map);
 			Content = stack;
 			Title = "Map";
@@ -33,6 +32,28 @@ namespace EIMAMaster
 
 			getLocation ();
 
+
+			ToolbarItem plusTBI = null;
+			ToolbarItem refreshTBI = null;
+			ToolbarItem filterTBI = null;
+
+			if (Device.OS == TargetPlatform.Android) {
+				plusTBI = new ToolbarItem ("", "", () => {
+				}, 0, 0);
+				refreshTBI = new ToolbarItem ("", "", () => {
+				}, 0, 0);
+				filterTBI = new ToolbarItem ("", "", () => {
+				}, 0, 0);
+			}
+			plusTBI.Icon = "Plus.png";
+			refreshTBI.Icon = "Refresh.png";
+			filterTBI.Icon = "Filter.png";
+
+			//refresh won't be present for stdAloneUser
+			ToolbarItems.Add (refreshTBI);
+			ToolbarItems.Add (filterTBI);
+			//+ Won't be there for netUser, is there for netMapEdit/netAdmin/stdAloneUser 
+			ToolbarItems.Add (plusTBI);
 
 		}
 		public async void getLocation(){
