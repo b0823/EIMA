@@ -48,6 +48,12 @@ Global
 		{3A7C65DE-1FBA-4F95-856A-785FF45646B9}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{3A7C65DE-1FBA-4F95-856A-785FF45646B9}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.StandardHeader = $1
+		$1.Text = 
+		$1.IncludeInNewFiles = True
+	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		App2\App2\App2.projitems*{a48a3030-5e7f-4e23-9948-aaa9bef1acee}*SharedItemsImports = 13
 		App2\App2\App2.projitems*{3a7c65de-1fba-4f95-856a-785ff45646b9}*SharedItemsImports = 4
