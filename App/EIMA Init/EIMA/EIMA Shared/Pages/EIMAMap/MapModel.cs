@@ -179,28 +179,29 @@ namespace TK.CustomMap.MapModel
 				return new Command<Position>(async position => 
 					{
 						var action = await Application.Current.MainPage.DisplayActionSheet(
-							"Long Press",
+							"Add Asset",
 							"Cancel",
 							null,
-							"Add Pin"//,
+							"Create Asset"//,
 //							"Add Circle"
 						);
 						
-						if (action == "Add Pin")
+						if (action == "Create Asset")
 						{
 							
-							var aToMapPage = new AddToMapPage();
-							await Application.Current.MainPage.Navigation.PushModalAsync(aToMapPage);
-							//TODO something get data from what we entered???
-
 							var pin = new TKCustomMapPin
 							{
 								Position = position,
-								Title = string.Format("Pin {0}, {1}", position.Latitude, position.Longitude),
+								Title = string.Format("", position.Latitude, position.Longitude),
 								ShowCallout = true,
 								IsDraggable = true
-							};
-							this._pins.Add(pin);
+							};						
+
+							var aToMapPage = new AddToMapPage(pin,this._pins);
+							await Application.Current.MainPage.Navigation.PushModalAsync(aToMapPage);
+
+							this._pins.Add(pin);							
+
 						}
 //						else if(action == "Add Circle")
 //						{
@@ -216,6 +217,7 @@ namespace TK.CustomMap.MapModel
 					});
 			}
 		}
+
 		/// <summary>
 		/// Map Clicked bound to the <see cref="TKCustomMap"/>
 		/// </summary>

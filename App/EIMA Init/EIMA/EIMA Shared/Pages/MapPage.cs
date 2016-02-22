@@ -28,7 +28,7 @@ namespace EIMAMaster
 			/**
 			 * TOOLBAR RELATED CODE
 			 */
-			ToolbarItem plusTBI = null;
+			//ToolbarItem plusTBI = null;
 			ToolbarItem refreshTBI = null;
 			ToolbarItem filterTBI = null;
 			ToolbarItem mapTypeTBI = null;
