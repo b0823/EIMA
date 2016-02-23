@@ -1,6 +1,8 @@
 ﻿{
   "settings": {
-      "updateSpeed":"1 Minute"
+      "updateSpeed":"1 Minute",
+	  "filterSettings":{"fire":true,"hazmat":true,"hazmat":true,"triage":true},
+	  "lastKnown":{"lat":-84.32,"long":39.43}
   },
   "userProfile": {
     "unit":"",

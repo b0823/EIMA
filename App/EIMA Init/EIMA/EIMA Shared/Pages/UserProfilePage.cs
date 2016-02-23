@@ -9,10 +9,6 @@ namespace EIMAMaster
 	{
 		public UserProfilePage ()
 		{
-			//TODO REFINE WHAT GOES HERE? Do we need more specifiers, what's in the list?
-
-			//TODO Bulk of work here will be saving these locally and updating to network upon changes
-
 
 			Label header = new Label
 			{

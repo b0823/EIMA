@@ -37,7 +37,6 @@ namespace EIMAMaster
 				BorderWidth = 1,
 				HorizontalOptions = LayoutOptions.Center,
 			};
-			loginButton.IsEnabled = false;
 
 			Button standAloneButton = new Button
 			{
@@ -47,7 +46,6 @@ namespace EIMAMaster
 				VerticalOptions = LayoutOptions.CenterAndExpand
 			};
 			loginButton.Clicked += OnLoginButtonClicked;
-			//standAloneButton.Clicked += OnStandButtonClicked;
 
 			standAloneButton.Clicked += async (sender, e) => {
 				await Navigation.PushModalAsync (new RootPage ());
@@ -70,12 +68,11 @@ namespace EIMAMaster
 				}
 			};
 		}
-		void OnLoginButtonClicked(object sender, EventArgs e)
+		async void OnLoginButtonClicked(object sender, EventArgs e)
 		{
-			//TODO
-			//if is connection exist
-				//query for correct username password
-
+			await DisplayAlert ("Warning", "No Username/Password Auth done yet", "Acknowledge");
+			await Navigation.PushModalAsync (new IncidentPage ());
+			//This would contain validiation of account.
 		}
 	}
 }

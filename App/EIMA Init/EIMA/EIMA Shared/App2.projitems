@@ -24,13 +24,17 @@
     <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\MenuListData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\RootPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\MenuPage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Pages\MapUtility\FilterModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Pages\MapUtility\SelectMultipleBagePage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\FilterModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\SelectMultipleBagePage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\MapModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\RoutePin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\AddToMapPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\IncidentPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)DataManagement\" />
     <Folder Include="$(MSBuildThisFileDirectory)SideBarMenu\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Pages\MapUtility\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)DataManagement\eima_default.json" />
