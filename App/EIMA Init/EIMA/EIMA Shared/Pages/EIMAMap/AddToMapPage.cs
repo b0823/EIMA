@@ -33,6 +33,7 @@ namespace EIMAMaster
 			hasCanceled = true;
 			toEdit = pin;
 			pinList = _pins;
+			buildUI ();
 								
 		}
 
