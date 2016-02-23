@@ -35,6 +35,7 @@
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
     <RunCodeAnalysis>false</RunCodeAnalysis>
+    <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -43,12 +44,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidSigningKeyStore>/Users/Brad/Code/xample.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyStore>C:\Users\Brad\Desktop\xample.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>publicpassword</AndroidSigningStorePass>
     <AndroidKeyStore>True</AndroidKeyStore>
     <AndroidSigningKeyAlias>publishingdoc</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>publicpassword</AndroidSigningKeyPass>
     <RunCodeAnalysis>false</RunCodeAnalysis>
+    <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
