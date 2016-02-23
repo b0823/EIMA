@@ -33,29 +33,7 @@ namespace EIMAMaster
 			hasCanceled = true;
 			toEdit = pin;
 			pinList = _pins;
-
-			/**
-			 * I'm just putting this here as a placeholder until we know exactly what we want.
-			 * 
-			 * Basicaly we take this information save it, then ask the user to select a locaiton, 
-			 * AND create the item at that location
-			 * 
-			 * OR.
-			 * 
-			 * We have them longPress(See MapModel) a location then have displayWindow Open with cancel or 
-			 * add to Map,i f they add to Map this window opens, we fill in data and then add the
-			 * item to the map at the known location
-			 * 
-			 * 
-			 * The second approach seems better but I'm still contemplating. 
-			 * I'm rambling now idk..
-			 * 
-			 * Update : I implemented the second path as the first seems counterintuitive for usage and 
-			 * telling the user to do that. I pass the pin and observable pin list in and edit here.
-			 */
-
-			buildUI ();
-					
+								
 		}
 
 		/**
@@ -66,6 +44,7 @@ namespace EIMAMaster
 				organziation 
 				unitNum 
 				currentStatus
+			See https://github.com/TorbenK/TK.CustomMap/wiki/TKCustomMapPin
 		 */
 		public void addPin(){
 			hasCanceled = false;
@@ -85,10 +64,9 @@ namespace EIMAMaster
 		 * Builds interface for data, sets calls for addPin and onCancel. 
 		 */
 		public void buildUI(){
-			Title = "Add Asset";
 			Label header = new Label
 			{
-				Text = "Specify Pin",
+				Text = "Specify Asset",
 				FontSize = 50,
 				FontAttributes = FontAttributes.Bold,
 				HorizontalOptions = LayoutOptions.Center

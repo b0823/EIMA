@@ -325,11 +325,14 @@ namespace TK.CustomMap.MapModel
 				return new Command(async () => 
 					{
 						var action = await Application.Current.MainPage.DisplayActionSheet(
-							"Callout clicked",
+							"Asset Selected",
 							"Cancel",
-							"Remove Pin");
+							null,
+							"Modify Asset Info",
+							"Delete Asset"
+						);
 
-						if (action == "Remove Pin")
+						if (action == "Delete Asset")
 						{
 							this._pins.Remove(this.SelectedPin);
 						}

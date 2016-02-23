@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\MapModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\RoutePin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\AddToMapPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\IncidentPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)DataManagement\" />
