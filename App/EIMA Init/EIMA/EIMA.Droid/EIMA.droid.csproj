@@ -194,6 +194,7 @@
     <AndroidResource Include="Resources\drawable\unchecked.png" />
     <AndroidResource Include="Resources\drawable\check.png" />
     <AndroidResource Include="Resources\drawable\cancel.png" />
+    <AndroidResource Include="Resources\drawable\Admin.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />

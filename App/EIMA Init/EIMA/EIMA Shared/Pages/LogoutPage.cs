@@ -25,9 +25,16 @@ namespace EIMAMaster
 				HorizontalOptions = LayoutOptions.Center
 			};
 
-			Button clearIncident = new Button
+			Button logout = new Button
 			{
-				Text = "Clear Incident",
+				Text = "Logout",
+				BorderWidth = 1,
+				HorizontalOptions = LayoutOptions.Center,
+			};
+
+			Button leaveIncident = new Button
+			{
+				Text = "Leave Incident",
 				BorderWidth = 1,
 				HorizontalOptions = LayoutOptions.Center,
 			};
@@ -37,7 +44,8 @@ namespace EIMAMaster
 				Children = 
 				{
 					header,
-					clearIncident
+					logout,
+					leaveIncident
 				}
 			};
 

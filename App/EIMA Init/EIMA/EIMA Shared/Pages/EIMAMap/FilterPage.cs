@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Reflection;
 using Xamarin.Forms;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace EIMAMaster
 	* https://developer.xamarin.com/recipes/cross-platform/xamarin-forms/controls/multiselect/
 	*/
 
-	public class SelectMultipleBasePage<T> : ContentPage
+	public class FilterPage<T> : ContentPage
 	{
 		public class WrappedSelection<V> : INotifyPropertyChanged
 		{
@@ -57,10 +57,11 @@ namespace EIMAMaster
 					Constraint.RelativeToParent (p => p.Height - 10)
 				);
 				View = layout;
+
 			}
 		}
 		public List<WrappedSelection<T>> WrappedItems = new List<WrappedSelection<T>>();
-		public SelectMultipleBasePage(List<T> items)
+		public FilterPage(List<T> items)
 		{
 			WrappedItems = items.Select (item => new WrappedSelection<T> () { Item = item, IsSelected = false }).ToList ();
 			ListView mainList = new ListView () {
@@ -72,6 +73,13 @@ namespace EIMAMaster
 				if (e.SelectedItem == null) return;
 				var o = (WrappedSelection<T>)e.SelectedItem;
 				o.IsSelected = !o.IsSelected;
+
+				var data = new DataManager();
+
+				var name = (string)o.Item.GetType().GetProperty("Name").GetValue(o.Item, null);
+
+				data.setFilter(name,o.IsSelected);
+
 				((ListView)sender).SelectedItem = null; //de-select
 			};
 			Content = mainList;

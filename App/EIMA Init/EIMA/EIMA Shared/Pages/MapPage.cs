@@ -15,41 +15,43 @@ namespace EIMAMaster
 	{
 		TKCustomMap map;
 		Position defaultLocation = new Position (39.8, -84.08711552);
-		SelectMultipleBasePage<FilterModel> multiPage; //Used in Filter function
+		FilterPage<FilterModel> multiPage; //Used in Filter function
+		private string[] uTypeOptions = {"Fire","Police", "Biohazard","EMS","Triage","Rescue","Command Post","Other"};
+
 
 		public MapPage ()
-		{			
+		{		
 			startAndBindMap();
 			setToolBar ();
-	
 		}
 
 		public void setToolBar(){
 			/**
 			 * TOOLBAR RELATED CODE
 			 */
-			//ToolbarItem plusTBI = null;
-			ToolbarItem refreshTBI = null;
+			var data = new DataManager();
+
 			ToolbarItem filterTBI = null;
 			ToolbarItem mapTypeTBI = null;
 
-			//plusTBI = new ToolbarItem ("", "", () => {addToMap();}, 0, 0);
-			refreshTBI = new ToolbarItem ("", "", () => {refreshData();}, 0, 0);
 			filterTBI = new ToolbarItem ("", "", () => {filterMapItems();}, 0, 0);
 			mapTypeTBI = new ToolbarItem ("", "", () => {changeMap();}, 0, 0);
 
-			//plusTBI.Icon = "Plus.png";
-			refreshTBI.Icon = "Refresh.png";
 			filterTBI.Icon = "Filter.png";
 			mapTypeTBI.Icon = "MapChange.png";
 
 			//Change map type
 			ToolbarItems.Add (mapTypeTBI);
-			//refresh won't be present for stdAloneUser
-			ToolbarItems.Add (refreshTBI);
+
+			if (data.isNetworked()) {
+				ToolbarItem refreshTBI = null;			
+				refreshTBI = new ToolbarItem ("", "", () => {refreshData();}, 0, 0);
+				refreshTBI.Icon = "Refresh.png";
+				ToolbarItems.Add (refreshTBI);
+			}
+
 			ToolbarItems.Add (filterTBI);
-			//+ Won't be there for netUser, is there for netMapEdit/netAdmin/stdAloneUser 
-			//ToolbarItems.Add (plusTBI);
+
 
 		}
 
@@ -87,22 +89,17 @@ namespace EIMAMaster
 
 		}
 
-//		public async void addToMap(){
-//			await Navigation.PushAsync (new AddToMapPage());
-//		}
-
 		public async void filterMapItems(){
 			var items = new List<FilterModel>();
-			items.Add (new FilterModel{ Name="Fire"});
-			items.Add (new FilterModel{ Name="Police"});
-			items.Add (new FilterModel{ Name="Hospital"});
-			items.Add (new FilterModel{ Name="Hazmat"});
-			items.Add (new FilterModel{ Name="Triage"});
-			items.Add (new FilterModel{ Name="Volcano Response"});
+			var data = new DataManager ();
 
+			foreach (string element in uTypeOptions)
+			{
+				items.Add(new FilterModel{Name = element, IsSelected = data.getFilter(element)});
+			}
 
 			if (multiPage == null)
-				multiPage = new SelectMultipleBasePage<FilterModel> (items){ Title = "Filter" };
+				multiPage = new FilterPage<FilterModel> (items){ Title = "Filter" };
 			multiPage.SelectAll ();//Just for proof of concept. Would need to make this data driven.
 			await Navigation.PushAsync (multiPage);
 
@@ -121,7 +118,7 @@ namespace EIMAMaster
 		}
 
 		public async void getAndSetLocation(){
-			var position = await CrossGeolocator.Current.GetPositionAsync (timeoutMilliseconds: 15000);
+			var position = await CrossGeolocator.Current.GetPositionAsync ();
 			Position parsed = new Position(position.Latitude,position.Longitude);
 			var curLoc = MapSpan.FromCenterAndRadius(parsed, Distance.FromMiles(5));
 			map.MoveToRegion(curLoc);

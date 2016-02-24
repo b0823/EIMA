@@ -182,8 +182,8 @@ namespace TK.CustomMap.MapModel
 							"Add Asset",
 							"Cancel",
 							null,
-							"Create Asset"//,
-//							"Add Circle"
+							"Create Asset",
+							"Add Circle"
 						);
 						
 						if (action == "Create Asset")
@@ -203,16 +203,18 @@ namespace TK.CustomMap.MapModel
 							this._pins.Add(pin);							
 
 						}
-//						else if(action == "Add Circle")
-//						{
-//							var circle = new TKCircle 
-//							{
-//								Center = position,
-//								Radius = 10000,
-//								Color = Color.FromRgba(100, 0, 0, 80)
-//							};
-//							this._circles.Add(circle);
-//						}
+						else if(action == "Add Circle")
+						{
+							var circle = new TKCircle 
+							{
+								Center = position,
+								Radius = 10000, 
+								//It's meters, tested w/ https://www.freemaptools.com/radius-around-point.htm
+								//If we're adding options to a menu before probably use miles and you'll have to convert.
+								Color = Color.FromRgba(100, 0, 0, 80)
+							};
+							this._circles.Add(circle);
+						}
 
 					});
 			}

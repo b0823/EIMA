@@ -7,43 +7,63 @@ namespace EIMAMaster
 
 	public class MenuListData : List<MenuItem>
 	{
+		private static MenuItem map = new MenuItem () {Title = "Map", IconSource = "Map.png", TargetType = typeof(MapPage)};
+		private static MenuItem alerts = new MenuItem () {Title = "Alerts", IconSource = "Alerts.png", TargetType = typeof(AlertsPage)};
+		private static MenuItem userProf = new MenuItem () {Title = "User Profile", IconSource = "UserProfile.png", TargetType = typeof(UserProfilePage)};
+		private static MenuItem settings = new MenuItem () {Title = "Settings", IconSource = "SettingsIcon.png", TargetType = typeof(SettingsPage)};
+		private static MenuItem admin = new MenuItem () {Title = "Admin", IconSource = "Admin.png", TargetType = typeof(AdminPage)};
+		private static MenuItem help = new MenuItem () {Title = "Help", IconSource = "Help.png", TargetType = typeof(HelpPage)};
+		private static MenuItem logout = new MenuItem () {Title = "Logout", IconSource = "Logout.png", TargetType = typeof(LogoutPage)};
+
 		public MenuListData ()
 		{
-			this.Add (new MenuItem () { 
-				Title = "Map", 
-				IconSource = "Map.png", 
-				TargetType = typeof(MapPage)
-			});
+			var data = new DataManager ();
+			//See marie's Spec for spreadsheet on why things are this way.
+			if (data.isStandAlone ()) {
+				standAloneMenu ();
+			} else if (data.isNetworked()){
 
-			this.Add (new MenuItem () { 
-				Title = "Alerts", 
-				IconSource = "Alerts.png", 
-				TargetType = typeof(AlertsPage)
-			});
+				if (data.isAdmin ()) {
+					networkedAdmin ();
+				} else if (data.isMapEditor ()) {
+					networkedMapEditor ();
+				} else if (data.isUser ()) {
+					networkedUserMenu ();
+				}
+			}
+				
+		}
 
-			this.Add (new MenuItem () { 
-				Title = "User Profile", 
-				IconSource = "UserProfile.png", 
-				TargetType = typeof(UserProfilePage)
-			});
+		public void standAloneMenu(){
+			this.Add (map);
+			this.Add (settings);
+			this.Add (help);
 
-			this.Add (new MenuItem () {
-				Title = "Settings",
-				IconSource = "SettingsIcon.png",
-				TargetType = typeof(SettingsPage)
-			});
-			this.Add (new MenuItem () {
-				Title = "Help",
-				IconSource = "Help.png",
-				TargetType = typeof(HelpPage)
-			});
-			this.Add (new MenuItem () {
-				Title = "Logout",
-				IconSource = "Logout.png",
-				TargetType = typeof(LogoutPage)
-			});
-			//if this were networked then do a check for if has admin then add the admin page here.
-			//no where close to this yet.
+		}
+		public void networkedAdmin(){
+			this.Add (map);
+			this.Add (alerts);
+			this.Add (userProf);
+			this.Add (settings);
+			this.Add (admin);
+			this.Add (help);
+			this.Add (logout);
+		}
+		public void networkedMapEditor(){
+			this.Add (map);
+			this.Add (alerts);
+			this.Add (userProf);
+			this.Add (settings);
+			this.Add (help);
+			this.Add (logout);
+		}
+		public void networkedUserMenu(){
+			this.Add (map);
+			this.Add (alerts);
+			this.Add (userProf);
+			this.Add (settings);
+			this.Add (help);
+			this.Add (logout);
 		}
 	}
 }

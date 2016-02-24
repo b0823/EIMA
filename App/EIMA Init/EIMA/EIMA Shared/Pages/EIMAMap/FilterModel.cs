@@ -9,6 +9,7 @@ namespace EIMAMaster
 	public class FilterModel
 	{
 		public string Name { get; set ; }
+		public bool IsSelected { get; set ; }
 
 		public FilterModel ()
 		{

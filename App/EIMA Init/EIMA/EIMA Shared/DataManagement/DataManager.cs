@@ -23,6 +23,7 @@ namespace EIMAMaster
 		 * Setters will reset and rewrite the file. 
 		 * Getters just get from the JsonObject in memory.
 		 */
+
 		public string getUpdateSpeed(){
 			return (string)dataStore["settings"]["updateSpeed"];
 		}
@@ -30,8 +31,98 @@ namespace EIMAMaster
 			dataStore["settings"]["updateSpeed"] = value;
 			rewriteObjectInMemory ();
 		}
-			
 
+
+		//public profilename
+		public string getName(){
+			return (string)dataStore["userProfile"]["name"];
+		}
+
+		public void setName(string value){
+			dataStore["userProfile"]["name"] = value;
+			rewriteObjectInMemory ();
+		}
+		//Organization
+		public string getOrg(){
+			return (string)dataStore["userProfile"]["organization"];
+		}
+		public void setOrg(string value){
+			dataStore["userProfile"]["organization"] = value;
+			rewriteObjectInMemory ();
+		}
+
+		//unit
+		public string getUnitID(){
+			return (string)dataStore["userProfile"]["unit"];
+		}
+		public void setUnitID(string value){
+			dataStore["userProfile"]["unit"] = value;
+			rewriteObjectInMemory ();
+		}
+
+		//unitType
+		public string getUnitType(){
+			return (string)dataStore["userProfile"]["unitType"];
+		}
+		public void setUnitType(string value){
+			dataStore["userProfile"]["unitType"] = value;
+			rewriteObjectInMemory ();
+		}
+
+		//status
+		public string getStatus(){
+			return (string)dataStore["userProfile"]["status"];
+		}
+		public void setStatus(string value){
+			dataStore["userProfile"]["status"] = value;
+			rewriteObjectInMemory ();
+		}
+
+		//Incident Role
+		public void setRole(string role){
+			dataStore ["incident"] ["role"] = role;
+			rewriteObjectInMemory ();
+		}
+
+
+		//FILTER
+
+		public void setFilter(string filterName, bool value){
+			dataStore["settings"]["filter"][filterName] = value;
+			rewriteObjectInMemory ();
+		}
+
+		public bool getFilter(string filterName){
+			return (bool)dataStore["settings"]["filter"][filterName];
+		}
+
+
+		/*
+		 * Block of is functions.
+		 */
+
+		//Incident Types
+		public bool isStandAlone(){
+			return "standalone".Equals((string)dataStore ["incident"] ["incidentType"]);
+		}
+
+		public bool isNetworked(){
+			return "networked".Equals((string)dataStore ["incident"] ["incidentType"]);
+		}
+
+
+		//User Groups
+		public bool isUser(){
+			return "user".Equals((string)dataStore ["incident"] ["role"]);
+		}
+
+		public bool isMapEditor(){
+			return "mapEditor".Equals((string)dataStore ["incident"] ["role"]);
+		}
+
+		public bool isAdmin(){
+			return "admin".Equals((string)dataStore ["incident"] ["role"]);
+		}
 
 		/**
 		 * This function needs to be called after modification of the JsonObject

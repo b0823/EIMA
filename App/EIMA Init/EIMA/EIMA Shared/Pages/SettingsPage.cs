@@ -31,6 +31,20 @@ namespace EIMAMaster
 				HorizontalOptions = LayoutOptions.Center
 			};
 
+			var data = new DataManager ();
+			if (data.isStandAlone ()) {
+				standAloneUI ();
+			} else
+				networkedUI ();
+
+		}
+		public void setSettings(){
+			string speed = new DataManager ().getUpdateSpeed ();
+			var index = Array.FindIndex(updateData, row => row == speed);
+			picker.SelectedIndex = index;
+		}
+
+		public void networkedUI(){
 			Label upSpeed = new Label
 			{
 				Text = "Update Speed",
@@ -50,13 +64,34 @@ namespace EIMAMaster
 			foreach (string datamember in updateData) {
 				picker.Items.Add (datamember);
 			}
-				
-			//TODO only on standlone, this will have handler that checks network and creates incident
+			this.Content = new StackLayout
+			{
+				Children = 
+				{
+					settings,
+					upSpeed,
+					picker
+				}
+			};
+			setSettings ();
+
+		}
+
+		public void standAloneUI(){
+
 			Button network = new Button
 			{
 				Text = "Make Incident Networked",
 				BorderWidth = 1,
 				HorizontalOptions = LayoutOptions.Center,
+				VerticalOptions = LayoutOptions.Center
+			};
+			Button reset = new Button
+			{
+				Text = "Clear Incident Data",
+				BorderWidth = 1,
+				HorizontalOptions = LayoutOptions.Center,
+				VerticalOptions = LayoutOptions.Center
 			};
 
 			this.Content = new StackLayout
@@ -64,43 +99,10 @@ namespace EIMAMaster
 				Children = 
 				{
 					settings,
-					upSpeed,
-					picker,
-					network
+					network,
+					reset
 				}
 			};
-					
-			setSettings ();
-		}
-		public void setSettings(){
-			string speed = new DataManager ().getUpdateSpeed ();
-			var index = Array.FindIndex(updateData, row => row == speed);
-			picker.SelectedIndex = index;
-		}
-
-		public void restGet(){
-			Uri url =  new Uri("https://eima-server.herokuapp.com/services/time/");
-			var syncClient = new WebClient ();
-
-			syncClient.DownloadStringCompleted += (sender, e) => 
-			{
-				settings.Text = e.Result;
-			};
-
-			syncClient.DownloadStringAsync(url);
-		}
-		public void restPost(){
-			var vm = new {
-				title= "C# XAMARIN TEST",
-				body= "http://jsonplaceholder.typicode.com/posts",
-				userId= "please work"
-			};
-			using (var client = new WebClient())
-			{
-				var dataString = JsonConvert.SerializeObject(vm);
-				client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-				client.UploadString(new Uri("http://jsonplaceholder.typicode.com/posts"), "POST", dataString);
-			}
 		}
 	}
 	

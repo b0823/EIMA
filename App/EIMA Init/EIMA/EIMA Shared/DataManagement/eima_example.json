@@ -19,7 +19,7 @@ listing names/privledges levels etc.
     "status":"good",
     "unitType":"Fire"
   },
-  "incidentData": {
+  "incident": {
     "role": "user",
     "incidentID":"null",
     "incidentType": "standalone",

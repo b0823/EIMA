@@ -11,6 +11,7 @@ namespace EIMAMaster
 {
 	public class AddToMapPage : ContentPage
 	{
+		
 		public bool hasCanceled { get; set; }
 		public string unitNum { get; set; }
 		public string organziation { get; set; }
