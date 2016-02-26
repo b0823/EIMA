@@ -13,10 +13,14 @@ namespace EIMAMaster
 	{
 		
 		public bool hasCanceled { get; set; }
-		public string unitNum { get; set; }
-		public string organziation { get; set; }
-		public string currentStatus { get; set; }
-		public string unitType { get; set; }
+
+		private string unitNum { get; set; }
+		private string unitName { get; set; }
+		private string organziation { get; set; }
+		private string currentStatus { get; set; }
+		private string unitType { get; set; }
+
+		private string[] unitTypes = {"Fire","Police", "Biohazard","EMS","Triage","Rescue","Command Post","Other"};
 
 		private EIMAPin toEdit;
 		private ObservableCollection<TKCustomMapPin> pinList;
@@ -42,6 +46,7 @@ namespace EIMAMaster
 		 * Call for when add asset is hit. Check data define the pin (toEdit) and do input checking 
 		 * on data that is entered, which is stored in fields :
 		 * Data will be set to
+				unitName
 				unitType 
 				organziation 
 				unitNum 
@@ -73,7 +78,10 @@ namespace EIMAMaster
 				FontAttributes = FontAttributes.Bold,
 				HorizontalOptions = LayoutOptions.Center
 			};
-
+			var unitNameEntry = new Entry { 
+				Placeholder = "Unit Name",
+				VerticalOptions = LayoutOptions.Center
+			};
 			var unitEntry = new Entry { 
 				Placeholder = "Unit #",
 				VerticalOptions = LayoutOptions.Center
@@ -95,28 +103,26 @@ namespace EIMAMaster
 				VerticalOptions = LayoutOptions.Center
 			};
 
-			unitPicker.Items.Add ("Police");
-			unitPicker.Items.Add ("Fire");
-			unitPicker.Items.Add ("EMS");
-			unitPicker.Items.Add ("Volcano Response");
-			unitPicker.Items.Add ("Hazmat");
-			unitPicker.Items.Add ("Other");
+
+			foreach (string s in unitTypes) {
+				unitPicker.Items.Add (s);
+			}
 
 			Button addToMap = new Button
 			{
+				VerticalOptions = LayoutOptions.Start,
+				HorizontalOptions = LayoutOptions.Start,
 				Text = "Add To Map",
-				BorderWidth = 1,
-				HorizontalOptions = LayoutOptions.Center,
-				VerticalOptions = LayoutOptions.End
+				BorderWidth = 1
 			};
 
 
 			Button cancel = new Button
 			{
+				VerticalOptions = LayoutOptions.Start,
+				HorizontalOptions = LayoutOptions.Start,
 				Text = "Cancel",
-				BorderWidth = 1,
-				HorizontalOptions = LayoutOptions.Center,
-				VerticalOptions = LayoutOptions.End
+				BorderWidth = 1
 			};
 
 			cancel.Clicked += (sender, e) => {
@@ -124,7 +130,17 @@ namespace EIMAMaster
 			};
 
 			addToMap.Clicked += (sender, e) => {
-				unitType = unitPicker.SelectedIndex + " ";
+				
+				if(unitNameEntry.Text == null || unitNameEntry.Text == ("") || unitNameEntry.Text == ("Unit Name")){
+					DisplayAlert("You must enter a Unit Name!","","OK");
+					return;
+				}
+				if(unitPicker.SelectedIndex < 0){
+					DisplayAlert("You must select a Unit Type!","","OK");
+					return;
+				}
+				unitName = unitNameEntry.Text;
+				unitType = unitTypes[unitPicker.SelectedIndex];
 				organziation = orgEntry.Text;
 				unitNum = unitEntry.Text;
 				currentStatus = statusEntry.Text;
@@ -136,12 +152,20 @@ namespace EIMAMaster
 				Children = 
 				{
 					header,
+					unitNameEntry,
 					unitEntry,
 					orgEntry,
 					statusEntry,
 					unitPicker,
-					addToMap,
-					cancel
+					new StackLayout()
+					{
+						HorizontalOptions = LayoutOptions.Center,
+						Orientation = StackOrientation.Horizontal,
+						Children = {
+							addToMap,
+							cancel
+						}
+					}
 				}
 			};
 		}

@@ -148,17 +148,31 @@ namespace EIMAMaster
 				toAdd.unique = (string)item["unique"];
 				toAdd.status = (string)item["status"];
 				toAdd.organization = (string)item["organization"];
+				toAdd.unit = (string)item ["unit"];
+
+				toAdd.Title = toAdd.name + " (" + toAdd.organization + "," + toAdd.unit + ")";//Not sure how we want to format data
+				toAdd.Subtitle = "Status:" + toAdd.status;
+
+
 				toAdd.IsDraggable = !(bool)item["isUser"];
 				toAdd.IsVisible = true;
 				toAdd.Position = new Position ((double)item["location"]["lat"],(double)item["location"]["long"]);
 				toAdd.Image = ((string)item["type"]) + ".png";
+				toAdd.ShowCallout = true;
 
 				toReturn.Add (toAdd);
 			}
 
 			return toReturn;
 		}
+		//SET
+		public void setAssets(List<EIMAPin> newAssets){
+			JArray assets = new JArray ();
 
+			foreach (EIMAPin asset in newAssets) {
+				
+			}
+		}
 			
 
 		/*
