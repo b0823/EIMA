@@ -18,6 +18,12 @@ namespace EIMAMaster
 
 		}
 
+		public void resetStandAlone(){
+			JObject defData = (JObject) JObject.Parse (getDefData());
+			dataStore ["incident"] = defData ["incident"];
+			rewriteObjectInMemory ();
+		}
+
 		/**
 		 * These are the set of setters and getters for adding and setting data.
 		 * Setters will reset and rewrite the file. 
@@ -141,8 +147,18 @@ namespace EIMAMaster
 		 */
 		public void dataStartup(){
 			verifyOrInitializeData ();	
-			string input = getDataFile ();
+			string input = getDataFile (eimaDataPath);
 			dataStore = (JObject) JObject.Parse (input);
+		}
+
+		private string getDefData(){
+			var assembly = typeof(DataManager).GetTypeInfo().Assembly;
+			Stream stream = assembly.GetManifestResourceStream(eimaInitalizeDataPath);
+			string text = "";
+			using (var reader = new System.IO.StreamReader (stream)) {
+				text = reader.ReadToEnd ();
+			}	
+			return text;
 		}
 
 		//Checks if datafilepath exists. 
@@ -152,19 +168,14 @@ namespace EIMAMaster
 			var filePath = Path.Combine (documentsPath, eimaDataPath);
 
 			if (!File.Exists (filePath)) { //If there is no data file- Set the default data to filepath
-				var assembly = typeof(DataManager).GetTypeInfo().Assembly;
-				Stream stream = assembly.GetManifestResourceStream(eimaInitalizeDataPath);
-				string text = "";
-				using (var reader = new System.IO.StreamReader (stream)) {
-					text = reader.ReadToEnd ();
-				}				
+				var text = getDefData();
 				System.IO.File.WriteAllText (filePath, text);
 			}
 		}
 
-		private string getDataFile(){
+		private string getDataFile(string data){
 			var documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
-			var filePath = Path.Combine (documentsPath, eimaDataPath);
+			var filePath = Path.Combine (documentsPath, data);
 			return System.IO.File.ReadAllText (filePath);
 		}
 	}

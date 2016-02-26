@@ -17,6 +17,7 @@ namespace EIMAMaster
 	 */
 	public class FilterPage : ContentPage
 	{
+
 		private List<FilterObject> listData;
 		private List<CustomSwitch> switchList;
 		private StackLayout myLayout;
@@ -106,5 +107,23 @@ namespace EIMAMaster
 			}
 		}
 	}
+	//Util Classes to extend switch, and hold data
+	public class FilterObject
+	{
+		public string Name { get; set ; }
+		public bool IsSelected { get; set ; }
+		public FilterObject ()
+		{
+		}
+	}
+
+	public class CustomSwitch : Switch
+	{
+		public string name;
+		public CustomSwitch ()
+		{
+		}
+	}
+
 }
 

@@ -94,6 +94,11 @@ namespace EIMAMaster
 				VerticalOptions = LayoutOptions.Center
 			};
 
+			reset.Clicked += (sender, e) => {
+				DataManager data = new DataManager();
+				data.resetStandAlone();
+			};
+
 			this.Content = new StackLayout
 			{
 				Children = 
