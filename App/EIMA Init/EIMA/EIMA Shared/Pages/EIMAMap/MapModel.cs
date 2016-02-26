@@ -376,16 +376,16 @@ namespace TK.CustomMap.MapModel
 			this._circles = new ObservableCollection<TKCircle>();
 		}
 
-		public void addPin(Position location){
-			
-			var pin = new TKCustomMapPin {
-				Position = location,
-				Title = string.Format("", location.Latitude, location.Longitude),
+		public void addPin(Position loc, string title, bool isUser){
+			var pin = new TKCustomMapPin
+			{
+				Position = loc,
+				Title = title,
 				ShowCallout = true,
-				IsDraggable = true
-			};						
+				IsDraggable = !isUser
+			};
 
-			this._pins.Add (pin);
+			this._pins.Add(pin);							
 		}
 
 		protected virtual void OnPropertyChanged(string propertyName)

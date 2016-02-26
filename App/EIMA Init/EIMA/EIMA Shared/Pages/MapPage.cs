@@ -108,9 +108,13 @@ namespace EIMAMaster
 			DataManager data = new DataManager ();
 			assetList = data.getAssets ();
 
+
+			//Doing this for now until we define a more clean add pin function.
 			foreach(MapAsset element in assetList){
-				myModel.addPin (element.Position);
+	
+				myModel.addPin (element.Position, element.name, element.isUser);
 			}
+
 		}
 
 		public async void filterMapItems(){

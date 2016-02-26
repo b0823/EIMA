@@ -31,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AdminPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\FilterPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\MapAsset.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\EIMAPin.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)DataManagement\" />
