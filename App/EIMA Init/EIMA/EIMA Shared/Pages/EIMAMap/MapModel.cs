@@ -189,8 +189,9 @@ namespace TK.CustomMap.MapModel
 						if (action == "Create Asset")
 						{
 							
-							var pin = new TKCustomMapPin
+							var pin = new EIMAPin
 							{
+								unique = randomString(16),
 								Position = position,
 								Title = string.Format("", position.Latitude, position.Longitude),
 								ShowCallout = true,
@@ -301,18 +302,11 @@ namespace TK.CustomMap.MapModel
 			{
 				return new Command<TKCustomMapPin>(pin => 
 					{
-						var routePin = pin as RoutePin;
+						var myObject = pin as EIMAPin;
 
-						if (routePin != null)
+						if (myObject != null)
 						{
-							if (routePin.IsSource)
-							{
-								routePin.Route.Source = pin.Position;
-							}
-							else
-							{
-								routePin.Route.Destination = pin.Position;
-							}
+							////
 						}
 					});
 			}
@@ -374,18 +368,19 @@ namespace TK.CustomMap.MapModel
 		{
 			this._pins = new ObservableCollection<TKCustomMapPin>();
 			this._circles = new ObservableCollection<TKCircle>();
+			 
 		}
 
-		public void addPin(Position loc, string title, bool isUser){
-			var pin = new TKCustomMapPin
-			{
-				Position = loc,
-				Title = title,
-				ShowCallout = true,
-				IsDraggable = !isUser
-			};
-
+		public void addPin(EIMAPin pin){
 			this._pins.Add(pin);							
+		}
+
+		public static string randomString(int length)
+		{
+			const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+			var random = new Random();
+			return new string(Enumerable.Repeat(chars, length)
+				.Select(s => s[random.Next(s.Length)]).ToArray());
 		}
 
 		protected virtual void OnPropertyChanged(string propertyName)

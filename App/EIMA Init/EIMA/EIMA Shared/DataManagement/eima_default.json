@@ -20,7 +20,7 @@
 		"span":"5"
 	},
     "mapAssets":[
-		{"type":"fire", location:{"lat":39.672677, "long":-84.151066},"status":"good","unit":"621","organization":"fema","isUser":true,"name":"Officer Brian Davis"}
+		{"type":"Police","unique":"qrCar5" ,location:{"lat":39.672677, "long":-84.151066},"status":"good","unit":"621","organization":"fema","isUser":true,"name":"Officer Brian Davis"}
     ],
 	"mapDangerZones":[
 	],

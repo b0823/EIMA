@@ -18,7 +18,7 @@ namespace EIMAMaster
 		public string currentStatus { get; set; }
 		public string unitType { get; set; }
 
-		private TKCustomMapPin toEdit;
+		private EIMAPin toEdit;
 		private ObservableCollection<TKCustomMapPin> pinList;
 
 		public async void goBack(){
@@ -29,7 +29,7 @@ namespace EIMAMaster
 			onCancel ();
 			return true;
 		}
-		public AddToMapPage (TKCustomMapPin pin, ObservableCollection<TKCustomMapPin> _pins)
+		public AddToMapPage (EIMAPin pin, ObservableCollection<TKCustomMapPin> _pins)
 		{
 			hasCanceled = true;
 			toEdit = pin;

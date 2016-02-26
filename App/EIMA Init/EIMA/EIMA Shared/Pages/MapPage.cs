@@ -17,7 +17,7 @@ namespace EIMAMaster
 		Position defaultLocation = new Position (39.8, -84.08711552);
 		FilterPage multiPage; //Used in Filter function
 		private string[] uTypeOptions = {"Fire","Police", "Biohazard","EMS","Triage","Rescue","Command Post","Other"};
-		private List<MapAsset> assetList;
+		private List<EIMAPin> assetList;
 		private MapModel myModel;
 
 		public MapPage ()
@@ -110,9 +110,8 @@ namespace EIMAMaster
 
 
 			//Doing this for now until we define a more clean add pin function.
-			foreach(MapAsset element in assetList){
-	
-				myModel.addPin (element.Position, element.name, element.isUser);
+			foreach(EIMAPin element in assetList){
+				myModel.addPin (element);
 			}
 
 		}

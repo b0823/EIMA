@@ -25,12 +25,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\RootPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\MenuPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\MapModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\RoutePin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\AddToMapPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\IncidentPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AdminPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\FilterPage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\MapAsset.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\EIMAPin.cs" />
   </ItemGroup>
   <ItemGroup>

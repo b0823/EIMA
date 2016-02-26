@@ -136,28 +136,29 @@ namespace EIMAMaster
 			return default(Position);
 		}
 		//MAP ASSETS 
-		public List<MapAsset> getAssets(){
-			List<MapAsset> toReturn = new List<MapAsset> ();
+		public List<EIMAPin> getAssets(){
+			List<EIMAPin> toReturn = new List<EIMAPin> ();
 
 			JArray assets = (JArray)dataStore ["incident"] ["mapAssets"];
 
 			foreach(JObject item in assets.Children()){
-				MapAsset toAdd = new MapAsset ();
+				EIMAPin toAdd = new EIMAPin ();
+
 				toAdd.name = (string)item["name"];
+				toAdd.unique = (string)item["unique"];
 				toAdd.status = (string)item["status"];
 				toAdd.organization = (string)item["organization"];
-				toAdd.isUser = (bool)item["isUser"];
-				toAdd.type = (string)item["type"];
-
+				toAdd.IsDraggable = !(bool)item["isUser"];
+				toAdd.IsVisible = true;
 				toAdd.Position = new Position ((double)item["location"]["lat"],(double)item["location"]["long"]);
+				toAdd.Image = ((string)item["type"]) + ".png";
 
 				toReturn.Add (toAdd);
 			}
 
 			return toReturn;
 		}
-			//GET
-			//SET
+
 			
 
 		/*
