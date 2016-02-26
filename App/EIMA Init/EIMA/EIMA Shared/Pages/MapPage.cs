@@ -15,7 +15,7 @@ namespace EIMAMaster
 	{
 		TKCustomMap map;
 		Position defaultLocation = new Position (39.8, -84.08711552);
-		FilterPage<FilterModel> multiPage; //Used in Filter function
+		FilterPage multiPage; //Used in Filter function
 		private string[] uTypeOptions = {"Fire","Police", "Biohazard","EMS","Triage","Rescue","Command Post","Other"};
 
 
@@ -90,17 +90,17 @@ namespace EIMAMaster
 		}
 
 		public async void filterMapItems(){
-			var items = new List<FilterModel>();
+			var items = new List<FilterObject>();
 			var data = new DataManager ();
 
 			foreach (string element in uTypeOptions)
 			{
-				items.Add(new FilterModel{Name = element, IsSelected = data.getFilter(element)});
+				items.Add(new FilterObject{Name = element, IsSelected = data.getFilter(element)});
 			}
 
 			if (multiPage == null)
-				multiPage = new FilterPage<FilterModel> (items){ Title = "Filter" };
-			multiPage.SelectAll ();//Just for proof of concept. Would need to make this data driven.
+				multiPage = new FilterPage (items);
+			//multiPage.SelectAll ();//Just for proof of concept. Would need to make this data driven.
 			await Navigation.PushAsync (multiPage);
 
 		}

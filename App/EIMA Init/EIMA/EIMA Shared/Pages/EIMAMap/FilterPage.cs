@@ -1,116 +1,110 @@
 ﻿using System;
-using System.Reflection;
+
 using Xamarin.Forms;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Collections;
+using System.IO;
 
 namespace EIMAMaster
 {
-	/* 
-	* based on
-	* https://gist.github.com/glennstephens/76e7e347ca6c19d4ef15
-	* 
-	* https://developer.xamarin.com/recipes/cross-platform/xamarin-forms/controls/multiselect/
-	*/
-
-	public class FilterPage<T> : ContentPage
+	/**
+	 * Totally Changed this from the old sample, it was inflexible and 
+	 * couldn't easily fit our needs, I need to make this page look nicer (If anyone wants to work with this feel free)
+	 * still however it has the same functionality and it's much simpler code wise.
+	 */
+	public class FilterPage : ContentPage
 	{
-		public class WrappedSelection<V> : INotifyPropertyChanged
-		{
-			public V Item { get; set; }
-			bool isSelected = false;
-			public bool IsSelected { 
-				get {
-					return isSelected;
+		private List<FilterObject> listData;
+		private List<CustomSwitch> switchList;
+		private StackLayout myLayout;
+
+		public FilterPage(List<FilterObject> inputData){
+			listData = inputData;
+			this.Title = "Filter";
+			switchList = new List<CustomSwitch>();
+			init ();
+		}
+
+		public void init(){
+
+			// Build the page.
+			myLayout = new StackLayout {
+				VerticalOptions = LayoutOptions.StartAndExpand,
+				Spacing = 5,
+				Children = {
 				}
-				set
-				{
-					if (isSelected != value) {
-						isSelected = value;
-						PropertyChanged (this, new PropertyChangedEventArgs ("IsSelected"));
-						//						PropertyChanged (this, new PropertyChangedEventArgs (nameof (IsSelected))); // C# 6
+			};
+
+
+			foreach (FilterObject element in listData) {
+
+				var declaredSwitch = new CustomSwitch () {
+					VerticalOptions = LayoutOptions.Start,
+					HorizontalOptions = LayoutOptions.Center,
+					name = element.Name
+				};
+				declaredSwitch.IsToggled = element.IsSelected;
+				declaredSwitch.Toggled += toggledSwitch;
+
+				switchList.Add (declaredSwitch);
+				var textSwitch = new StackLayout () {
+					HorizontalOptions = LayoutOptions.EndAndExpand,
+					VerticalOptions = LayoutOptions.StartAndExpand,
+					Orientation = StackOrientation.Horizontal,
+					Children = {
+						new Label () {
+							VerticalOptions = LayoutOptions.Start,
+							HorizontalOptions = LayoutOptions.Start,
+							Text = element.Name,
+							FontSize = 28
+						},
+						declaredSwitch
 					}
-				}
+				};
+				myLayout.Children.Add (textSwitch);
 			}
-			public event PropertyChangedEventHandler PropertyChanged = delegate {};
+
+			this.Content = myLayout;
+
+
+			ToolbarItem allOnTBI = null;
+			ToolbarItem allOffTBI = null;
+
+			allOnTBI = new ToolbarItem ("All", "", () => {allOn();}, 0, 0);
+			allOffTBI = new ToolbarItem ("None", "", () => {allOff();}, 0, 0);
+
+			//Change map type
+			ToolbarItems.Add (allOnTBI);
+			ToolbarItems.Add (allOffTBI);
 		}
-		public class WrappedItemSelectionTemplate : ViewCell
-		{
-			public WrappedItemSelectionTemplate() : base ()
-			{
-				Label name = new Label();
-				name.SetBinding(Label.TextProperty, new Binding("Item.Name"));
-				Switch mainSwitch = new Switch();
-				mainSwitch.SetBinding(Switch.IsToggledProperty, new Binding("IsSelected"));
-				RelativeLayout layout = new RelativeLayout();
-				layout.Children.Add (name, 
-					Constraint.Constant (5), 
-					Constraint.Constant (5),
-					Constraint.RelativeToParent (p => p.Width - 60),
-					Constraint.RelativeToParent (p => p.Height - 10)
-				);
-				layout.Children.Add (mainSwitch, 
-					Constraint.RelativeToParent (p => p.Width - 55), 
-					Constraint.Constant (5),
-					Constraint.Constant (50),
-					Constraint.RelativeToParent (p => p.Height - 10)
-				);
-				View = layout;
 
-			}
+		void toggledSwitch(object sender, ToggledEventArgs e)
+		{
+//			this.Title
+			var switchSent = (CustomSwitch)sender;
+
+			DataManager data = new DataManager ();
+			data.setFilter (switchSent.name, e.Value);
+
 		}
-		public List<WrappedSelection<T>> WrappedItems = new List<WrappedSelection<T>>();
-		public FilterPage(List<T> items)
-		{
-			WrappedItems = items.Select (item => new WrappedSelection<T> () { Item = item, IsSelected = false }).ToList ();
-			ListView mainList = new ListView () {
-				ItemsSource = WrappedItems,
-				ItemTemplate = new DataTemplate (typeof(WrappedItemSelectionTemplate)),
-			};
 
-			mainList.ItemSelected += (sender, e) => {
-				if (e.SelectedItem == null) return;
-				var o = (WrappedSelection<T>)e.SelectedItem;
-				o.IsSelected = !o.IsSelected;
-
-				var data = new DataManager();
-
-				var name = (string)o.Item.GetType().GetProperty("Name").GetValue(o.Item, null);
-
-				data.setFilter(name,o.IsSelected);
-
-				((ListView)sender).SelectedItem = null; //de-select
-			};
-			Content = mainList;
-			if (Device.OS == TargetPlatform.Windows)
-			{   // fix issue where rows are badly sized (as tall as the screen) on WinPhone8.1
-				mainList.RowHeight = 40;
-				// also need icons for Windows app bar (other platforms can just use text)
-				ToolbarItems.Add(new ToolbarItem("All", "check.png", SelectAll, ToolbarItemOrder.Primary));
-				ToolbarItems.Add(new ToolbarItem("None", "cancel.png", SelectNone, ToolbarItemOrder.Primary));
-			}
-			else
-			{
-				ToolbarItems.Add(new ToolbarItem("All", null, SelectAll, ToolbarItemOrder.Primary));
-				ToolbarItems.Add(new ToolbarItem("None", null, SelectNone, ToolbarItemOrder.Primary));
+		public void allOn(){
+			DataManager data = new DataManager ();
+			foreach (CustomSwitch element in switchList) {
+				element.IsToggled = true;
+				data.setFilter (element.name, true);
 			}
 		}
-		public void SelectAll ()
-		{
-			foreach (var wi in WrappedItems) {
-				wi.IsSelected = true;
+		public void allOff(){
+			DataManager data = new DataManager ();
+			foreach (CustomSwitch element in switchList) {
+				element.IsToggled = false;
+				data.setFilter (element.name, false);
 			}
-		}
-		public void SelectNone ()
-		{
-			foreach (var wi in WrappedItems) {
-				wi.IsSelected = false;
-			}
-		}
-		public List<T> GetSelection() 
-		{
-			return WrappedItems.Where (item => item.IsSelected).Select (wrappedItem => wrappedItem.Item).ToList ();	
 		}
 	}
 }
+
