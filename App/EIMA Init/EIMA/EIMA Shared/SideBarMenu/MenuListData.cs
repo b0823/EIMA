@@ -35,10 +35,16 @@ namespace EIMAMaster
 		}
 
 		public void standAloneMenu(){
+//			this.Add (map);
+//			this.Add (settings);
+//			this.Add (help);
 			this.Add (map);
+			this.Add (alerts);
+			this.Add (userProf);
 			this.Add (settings);
+			this.Add (admin);
 			this.Add (help);
-
+			this.Add (logout);
 		}
 		public void networkedAdmin(){
 			this.Add (map);

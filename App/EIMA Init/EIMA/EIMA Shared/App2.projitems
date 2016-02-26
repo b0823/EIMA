@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\IncidentPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AdminPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\FilterPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\MapAsset.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)DataManagement\" />

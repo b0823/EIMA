@@ -17,12 +17,14 @@ namespace EIMAMaster
 		Position defaultLocation = new Position (39.8, -84.08711552);
 		FilterPage multiPage; //Used in Filter function
 		private string[] uTypeOptions = {"Fire","Police", "Biohazard","EMS","Triage","Rescue","Command Post","Other"};
-
+		private List<MapAsset> assetList;
+		private MapModel myModel;
 
 		public MapPage ()
 		{		
 			startAndBindMap();
 			setToolBar ();
+			loadData ();
 		}
 
 		public void setToolBar(){
@@ -56,9 +58,21 @@ namespace EIMAMaster
 		}
 
 		public void startAndBindMap(){
-			var ms = MapSpan.FromCenterAndRadius (defaultLocation, Distance.FromMiles (0.3));
+			DataManager data = new DataManager ();
+			var miles = data.getSpan ();
+			Position locationDef = data.getCenter ();
+			MapSpan ms;
+
+			if (locationDef != default(Position))
+				ms = MapSpan.FromCenterAndRadius (locationDef, Distance.FromMiles (miles));
+			else {
+				ms = MapSpan.FromCenterAndRadius (defaultLocation, Distance.FromMiles (miles));
+				getAndSetLocation (miles);
+			}
 			map = new TKCustomMap(ms);
 			map.IsShowingUser = true;
+
+
 
 			var stack = new StackLayout { Spacing = 0 };
 			stack.Children.Add(map);
@@ -83,10 +97,20 @@ namespace EIMAMaster
 			map.SetBinding(TKCustomMap.RouteCalculationFinishedCommandProperty, "RouteCalculationFinishedCommand");
 			map.SetBinding(TKCustomMap.TilesUrlOptionsProperty, "TilesUrlOptions");
 			map.AnimateMapCenterChange = true;
-		
-			this.BindingContext = new MapModel ();
-			getAndSetLocation ();
 
+			myModel = new MapModel ();
+
+			this.BindingContext = myModel;
+
+		}
+
+		public void loadData(){
+			DataManager data = new DataManager ();
+			assetList = data.getAssets ();
+
+			foreach(MapAsset element in assetList){
+				myModel.addPin (element.Position);
+			}
 		}
 
 		public async void filterMapItems(){
@@ -117,10 +141,10 @@ namespace EIMAMaster
 				map.MapType = MapType.Hybrid;
 		}
 
-		public async void getAndSetLocation(){
+		public async void getAndSetLocation(double miles){
 			var position = await CrossGeolocator.Current.GetPositionAsync ();
 			Position parsed = new Position(position.Latitude,position.Longitude);
-			var curLoc = MapSpan.FromCenterAndRadius(parsed, Distance.FromMiles(5));
+			var curLoc = MapSpan.FromCenterAndRadius(parsed, Distance.FromMiles(miles));
 			map.MoveToRegion(curLoc);
 		}
 	}

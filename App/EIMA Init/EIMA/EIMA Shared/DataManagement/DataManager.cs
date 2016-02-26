@@ -4,6 +4,10 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 using Xamarin.Forms;
+using Xamarin.Forms.Maps;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace EIMAMaster
 {
@@ -103,8 +107,61 @@ namespace EIMAMaster
 		}
 
 
+		//MAP SPAN
+		public void setSpan(double num){
+			dataStore["incident"]["metainf"]["span"] = num;
+			rewriteObjectInMemory ();
+		}
+
+		public double getSpan(){
+			return (double)dataStore ["incident"] ["metainf"] ["span"];
+		}
+
+		//MAP DEFAULT LOCATION
+		public void setCenter(Position defLoc){
+			JObject pos = new JObject ();
+			pos ["lat"] = defLoc.Latitude;
+			pos ["long"] = defLoc.Longitude;
+
+			dataStore["incident"]["metainf"]["center"] = pos;
+			rewriteObjectInMemory ();
+		}
+
+		public Position getCenter(){
+			string data = (string)dataStore ["incident"] ["metainf"] ["center"];
+			if (IsValidJson (data)) {
+				var obj = (JObject)dataStore ["incident"] ["metainf"] ["center"];
+				return new Position ((double)obj["lat"],(double)obj["long"]);
+			} 
+			return default(Position);
+		}
+		//MAP ASSETS 
+		public List<MapAsset> getAssets(){
+			List<MapAsset> toReturn = new List<MapAsset> ();
+
+			JArray assets = (JArray)dataStore ["incident"] ["mapAssets"];
+
+			foreach(JObject item in assets.Children()){
+				MapAsset toAdd = new MapAsset ();
+				toAdd.name = (string)item["name"];
+				toAdd.status = (string)item["status"];
+				toAdd.organization = (string)item["organization"];
+				toAdd.isUser = (bool)item["isUser"];
+				toAdd.type = (string)item["type"];
+
+				toAdd.Position = new Position ((double)item["location"]["lat"],(double)item["location"]["long"]);
+
+				toReturn.Add (toAdd);
+			}
+
+			return toReturn;
+		}
+			//GET
+			//SET
+			
+
 		/*
-		 * Block of is functions.
+		 * Block of is functions Relating to states and user privledges.
 		 */
 
 		//Incident Types
@@ -177,6 +234,34 @@ namespace EIMAMaster
 			var documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
 			var filePath = Path.Combine (documentsPath, data);
 			return System.IO.File.ReadAllText (filePath);
+		}
+		private static bool IsValidJson(string strInput)
+		{
+			strInput = strInput.Trim();
+			if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
+				(strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
+			{
+				try
+				{
+					JToken.Parse(strInput);
+					return true;
+				}
+				catch (JsonReaderException jex)
+				{
+					//Exception in parsing json
+					Console.WriteLine(jex.StackTrace);
+					return false;
+				}
+				catch (Exception ex) //some other exception
+				{
+					Console.WriteLine(ex.StackTrace);
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 }

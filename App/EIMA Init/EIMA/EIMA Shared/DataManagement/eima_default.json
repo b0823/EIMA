@@ -15,13 +15,15 @@
     "role": "user",
     "incidentID":"null",
     "incidentType": "standalone",
-	"meta-inf":{
+	"metainf":{
 		"center":"default",
 		"span":"5"
 	},
-    "mapData":[
-    
+    "mapAssets":[
+		{"type":"fire", location:{"lat":39.672677, "long":-84.151066},"status":"good","unit":"621","organization":"fema","isUser":true,"name":"Officer Brian Davis"}
     ],
+	"mapDangerZones":[
+	],
     "alerts":[
     ]
   }

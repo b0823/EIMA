@@ -17,7 +17,7 @@ namespace EIMAMaster
 			Menu = new MenuListView ();
 
 			var menuLabel = new ContentView {
-				Padding = new Thickness (10, 36, 0, 5),
+				Padding = new Thickness (10, 15, 0, 5),
 				Content = new Label {
 					TextColor = Color.FromHex ("AAAAAA"),
 					Text = "MENU", 
