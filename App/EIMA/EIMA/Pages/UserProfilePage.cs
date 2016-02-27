@@ -7,7 +7,7 @@ namespace EIMA
 
 	public class UserProfilePage : ContentPage
 	{
-		private string[] uTypeOptions = {"Fire","Police", "Biohazard","EMS","Triage","Rescue","Command Post","Other"};
+		private string[] uTypeOptions = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
 
 		Entry nameEntry;
 		Entry orgEntry;

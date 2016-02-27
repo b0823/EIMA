@@ -16,7 +16,7 @@ namespace EIMA
 		TKCustomMap map;
 		Position defaultLocation = new Position (39.8, -84.08711552);
 		FilterPage multiPage; //Used in Filter function
-		private string[] uTypeOptions = {"Fire","Police", "Biohazard","EMS","Triage","Rescue","Command Post","Other"};
+		private string[] uTypeOptions = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
 		private List<EIMAPin> assetList;
 		private MapModel myModel;
 

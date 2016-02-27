@@ -179,11 +179,11 @@ namespace TK.CustomMap.MapModel
 				return new Command<Position>(async position => 
 					{
 						var action = await Application.Current.MainPage.DisplayActionSheet(
-							"Add Asset",
+							"",
 							"Cancel",
 							null,
 							"Create Asset",
-							"Add Circle"
+							"Add Danger Zone"
 						);
 						
 						if (action == "Create Asset")
@@ -194,13 +194,11 @@ namespace TK.CustomMap.MapModel
 								Position = position,
 							};						
 
-							var aToMapPage = new AddToMapPage(pin,this._pins);
+							AddToMapPage aToMapPage = new AddToMapPage(pin,false,this);//is false because this is a new pin.
 							await Application.Current.MainPage.Navigation.PushModalAsync(aToMapPage);
 
-							this._pins.Add(pin);							
-
 						}
-						else if(action == "Add Circle")
+						else if(action == "Add Danger Zone")
 						{
 							var circle = new TKCircle 
 							{
@@ -302,8 +300,7 @@ namespace TK.CustomMap.MapModel
 
 						if (myObject != null)
 						{
-							DataManager data = new DataManager();
-							data.setAssets(eimaPinsList());
+							saveData();
 						}
 					});
 			}
@@ -315,7 +312,7 @@ namespace TK.CustomMap.MapModel
 		{
 			get
 			{
-				return new Command(async () => 
+				return new Command(async (object a) => 
 					{
 						var action = await Application.Current.MainPage.DisplayActionSheet(
 							"Asset Selected",
@@ -327,9 +324,27 @@ namespace TK.CustomMap.MapModel
 
 						if (action == "Delete Asset")
 						{
-							this._pins.Remove(this.SelectedPin);
-							DataManager data = new DataManager();
-							data.setAssets(eimaPinsList());
+							var eimaPin = this.SelectedPin as EIMAPin;
+							if (eimaPin != null)
+							{
+								if(eimaPin.IsDraggable){
+									this._pins.Remove(eimaPin);
+									saveData();
+								} else {
+									await Application.Current.MainPage.DisplayAlert("Cannot Perform Delete","Asset is a user","OK");
+								}
+							} 
+							else
+								this._pins.Remove(this.SelectedPin);
+						}
+						else if (action == "Modify Asset Info")
+						{
+							var eimaPin = this.SelectedPin as EIMAPin;
+							if (eimaPin != null)
+							{
+								AddToMapPage editPage = new AddToMapPage(eimaPin,true,this);
+								await Application.Current.MainPage.Navigation.PushModalAsync(editPage);
+							}
 						}
 					});
 			}
@@ -374,6 +389,15 @@ namespace TK.CustomMap.MapModel
 			this._pins.Add(pin);							
 		}
 
+		public void removePin(EIMAPin pin){
+			this._pins.Remove(pin);							
+		}
+
+		public void saveData(){
+			DataManager data = new DataManager();
+			data.setAssets(eimaPinsList());
+		}
+
 		public List<EIMAPin> eimaPinsList(){
 			List<EIMAPin> toReturn = new List<EIMAPin> ();
 			foreach (TKCustomMapPin element in this._pins) {
@@ -385,14 +409,6 @@ namespace TK.CustomMap.MapModel
 				}
 			}
 			return toReturn;
-		}
-
-		public static string randomString(int length)
-		{
-			const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-			var random = new Random();
-			return new string(Enumerable.Repeat(chars, length)
-				.Select(s => s[random.Next(s.Length)]).ToArray());
 		}
 
 		protected virtual void OnPropertyChanged(string propertyName)

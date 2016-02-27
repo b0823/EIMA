@@ -160,7 +160,7 @@ namespace EIMA
 				toAdd.IsDraggable = !(bool)item["isUser"];
 				toAdd.IsVisible = true;
 				toAdd.Position = new Position ((double)item["location"]["lat"],(double)item["location"]["long"]);
-				toAdd.Image = ((string)item["type"]) + ".png";
+				toAdd.Image = ((string)item["type"]).Replace(" ","") + ".png";
 				toAdd.unitType = (string)item ["type"];
 				toAdd.ShowCallout = true;
 
