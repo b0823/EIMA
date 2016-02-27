@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{82160F2C-7C70-4CA9-BF79-44F0A1EBC994}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>EIMA</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)EIMA.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\AdminPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\AlertsPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\HelpPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\IncidentPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\LoginPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\LogoutPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\MapPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\SettingsPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\UserProfilePage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\AddToMapPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\EIMAPin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\FilterPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\MapModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\MenuCell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\MenuItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\MenuListData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\MenuListView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\MenuPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SideBarMenu\RootPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataManagement\DataManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)DataManagement\eima_example.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)DataManagement\eima_default.json" />
+  </ItemGroup>
+</Project>
