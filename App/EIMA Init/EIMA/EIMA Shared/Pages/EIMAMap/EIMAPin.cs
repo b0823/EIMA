@@ -11,6 +11,7 @@ namespace EIMAMaster
 		public string unit;
 		public string organization;
 		public string status;
+		public string unitType;
 
 		public EIMAPin () : base()
 		{

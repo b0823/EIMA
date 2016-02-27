@@ -158,6 +158,7 @@ namespace EIMAMaster
 				toAdd.IsVisible = true;
 				toAdd.Position = new Position ((double)item["location"]["lat"],(double)item["location"]["long"]);
 				toAdd.Image = ((string)item["type"]) + ".png";
+				toAdd.unitType = (string)item ["type"];
 				toAdd.ShowCallout = true;
 
 				toReturn.Add (toAdd);
@@ -170,8 +171,25 @@ namespace EIMAMaster
 			JArray assets = new JArray ();
 
 			foreach (EIMAPin asset in newAssets) {
-				
+				JObject toAdd = new JObject ();
+
+				JObject locObject = new JObject ();
+				locObject ["lat"] = asset.Position.Latitude;
+				locObject ["long"] = asset.Position.Longitude;
+
+				toAdd ["type"] = asset.unitType;
+				toAdd ["unique"] = asset.unique;
+				toAdd ["name"] = asset.name;
+				toAdd ["unit"] = asset.unit;
+				toAdd ["status"] = asset.status;
+				toAdd ["organization"] = asset.organization;
+				toAdd ["location"] = locObject;
+				toAdd ["isUser"] = !asset.IsDraggable;
+
+				assets.Add (toAdd);
 			}
+			dataStore["incident"] ["mapAssets"] = assets;
+			rewriteObjectInMemory();
 		}
 			
 

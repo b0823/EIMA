@@ -20,7 +20,7 @@
 		"span":"5"
 	},
     "mapAssets":[
-		{"type":"Police","unique":"qrCar5" ,location:{"lat":39.672677, "long":-84.151066},"status":"Low on sandbags","unit":"621","organization":"Dayton PD","isUser":true,"name":"Officer Brian Davis"}
+		{"type":"Police","unique":"qrCar5" ,location:{"lat":39.672677, "long":-84.151066},"status":"Low on sandbags","unit":"621","organization":"Dayton PD","isUser":false,"name":"Officer Brian Davis"}
     ],
 	"mapDangerZones":[
 	],

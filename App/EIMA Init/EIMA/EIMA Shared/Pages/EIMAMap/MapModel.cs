@@ -306,7 +306,8 @@ namespace TK.CustomMap.MapModel
 
 						if (myObject != null)
 						{
-							////
+							DataManager data = new DataManager();
+							data.setAssets(eimaPinsList());
 						}
 					});
 			}
@@ -331,6 +332,8 @@ namespace TK.CustomMap.MapModel
 						if (action == "Delete Asset")
 						{
 							this._pins.Remove(this.SelectedPin);
+							DataManager data = new DataManager();
+							data.setAssets(eimaPinsList());
 						}
 					});
 			}
@@ -373,6 +376,19 @@ namespace TK.CustomMap.MapModel
 
 		public void addPin(EIMAPin pin){
 			this._pins.Add(pin);							
+		}
+
+		public List<EIMAPin> eimaPinsList(){
+			List<EIMAPin> toReturn = new List<EIMAPin> ();
+			foreach (TKCustomMapPin element in this._pins) {
+
+				var eimaPin = element as EIMAPin;
+				if (eimaPin != null)
+				{
+					toReturn.Add (eimaPin);
+				}
+			}
+			return toReturn;
 		}
 
 		public static string randomString(int length)
