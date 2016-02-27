@@ -191,11 +191,7 @@ namespace TK.CustomMap.MapModel
 							
 							var pin = new EIMAPin
 							{
-								unique = randomString(16),
 								Position = position,
-								Title = string.Format("", position.Latitude, position.Longitude),
-								ShowCallout = true,
-								IsDraggable = true
 							};						
 
 							var aToMapPage = new AddToMapPage(pin,this._pins);
