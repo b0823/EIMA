@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "EIMA", "EIMA\EIMA.shproj", "{82160F2C-7C70-4CA9-BF79-44F0A1EBC994}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIMA.iOS", "iOS\EIMA.iOS.csproj", "{09E891F8-D5C3-46BB-9E61-776B995DDFD6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIMA.Droid", "Droid\EIMA.Droid.csproj", "{F9DD0EBA-1DF6-4F85-BE37-E8300A560000}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIMA.iOS", "iOS\EIMA.iOS.csproj", "{09E891F8-D5C3-46BB-9E61-776B995DDFD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
