@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "EIMA", "EIMA\EIMA.shproj", "{82160F2C-7C70-4CA9-BF79-44F0A1EBC994}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIMA.Droid", "Droid\EIMA.Droid.csproj", "{F9DD0EBA-1DF6-4F85-BE37-E8300A560000}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9DD0EBA-1DF6-4F85-BE37-E8300A560000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9DD0EBA-1DF6-4F85-BE37-E8300A560000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9DD0EBA-1DF6-4F85-BE37-E8300A560000}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{F9DD0EBA-1DF6-4F85-BE37-E8300A560000}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{F9DD0EBA-1DF6-4F85-BE37-E8300A560000}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{F9DD0EBA-1DF6-4F85-BE37-E8300A560000}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{F9DD0EBA-1DF6-4F85-BE37-E8300A560000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9DD0EBA-1DF6-4F85-BE37-E8300A560000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9DD0EBA-1DF6-4F85-BE37-E8300A560000}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{F9DD0EBA-1DF6-4F85-BE37-E8300A560000}.Release|iPhone.Build.0 = Release|Any CPU
+		{F9DD0EBA-1DF6-4F85-BE37-E8300A560000}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{F9DD0EBA-1DF6-4F85-BE37-E8300A560000}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
