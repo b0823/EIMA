@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Collections;
 using System.IO;
+using TK.CustomMap.MapModel;
 
 namespace EIMA
 {
@@ -21,8 +22,10 @@ namespace EIMA
 		private List<FilterObject> listData;
 		private List<CustomSwitch> switchList;
 		private StackLayout myLayout;
+		private MapModel myModel;
 
-		public FilterPage(List<FilterObject> inputData){
+		public FilterPage(List<FilterObject> inputData, MapModel mapModel){
+			myModel = mapModel;
 			listData = inputData;
 			this.Title = "Filter";
 			switchList = new List<CustomSwitch>();
@@ -89,7 +92,7 @@ namespace EIMA
 
 			DataManager data = new DataManager ();
 			data.setFilter (switchSent.name, e.Value);
-
+			myModel.filterPins (switchSent.name, e.Value);
 		}
 
 		public void allOn(){
@@ -97,6 +100,7 @@ namespace EIMA
 			foreach (CustomSwitch element in switchList) {
 				element.IsToggled = true;
 				data.setFilter (element.name, true);
+				myModel.filterPins (element.name, true);
 			}
 		}
 		public void allOff(){
@@ -104,6 +108,7 @@ namespace EIMA
 			foreach (CustomSwitch element in switchList) {
 				element.IsToggled = false;
 				data.setFilter (element.name, false);
+				myModel.filterPins (element.name, false);
 			}
 		}
 	}

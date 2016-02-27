@@ -411,6 +411,18 @@ namespace TK.CustomMap.MapModel
 			return toReturn;
 		}
 
+		public void filterPins(string pinType,bool setting){
+			foreach(TKCustomMapPin element in _pins){
+				var eimaPin = element as EIMAPin;
+				if (eimaPin != null)
+				{
+					if (eimaPin.unitType == pinType) {
+						eimaPin.IsVisible = setting;
+					}
+				}
+			}
+		}
+
 		protected virtual void OnPropertyChanged(string propertyName)
 		{
 			var ev = this.PropertyChanged;

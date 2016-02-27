@@ -108,10 +108,11 @@ namespace EIMA
 			DataManager data = new DataManager ();
 			assetList = data.getAssets ();
 
-
-			//Doing this for now until we define a more clean add pin function.
-			foreach(EIMAPin element in assetList){
+			foreach(EIMAPin element in assetList){ //add pins
 				myModel.addPin (element);
+			}
+			foreach (string element in uTypeOptions) { //set filter settings
+				myModel.filterPins (element, data.getFilter (element));
 			}
 
 		}
@@ -126,7 +127,7 @@ namespace EIMA
 			}
 
 			if (multiPage == null)
-				multiPage = new FilterPage (items);
+				multiPage = new FilterPage (items, myModel);
 			//multiPage.SelectAll ();//Just for proof of concept. Would need to make this data driven.
 			await Navigation.PushAsync (multiPage);
 
