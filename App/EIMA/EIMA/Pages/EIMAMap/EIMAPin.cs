@@ -1,5 +1,4 @@
-﻿using System;
-using TK.CustomMap;
+﻿using TK.CustomMap;
 
 namespace EIMA
 {

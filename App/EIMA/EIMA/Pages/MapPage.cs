@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Plugin.Geolocator;
-using XLabs.Forms.Controls;
 using TK.CustomMap;
 using TK.CustomMap.MapModel;
 

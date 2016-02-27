@@ -1,17 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System;
 using System.Linq;
 using TK.CustomMap.Api;
 using TK.CustomMap.Api.Google;
 using TK.CustomMap.Api.OSM;
 using TK.CustomMap.Overlays;
-using TK.CustomMap.Utilities;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
-using System.Threading.Tasks;
 using EIMA;
 
 namespace TK.CustomMap.MapModel

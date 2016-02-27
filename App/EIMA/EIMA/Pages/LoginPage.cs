@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace EIMA
@@ -48,7 +46,9 @@ namespace EIMA
 			loginButton.Clicked += OnLoginButtonClicked;
 
 			standAloneButton.Clicked += async (sender, e) => {
+				standAloneButton.IsEnabled = false;
 				await Navigation.PushModalAsync (new RootPage ());
+				standAloneButton.IsEnabled = true;
 			};
 
 

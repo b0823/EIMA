@@ -2,10 +2,7 @@
 using Xamarin.Forms;
 using TK.CustomMap;
 using TK.CustomMap.MapModel;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace EIMA

@@ -1,11 +1,5 @@
 using System;
 using Xamarin.Forms;
-using System.Collections.Generic;
-
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace EIMA
 {
