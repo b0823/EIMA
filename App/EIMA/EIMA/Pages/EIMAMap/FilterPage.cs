@@ -1,25 +1,20 @@
 ﻿using Xamarin.Forms;
 using System.Collections.Generic;
-using TK.CustomMap.MapModel;
 
 namespace EIMA
 {
-	/**
-	 * Totally Changed this from the old sample, it was inflexible and 
-	 * couldn't easily fit our needs, I need to make this page look nicer (If anyone wants to work with this feel free)
-	 * still however it has the same functionality and it's much simpler code wise.
-	 */
+	
 	public class FilterPage : ContentPage
 	{
 
-		private List<FilterObject> listData;
-		private readonly List<SwitchCell> switchList;
-		private MapModel myModel;
+		List<FilterObject> listData;
+		readonly List<SwitchCell> switchList;
+		MapModel myModel;
 
 		public FilterPage(List<FilterObject> inputData, MapModel mapModel){
 			myModel = mapModel;
 			listData = inputData;
-			this.Title = "Filter";
+			Title = "Filter";
 			switchList = new List<SwitchCell>();
 			buildUI ();
 		}
@@ -59,10 +54,10 @@ namespace EIMA
 			root.Add (section);
 			TableView tableView = new TableView (root);
 
-			this.Content = tableView;
+			Content = tableView;
 
-			ToolbarItem allOnTBI = null;
-			ToolbarItem allOffTBI = null;
+			ToolbarItem allOnTBI;
+			ToolbarItem allOffTBI;
 
 			allOnTBI = new ToolbarItem ("All", "", allOn, 0, 0);
 			allOffTBI = new ToolbarItem ("None", "", allOff, 0, 0);

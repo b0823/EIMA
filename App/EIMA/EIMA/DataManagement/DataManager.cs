@@ -1,11 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
-using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
@@ -13,9 +11,9 @@ namespace EIMA
 {
 	public class DataManager
 	{
-		private static string eimaDataPath = "eima.jcfg";
-		private static string eimaInitalizeDataPath;
-		private static JObject dataStore;
+		const string eimaDataPath = "eima.jcfg";
+		static string eimaInitalizeDataPath;
+		static JObject dataStore;
 	
 		public DataManager ()
 		{
@@ -26,7 +24,7 @@ namespace EIMA
 		}
 
 		public void resetStandAlone(){
-			JObject defData = (JObject) JObject.Parse (getDefData());
+			JObject defData = JObject.Parse (getDefData ());
 			dataStore ["incident"] = defData ["incident"];
 			rewriteObjectInMemory ();
 		}
@@ -227,7 +225,7 @@ namespace EIMA
 		 * This function needs to be called after modification of the JsonObject
 		 * This is so if someone closes right after changing settings they mantain their settings.
 		 */
-		private void rewriteObjectInMemory(){
+		void rewriteObjectInMemory(){
 			string text = dataStore.ToString ();
 			var documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
 			var filePath = Path.Combine (documentsPath, eimaDataPath);
@@ -244,7 +242,7 @@ namespace EIMA
 			dataStore = (JObject) JObject.Parse (input);
 		}
 
-		private string getDefData(){
+		string getDefData(){
 			var assembly = typeof(DataManager).GetTypeInfo().Assembly;
 			Stream stream = assembly.GetManifestResourceStream(eimaInitalizeDataPath);
 			string text = "";
@@ -256,7 +254,7 @@ namespace EIMA
 
 		//Checks if datafilepath exists. 
 		//If it doesn't pull from eima_default a PCL and create that file.
-		private void verifyOrInitializeData () {
+		void verifyOrInitializeData () {
 			var documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
 			var filePath = Path.Combine (documentsPath, eimaDataPath);
 
@@ -266,12 +264,12 @@ namespace EIMA
 			}
 		}
 
-		private string getDataFile(string data){
+		string getDataFile(string data){
 			var documentsPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
 			var filePath = Path.Combine (documentsPath, data);
 			return System.IO.File.ReadAllText (filePath);
 		}
-		private static bool IsValidJson(string strInput)
+		static bool IsValidJson(string strInput)
 		{
 			strInput = strInput.Trim();
 			if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object

@@ -12,9 +12,6 @@ namespace EIMA
 		public string status;
 		public string unitType;
 
-		public EIMAPin () : base()
-		{
-		}
 	}
 }
 

@@ -15,7 +15,7 @@ namespace EIMA
 
 			//Networked, Logout/Leave incident options.
 
-			Label header = new Label
+			var header = new Label
 			{
 				Text = "Exit Options",
 				FontSize = 50,
@@ -23,29 +23,25 @@ namespace EIMA
 				HorizontalOptions = LayoutOptions.Center
 			};
 
-			Button logout = new Button
+			var logout = new Button
 			{
 				Text = "Logout",
 				BorderWidth = 1,
 				HorizontalOptions = LayoutOptions.Center,
 			};
 
-			Button leaveIncident = new Button
+			var leaveIncident = new Button
 			{
 				Text = "Leave Incident",
 				BorderWidth = 1,
 				HorizontalOptions = LayoutOptions.Center,
 			};
 
-			this.Content = new StackLayout
-			{
-				Children = 
-				{
-					header,
-					logout,
-					leaveIncident
-				}
-			};
+			var stackLayout = new StackLayout ();
+			stackLayout.Children.Add (header);
+			stackLayout.Children.Add (logout);
+			stackLayout.Children.Add (leaveIncident);
+			Content = stackLayout;
 
 
 			Title = "Logout";

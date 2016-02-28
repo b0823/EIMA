@@ -6,8 +6,8 @@ namespace EIMA
 
 	public class SettingsPage : ContentPage
 	{
-		Label settings;
-		string[] updateData = new string[6]{
+		readonly Label settings;
+		string[] updateData = {
 			"30 Seconds", "1 Minute", "5 Minutes", "10 Minutes", "30 Minutes", "1 Hour"
 		};
 		Picker picker;
@@ -39,7 +39,7 @@ namespace EIMA
 		}
 
 		public void networkedUI(){
-			Label upSpeed = new Label
+			var upSpeed = new Label
 			{
 				Text = "Update Speed",
 				FontSize = 16,
@@ -51,22 +51,16 @@ namespace EIMA
 				VerticalOptions = LayoutOptions.Center
 			};
 			picker.SelectedIndexChanged += (sender, args) =>
-			{
-				new DataManager().setUpdateSpeed(updateData[picker.SelectedIndex]);
-			};
+			new DataManager ().setUpdateSpeed (updateData [picker.SelectedIndex]);
 
 			foreach (string datamember in updateData) {
 				picker.Items.Add (datamember);
 			}
-			this.Content = new StackLayout
-			{
-				Children = 
-				{
-					settings,
-					upSpeed,
-					picker
-				}
-			};
+			var stackLayout = new StackLayout ();
+			stackLayout.Children.Add (settings);
+			stackLayout.Children.Add (upSpeed);
+			stackLayout.Children.Add (picker);
+			Content = stackLayout;
 			setSettings ();
 
 		}
@@ -88,14 +82,14 @@ namespace EIMA
 
 		public void standAloneUI(){
 
-			Button network = new Button
+			var network = new Button
 			{
 				Text = "Make Incident Networked",
 				BorderWidth = 1,
 				HorizontalOptions = LayoutOptions.Center,
 				VerticalOptions = LayoutOptions.Center
 			};
-			Button reset = new Button
+			var reset = new Button
 			{
 				Text = "Clear Incident Data",
 				BorderWidth = 1,
@@ -105,15 +99,11 @@ namespace EIMA
 
 			reset.Clicked += (sender, e) => deleteData ();
 
-			this.Content = new StackLayout
-			{
-				Children = 
-				{
-					settings,
-					network,
-					reset
-				}
-			};
+			var stackLayout = new StackLayout ();
+			stackLayout.Children.Add (settings);
+			stackLayout.Children.Add (network);
+			stackLayout.Children.Add (reset);
+			Content = stackLayout;
 		}
 	}
 	

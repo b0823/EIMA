@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using System.Collections.Generic;
 
 namespace EIMA
@@ -17,8 +16,8 @@ namespace EIMA
 			SeparatorVisibility = SeparatorVisibility.None;
 
 			var cell = new DataTemplate (typeof(MenuCell));
-			cell.SetBinding (MenuCell.TextProperty, "Title");
-			cell.SetBinding (MenuCell.ImageSourceProperty, "IconSource");
+			cell.SetBinding (TextCell.TextProperty, "Title");
+			cell.SetBinding (ImageCell.ImageSourceProperty, "IconSource");
 
 			ItemTemplate = cell;
 		}

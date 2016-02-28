@@ -1,8 +1,5 @@
 ﻿using System;
 using Xamarin.Forms;
-using TK.CustomMap;
-using TK.CustomMap.MapModel;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace EIMA
@@ -11,13 +8,12 @@ namespace EIMA
 	{
 		
 		public bool hasCanceled { get; set; }
-		private bool editAsset; //true when editing, false when adding
+		bool editAsset; //true when editing, false when adding
 
-		private string[] unitTypes = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
+		string[] unitTypes = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
 
-		private EIMAPin toEdit;
-		private ObservableCollection<TKCustomMapPin> pinList;
-		private MapModel myModel;
+		EIMAPin toEdit;
+		MapModel myModel;
 
 		public AddToMapPage (EIMAPin pin, bool editPin, MapModel model)
 		{
@@ -59,11 +55,6 @@ namespace EIMA
 			toEdit.Image = toEdit.unitType.Replace(" ","") + ".png" ; //only works with police atm
 
 			myModel.addPin (toEdit);
-//			if (!this.editAsset) {
-//				pinList.Remove (toEdit);
-//				myModel.addPin (toEdit);
-//			}
-
 
 			goBack();
 		}
@@ -72,15 +63,13 @@ namespace EIMA
 		 * When cancel or back is 		hit. 
 		 */
 		public void onCancel(){
-			if(!this.editAsset)
-				pinList.Remove (toEdit);
 			goBack ();
 		}
 		/**
 		 * Builds interface for data, sets calls for addPin and onCancel. 
 		 */
 		public void buildUI(){
-			Label header = new Label
+			var header = new Label
 			{
 				Text = "Specify Asset",
 				FontSize = 50,
@@ -106,7 +95,7 @@ namespace EIMA
 				VerticalOptions = LayoutOptions.Center
 			};
 
-			Picker unitPicker = new Picker
+			var unitPicker = new Picker
 			{
 				Title = "Unit Type",
 				VerticalOptions = LayoutOptions.Center
@@ -117,18 +106,18 @@ namespace EIMA
 				unitPicker.Items.Add (s);
 			}
 
-			Button addToMap = new Button
+			var addToMap = new Button
 			{
 				VerticalOptions = LayoutOptions.Start,
 				HorizontalOptions = LayoutOptions.Start,
 				Text = "Add To Map",
 				BorderWidth = 1
 			};
-			if (this.editAsset) {
+			if (editAsset) {
 				addToMap.Text = "Confirm Edit";
 			}
 
-			Button cancel = new Button
+			var cancel = new Button
 			{
 				VerticalOptions = LayoutOptions.Start,
 				HorizontalOptions = LayoutOptions.Start,
@@ -136,13 +125,11 @@ namespace EIMA
 				BorderWidth = 1
 			};
 
-			cancel.Clicked += (sender, e) => {
-				onCancel();
-			};
+			cancel.Clicked += (sender, e) => onCancel ();
 
 			addToMap.Clicked += (sender, e) => {
 				
-				if(unitNameEntry.Text == null || unitNameEntry.Text == ("") || unitNameEntry.Text == ("Unit Name")){
+				if(string.IsNullOrEmpty (unitNameEntry.Text) || unitNameEntry.Text == ("Unit Name")){
 					DisplayAlert("You must enter a Unit Name!","","OK");
 					return;
 				}
@@ -170,27 +157,20 @@ namespace EIMA
 				if(toEdit.status != null || toEdit.status != "") statusEntry.Text = toEdit.status;
 			}
 
-			this.Content = new StackLayout
-			{
-				Children = 
-				{
-					header,
-					unitNameEntry,
-					unitPicker,
-					unitEntry,
-					orgEntry,
-					statusEntry,
-					new StackLayout()
-					{
-						HorizontalOptions = LayoutOptions.Center,
-						Orientation = StackOrientation.Horizontal,
-						Children = {
-							addToMap,
-							cancel
-						}
-					}
-				}
-			};
+			var stackLayout = new StackLayout ();
+			stackLayout.Children.Add (header);
+			stackLayout.Children.Add (unitNameEntry);
+			stackLayout.Children.Add (unitPicker);
+			stackLayout.Children.Add (unitEntry);
+			stackLayout.Children.Add (orgEntry);
+			stackLayout.Children.Add (statusEntry);
+			var stackLayout2 = new StackLayout ();
+			stackLayout2.HorizontalOptions = LayoutOptions.Center;
+			stackLayout2.Orientation = StackOrientation.Horizontal;
+			stackLayout2.Children.Add (addToMap);
+			stackLayout2.Children.Add (cancel);
+			stackLayout.Children.Add (stackLayout2);
+			Content = stackLayout;
 		}
 		public static string randomString(int length)
 		{

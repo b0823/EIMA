@@ -1,12 +1,11 @@
 ﻿using System;
 using Xamarin.Forms;
-using System.Linq;
 
 namespace EIMA
 {
 	public class RootPage : MasterDetailPage
 	{
-		MenuPage menuPage;
+		readonly MenuPage menuPage;
 
 		public RootPage ()
 		{

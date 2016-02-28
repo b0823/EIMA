@@ -27,7 +27,7 @@ listing names/privledges levels etc.
 		"span":"15"
 	 },
     "mapData":[
-    	{"type":"fire", location:{"lat":-84.32, "long":40.1},"status":"good","unit":"621","organization":"fema","isUser":true,"name":"Officer Brian Davis"}
+		{"type":"Police","unique":"qrCar5" ,location:{"lat":39.672677, "long":-84.151066},"status":"Low on sandbags","unit":"621","organization":"Dayton PD","isUser":true,"name":"Officer Brian Davis"}
     ],
     "alerts":[
       {"alertType":"Danger", "sender":"SYSTEM", "message":"Within .2 Miles of Hazard Spill"},

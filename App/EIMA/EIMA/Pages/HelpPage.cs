@@ -7,7 +7,7 @@ namespace EIMA
 	{
 		public HelpPage ()
 		{
-			Label header = new Label
+			var header = new Label
 			{
 				Text = "User Guide",
 				FontSize = 50,
@@ -24,7 +24,7 @@ namespace EIMA
 
 
 			var listView = new ListView();
-			listView.ItemsSource = new string[]{
+			listView.ItemsSource = new []{
 				"Section 1 - QuickStart Guide",
 				"Section 2 - Users and Login",
 				"Section 3 - Event Creation and Login",
@@ -33,14 +33,10 @@ namespace EIMA
 			};
 			Title = "Help Page";
 			Icon = "Help.png";
-			this.Content = new StackLayout
-			{
-				Children = 
-				{
-					header,
-					listView
-				}
-			};
+			var stackLayout = new StackLayout ();
+			stackLayout.Children.Add (header);
+			stackLayout.Children.Add (listView);
+			Content = stackLayout;
 		}
 	}
 

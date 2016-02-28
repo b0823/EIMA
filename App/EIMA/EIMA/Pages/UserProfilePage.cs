@@ -6,7 +6,7 @@ namespace EIMA
 
 	public class UserProfilePage : ContentPage
 	{
-		private string[] uTypeOptions = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
+		readonly string[] uTypeOptions = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
 
 		Entry nameEntry;
 		Entry orgEntry;
@@ -91,19 +91,15 @@ namespace EIMA
 				VerticalOptions = LayoutOptions.End
 			};
 			putExistingData ();
-			this.Content = new StackLayout
-			{
-				Children = 
-				{
-					header,
-					nameEntry,
-					unitEntry,
-					orgEntry,
-					statusEntry,
-					picker,
-					update
-				}
-			};
+			var stackLayout = new StackLayout ();
+			stackLayout.Children.Add (header);
+			stackLayout.Children.Add (nameEntry);
+			stackLayout.Children.Add (unitEntry);
+			stackLayout.Children.Add (orgEntry);
+			stackLayout.Children.Add (statusEntry);
+			stackLayout.Children.Add (picker);
+			stackLayout.Children.Add (update);
+			Content = stackLayout;
 
 			Title = "User Profile";
 			Icon = "UserProfile.png";

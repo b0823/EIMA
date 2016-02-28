@@ -5,7 +5,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Plugin.Geolocator;
 using TK.CustomMap;
-using TK.CustomMap.MapModel;
 
 namespace EIMA
 {

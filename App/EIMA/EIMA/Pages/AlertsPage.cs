@@ -22,7 +22,7 @@ namespace EIMA
 			//Should use the above references to create a new content page and navigate to it with a text box and a send, 
 			//need to figure out specifics still.
 
-			Button button = new Button
+			var button = new Button
 			{
 				Text = "+",
 				Font = Font.SystemFontOfSize(NamedSize.Large),
@@ -54,14 +54,10 @@ namespace EIMA
 			};
 
 
-			this.Content = new StackLayout
-			{
-				Children = 
-				{
-					listView,
-					button
-				}
-			};
+			var stackLayout = new StackLayout ();
+			stackLayout.Children.Add (listView);
+			stackLayout.Children.Add (button);
+			Content = stackLayout;
 		}
 	}
 	

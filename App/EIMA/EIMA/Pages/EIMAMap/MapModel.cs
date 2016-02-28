@@ -9,9 +9,9 @@ using TK.CustomMap.Api.OSM;
 using TK.CustomMap.Overlays;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
-using EIMA;
+using TK.CustomMap;
 
-namespace TK.CustomMap.MapModel
+namespace EIMA
 {
 	public class MapModel : INotifyPropertyChanged
 	{

@@ -7,7 +7,7 @@ namespace EIMA
 	{
 		public LoginPage ()
 		{
-			Label header = new Label
+			var header = new Label
 			{
 				Text = "EIMA",
 				FontSize = 50,
@@ -15,7 +15,7 @@ namespace EIMA
 				HorizontalOptions = LayoutOptions.Center
 			};
 
-			Label subheader = new Label
+			var subheader = new Label
 			{
 				Text = "Emergency Incident Management Application",
 				FontSize = 16,
@@ -29,14 +29,14 @@ namespace EIMA
 				IsPassword = true
 			};
 
-			Button loginButton = new Button
+			var loginButton = new Button
 			{
 				Text = "Login",
 				BorderWidth = 1,
 				HorizontalOptions = LayoutOptions.Center,
 			};
 
-			Button standAloneButton = new Button
+			var standAloneButton = new Button
 			{
 				Text = "Standalone",
 				BorderWidth = 1,
@@ -52,21 +52,17 @@ namespace EIMA
 			};
 
 
-			this.Padding = new Thickness(10, Device.OnPlatform(20, 0, 0), 10, 5);
+			Padding = new Thickness (10, Device.OnPlatform (20, 0, 0), 10, 5);
 
 			// Build the page.
-			this.Content = new StackLayout
-			{
-				Children = 
-				{
-					header,
-					subheader,
-					usernameEntry,
-					passwordEntry,
-					loginButton,
-					standAloneButton
-				}
-			};
+			var stackLayout = new StackLayout ();
+			stackLayout.Children.Add (header);
+			stackLayout.Children.Add (subheader);
+			stackLayout.Children.Add (usernameEntry);
+			stackLayout.Children.Add (passwordEntry);
+			stackLayout.Children.Add (loginButton);
+			stackLayout.Children.Add (standAloneButton);
+			Content = stackLayout;
 		}
 		async void OnLoginButtonClicked(object sender, EventArgs e)
 		{

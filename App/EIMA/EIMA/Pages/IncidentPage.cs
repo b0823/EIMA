@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace EIMA
 {
@@ -7,7 +6,7 @@ namespace EIMA
 	{
 		public IncidentPage ()
 		{			
-			Label header = new Label
+			var header = new Label
 			{
 				Text = "Join/Create Incident",
 				FontSize = 40,
@@ -20,7 +19,7 @@ namespace EIMA
 				VerticalOptions = LayoutOptions.Center
 			};
 
-			Button joinInc = new Button
+			var joinInc = new Button
 			{
 				Text = "Join Incident",
 				BorderWidth = 1,
@@ -28,11 +27,9 @@ namespace EIMA
 				VerticalOptions = LayoutOptions.Start
 			};
 
-			joinInc.Clicked += (sender, e) => {
-				DisplayAlert("Warning","This is yet to be implemented","Acknowledge");
-			};
+			joinInc.Clicked += (sender, e) => DisplayAlert ("Warning", "This is yet to be implemented", "Acknowledge");
 
-			Button createIncidentButton = new Button
+			var createIncidentButton = new Button
 			{
 				Text = "Create Incident",
 				BorderWidth = 1,
@@ -40,20 +37,14 @@ namespace EIMA
 				VerticalOptions = LayoutOptions.CenterAndExpand
 			};
 
-			createIncidentButton.Clicked += (sender, e) => {
-				DisplayAlert("Warning","This is yet to be implemented","Acknowledge");
-			};
+			createIncidentButton.Clicked += (sender, e) => DisplayAlert ("Warning", "This is yet to be implemented", "Acknowledge");
 
-			this.Content = new StackLayout
-			{
-				Children = 
-				{
-					header,
-					incId,
-					joinInc,
-					createIncidentButton
-				}
-			};
+			var stackLayout = new StackLayout ();
+			stackLayout.Children.Add (header);
+			stackLayout.Children.Add (incId);
+			stackLayout.Children.Add (joinInc);
+			stackLayout.Children.Add (createIncidentButton);
+			Content = stackLayout;
 		}
 
 	}
