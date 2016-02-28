@@ -1,4 +1,6 @@
 ﻿{
+  "secret":"",
+  "username":"",
   "settings": {
       "updateSpeed":"1 Minute",
 	  "filter":{"Fire":true,"Police":true, "Hazmat":true,"EMS":true,"Triage":true,"Rescue":true,"Command Post":true,"Other":true},

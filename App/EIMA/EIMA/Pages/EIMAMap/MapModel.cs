@@ -206,6 +206,36 @@ namespace TK.CustomMap.MapModel
 								Color = Color.FromRgba(100, 0, 0, 80)
 							};
 							this._circles.Add(circle);
+
+							//polygon testing
+//							List<Position> polyPoints = new List<Position>();
+//
+//							polyPoints.Add(new Position(position.Latitude+.005,position.Longitude+.005));
+//							polyPoints.Add(new Position(position.Latitude+.005,position.Longitude-.005));
+//							polyPoints.Add(new Position(position.Latitude-.005,position.Longitude-.005));
+//							polyPoints.Add(new Position(position.Latitude-.005,position.Longitude+.005));
+//
+//							var poly = new TKPolygon{
+//								Coordinates = polyPoints,
+//								Color = Color.FromRgba(0, 0, 100, 80),
+//								StrokeWidth = 2f
+//
+//							};
+
+//							var poly = new TKPolygon 
+//							{
+//								StrokeColor = Color.Green,
+//								StrokeWidth = 2f,
+//								Color = Color.Red,
+//								Coordinates = new List<Position>(new Position[] 
+//									{
+//										new Position(40.716901, -74.055969),
+//										new Position(40.699878, -73.986296),
+//										new Position(40.636811, -74.076240)
+//									})
+//							};
+
+//							this._polygons.Add(poly);
 						}
 
 					});
@@ -338,9 +368,13 @@ namespace TK.CustomMap.MapModel
 						{
 							var eimaPin = this.SelectedPin as EIMAPin;
 							if (eimaPin != null)
-							{
-								AddToMapPage editPage = new AddToMapPage(eimaPin,true,this);
-								await Application.Current.MainPage.Navigation.PushModalAsync(editPage);
+							{		
+								if(eimaPin.IsDraggable){
+									AddToMapPage editPage = new AddToMapPage(eimaPin,true,this);
+									await Application.Current.MainPage.Navigation.PushModalAsync(editPage);
+								} else {
+									await Application.Current.MainPage.DisplayAlert("Cannot Modify Information","Asset is a user","OK");
+								}
 							}
 						}
 					});
@@ -379,6 +413,7 @@ namespace TK.CustomMap.MapModel
 		{
 			this._pins = new ObservableCollection<TKCustomMapPin>();
 			this._circles = new ObservableCollection<TKCircle>();
+			this._polygons = new ObservableCollection<TKPolygon>();
 			 
 		}
 
