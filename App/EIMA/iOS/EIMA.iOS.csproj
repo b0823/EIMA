@@ -168,25 +168,6 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.0.1.6505\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.0.1.6505\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <ItemGroup>
-    <BundleResource Include="Resources\Images.xcassets\cancel.png" />
-    <BundleResource Include="Resources\Images.xcassets\check.png" />
-    <BundleResource Include="Resources\Images.xcassets\checked.png" />
-    <BundleResource Include="Resources\Images.xcassets\Filter.png" />
-    <BundleResource Include="Resources\Images.xcassets\Help.png" />
-    <BundleResource Include="Resources\Images.xcassets\icon.png" />
-    <BundleResource Include="Resources\Images.xcassets\icon2.png" />
-    <BundleResource Include="Resources\Images.xcassets\Logout.png" />
-    <BundleResource Include="Resources\Images.xcassets\Map.png" />
-    <BundleResource Include="Resources\Images.xcassets\MapChange.png" />
-    <BundleResource Include="Resources\Images.xcassets\Plus.png" />
-    <BundleResource Include="Resources\Images.xcassets\Police.png" />
-    <BundleResource Include="Resources\Images.xcassets\Refresh.png" />
-    <BundleResource Include="Resources\Images.xcassets\settings.png" />
-    <BundleResource Include="Resources\Images.xcassets\SettingsIcon.png" />
-    <BundleResource Include="Resources\Images.xcassets\unchecked.png" />
-    <BundleResource Include="Resources\Images.xcassets\UserProfile.png" />
-    <BundleResource Include="Resources\Images.xcassets\Admin.png" />
-    <BundleResource Include="Resources\Images.xcassets\Alerts.png" />
     <BundleResource Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-40.png" />
     <BundleResource Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-40%402x.png" />
     <BundleResource Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-40%403x.png" />
@@ -207,5 +188,27 @@
     <BundleResource Include="Resources\Images.xcassets\AppIcons.appiconset\Icon%402x.png" />
     <BundleResource Include="Resources\Images.xcassets\AppIcons.appiconset\iTunesArtwork.png" />
     <BundleResource Include="Resources\Images.xcassets\AppIcons.appiconset\iTunesArtwork%402x.png" />
+    <BundleResource Include="Resources\Admin.png" />
+    <BundleResource Include="Resources\Alerts.png" />
+    <BundleResource Include="Resources\cancel.png" />
+    <BundleResource Include="Resources\check.png" />
+    <BundleResource Include="Resources\checked.png" />
+    <BundleResource Include="Resources\Filter.png" />
+    <BundleResource Include="Resources\Help.png" />
+    <BundleResource Include="Resources\icon.png" />
+    <BundleResource Include="Resources\icon2.png" />
+    <BundleResource Include="Resources\Logout.png" />
+    <BundleResource Include="Resources\Map.png" />
+    <BundleResource Include="Resources\MapChange.png" />
+    <BundleResource Include="Resources\Plus.png" />
+    <BundleResource Include="Resources\Police.png" />
+    <BundleResource Include="Resources\Refresh.png" />
+    <BundleResource Include="Resources\settings.png" />
+    <BundleResource Include="Resources\SettingsIcon.png" />
+    <BundleResource Include="Resources\unchecked.png" />
+    <BundleResource Include="Resources\UserProfile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Images.xcassets\EIMA.imageset\" />
   </ItemGroup>
 </Project>

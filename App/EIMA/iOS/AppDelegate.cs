@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
+﻿using Foundation;
+using TK.CustomMap.iOSUnified;
 using UIKit;
 
 namespace EIMA.iOS
@@ -14,6 +11,9 @@ namespace EIMA.iOS
 		{
 			global::Xamarin.Forms.Forms.Init ();
 			global::Xamarin.FormsMaps.Init();
+
+			TKCustomMapRenderer.InitMapRenderer();
+			NativePlacesApi.Init();
 
 			LoadApplication (new App ());
 
