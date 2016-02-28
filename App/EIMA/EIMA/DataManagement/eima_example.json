@@ -5,9 +5,8 @@ This allows a flexible solution to data management. Administration would be an a
 listing names/privledges levels etc.
 
 {
-  "uName":"Not sure how This should be structured yet.",
-  "secret":"Using OAuth?",
-
+  "uName":"dytpdcar5",
+  "secret":"ASDF98AS9D0FJXKLVUD9F0IKFDGJD",
   "settings": {
       "updateSpeed":"30",
 	  "filterSettings":{"fire":true,"hazmat":false,"hazmat":false,"triage":false},

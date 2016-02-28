@@ -1,129 +1,90 @@
-﻿using System;
-
-using Xamarin.Forms;
-using System.ComponentModel;
+﻿using Xamarin.Forms;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Collections;
-using System.IO;
+using TK.CustomMap.MapModel;
 
 namespace EIMA
 {
-	/**
-	 * Totally Changed this from the old sample, it was inflexible and 
-	 * couldn't easily fit our needs, I need to make this page look nicer (If anyone wants to work with this feel free)
-	 * still however it has the same functionality and it's much simpler code wise.
-	 */
+	
 	public class FilterPage : ContentPage
 	{
 
 		private List<FilterObject> listData;
-		private List<CustomSwitch> switchList;
-		private StackLayout myLayout;
+		private readonly List<SwitchCell> switchList;
+		private MapModel myModel;
 
-		public FilterPage(List<FilterObject> inputData){
+		public FilterPage(List<FilterObject> inputData, MapModel mapModel){
+			myModel = mapModel;
 			listData = inputData;
 			this.Title = "Filter";
-			switchList = new List<CustomSwitch>();
-			init ();
+			switchList = new List<SwitchCell>();
+			buildUI ();
 		}
 
-		public void init(){
+		void switchedCell(object sender, ToggledEventArgs e){
+			var switchSent = (SwitchCell)sender;
 
-			// Build the page.
-			myLayout = new StackLayout {
-				VerticalOptions = LayoutOptions.StartAndExpand,
-				Spacing = 5,
-				Children = {
-				}
-			};
+			DataManager data = new DataManager ();
+			data.setFilter (switchSent.Text, e.Value);
+			myModel.filterPins (switchSent.Text, e.Value);	
+		}
 
+		void tappedCell (object sender, System.EventArgs ea)
+		{
+			var switchSent = (SwitchCell)sender;
+			switchSent.On = !switchSent.On;
 
-			foreach (FilterObject element in listData) {
+			DataManager data = new DataManager ();
+			data.setFilter (switchSent.Text, switchSent.On);
+			myModel.filterPins (switchSent.Text, switchSent.On);
+		}
 
-				var declaredSwitch = new CustomSwitch () {
-					VerticalOptions = LayoutOptions.Start,
-					HorizontalOptions = LayoutOptions.Center,
-					name = element.Name
+		public void buildUI(){
+			var section = new TableSection ("Assets");
+			foreach(FilterObject element in listData){
+				var cell = new SwitchCell {
+					Text = element.Name, 
+					On = element.IsSelected,
 				};
-				declaredSwitch.IsToggled = element.IsSelected;
-				declaredSwitch.Toggled += toggledSwitch;
+				cell.OnChanged += switchedCell;
+				cell.Tapped += tappedCell;
 
-				switchList.Add (declaredSwitch);
-				var textSwitch = new StackLayout () {
-					HorizontalOptions = LayoutOptions.EndAndExpand,
-					VerticalOptions = LayoutOptions.StartAndExpand,
-					Orientation = StackOrientation.Horizontal,
-					Children = {
-						new Label () {
-							VerticalOptions = LayoutOptions.Start,
-							HorizontalOptions = LayoutOptions.Start,
-							Text = element.Name,
-							FontSize = 28
-						},
-						declaredSwitch
-					}
-				};
-				myLayout.Children.Add (textSwitch);
+				section.Add (cell);
+				switchList.Add (cell);
 			}
+			TableRoot root = new TableRoot ();
+			root.Add (section);
+			TableView tableView = new TableView (root);
 
-			this.Content = myLayout;
-
+			this.Content = tableView;
 
 			ToolbarItem allOnTBI = null;
 			ToolbarItem allOffTBI = null;
 
-			allOnTBI = new ToolbarItem ("All", "", () => {allOn();}, 0, 0);
-			allOffTBI = new ToolbarItem ("None", "", () => {allOff();}, 0, 0);
+			allOnTBI = new ToolbarItem ("All", "", allOn, 0, 0);
+			allOffTBI = new ToolbarItem ("None", "", allOff, 0, 0);
 
 			//Change map type
 			ToolbarItems.Add (allOnTBI);
 			ToolbarItems.Add (allOffTBI);
 		}
-
-		void toggledSwitch(object sender, ToggledEventArgs e)
-		{
-//			this.Title
-			var switchSent = (CustomSwitch)sender;
-
-			DataManager data = new DataManager ();
-			data.setFilter (switchSent.name, e.Value);
-
-		}
-
+			
 		public void allOn(){
-			DataManager data = new DataManager ();
-			foreach (CustomSwitch element in switchList) {
-				element.IsToggled = true;
-				data.setFilter (element.name, true);
+			foreach (SwitchCell element in switchList) {
+				element.On = true;
 			}
 		}
 		public void allOff(){
-			DataManager data = new DataManager ();
-			foreach (CustomSwitch element in switchList) {
-				element.IsToggled = false;
-				data.setFilter (element.name, false);
+			foreach (SwitchCell element in switchList) {
+				element.On = false;
 			}
 		}
 	}
+
 	//Util Classes to extend switch, and hold data
 	public class FilterObject
 	{
 		public string Name { get; set ; }
 		public bool IsSelected { get; set ; }
-		public FilterObject ()
-		{
-		}
 	}
-
-	public class CustomSwitch : Switch
-	{
-		public string name;
-		public CustomSwitch ()
-		{
-		}
-	}
-
 }
 

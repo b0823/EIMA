@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Plugin.Geolocator;
-using XLabs.Forms.Controls;
 using TK.CustomMap;
 using TK.CustomMap.MapModel;
 
@@ -16,7 +15,7 @@ namespace EIMA
 		TKCustomMap map;
 		Position defaultLocation = new Position (39.8, -84.08711552);
 		FilterPage multiPage; //Used in Filter function
-		private string[] uTypeOptions = {"Fire","Police", "Biohazard","EMS","Triage","Rescue","Command Post","Other"};
+		private string[] uTypeOptions = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
 		private List<EIMAPin> assetList;
 		private MapModel myModel;
 
@@ -108,10 +107,11 @@ namespace EIMA
 			DataManager data = new DataManager ();
 			assetList = data.getAssets ();
 
-
-			//Doing this for now until we define a more clean add pin function.
-			foreach(EIMAPin element in assetList){
+			foreach(EIMAPin element in assetList){ //add pins
 				myModel.addPin (element);
+			}
+			foreach (string element in uTypeOptions) { //set filter settings
+				myModel.filterPins (element, data.getFilter (element));
 			}
 
 		}
@@ -126,7 +126,7 @@ namespace EIMA
 			}
 
 			if (multiPage == null)
-				multiPage = new FilterPage (items);
+				multiPage = new FilterPage (items, myModel);
 			//multiPage.SelectAll ();//Just for proof of concept. Would need to make this data driven.
 			await Navigation.PushAsync (multiPage);
 

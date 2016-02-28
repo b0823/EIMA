@@ -1,11 +1,5 @@
 using System;
 using Xamarin.Forms;
-using System.Collections.Generic;
-
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace EIMA
 {
@@ -77,6 +71,21 @@ namespace EIMA
 
 		}
 
+		public async void deleteData(){
+			var action = await DisplayActionSheet(
+				"Are you sure you want to delete existing data?",
+				"",
+				null,
+				"Yes",
+				"Cancel"
+			);
+
+			if(action == "Yes"){
+				DataManager data = new DataManager();
+				data.resetStandAlone();
+			}
+		}
+
 		public void standAloneUI(){
 
 			Button network = new Button
@@ -94,10 +103,7 @@ namespace EIMA
 				VerticalOptions = LayoutOptions.Center
 			};
 
-			reset.Clicked += (sender, e) => {
-				DataManager data = new DataManager();
-				data.resetStandAlone();
-			};
+			reset.Clicked += (sender, e) => deleteData ();
 
 			this.Content = new StackLayout
 			{

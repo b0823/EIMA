@@ -2,10 +2,8 @@
 using Xamarin.Forms;
 using TK.CustomMap;
 using TK.CustomMap.MapModel;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace EIMA
 {
@@ -13,19 +11,26 @@ namespace EIMA
 	{
 		
 		public bool hasCanceled { get; set; }
+		private bool editAsset; //true when editing, false when adding
 
-		private string unitNum { get; set; }
-		private string unitName { get; set; }
-		private string organziation { get; set; }
-		private string currentStatus { get; set; }
-		private string unitType { get; set; }
-
-		private string[] unitTypes = {"Fire","Police", "Biohazard","EMS","Triage","Rescue","Command Post","Other"};
+		private string[] unitTypes = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
 
 		private EIMAPin toEdit;
 		private ObservableCollection<TKCustomMapPin> pinList;
+		private MapModel myModel;
+
+		public AddToMapPage (EIMAPin pin, bool editPin, MapModel model)
+		{
+			myModel = model;
+			editAsset = editPin;
+			hasCanceled = true;
+			toEdit = pin;
+			buildUI ();
+
+		}
 
 		public async void goBack(){
+			myModel.saveData ();
 			await Navigation.PopModalAsync();
 		}
 
@@ -33,40 +38,44 @@ namespace EIMA
 			onCancel ();
 			return true;
 		}
-		public AddToMapPage (EIMAPin pin, ObservableCollection<TKCustomMapPin> _pins)
-		{
-			hasCanceled = true;
-			toEdit = pin;
-			pinList = _pins;
-			buildUI ();
-								
-		}
-
 		/**
-		 * Call for when add asset is hit. Check data define the pin (toEdit) and do input checking 
-		 * on data that is entered, which is stored in fields :
-		 * Data will be set to
-				unitName
-				unitType 
-				organziation 
-				unitNum 
-				currentStatus
+		 * 	Data stored in pin (toEdit) values now. Doesnt make sense to replicate that.
 			See https://github.com/TorbenK/TK.CustomMap/wiki/TKCustomMapPin
 		 */
 		public void addPin(){
+			toEdit.ShowCallout = true;
+			toEdit.IsVisible = true;
 			hasCanceled = false;
-			toEdit.Title = "" + currentStatus + " " + organziation;
+
+			if (!editAsset) {
+				toEdit.unique = randomString (16);
+				toEdit.IsDraggable = true;
+			}
+
+			toEdit.Title = toEdit.name + " (" + toEdit.organization + "," + toEdit.unit + ")";
+			toEdit.Subtitle = "Status:" + toEdit.status;
+		
+
+			toEdit.Image = toEdit.unitType.Replace(" ","") + ".png" ; //only works with police atm
+
+			myModel.addPin (toEdit);
+//			if (!this.editAsset) {
+//				pinList.Remove (toEdit);
+//				myModel.addPin (toEdit);
+//			}
+
+
 			goBack();
 		}
 
 		/*
-		 * When cancel or back is hit. 
+		 * When cancel or back is 		hit. 
 		 */
 		public void onCancel(){
-			pinList.Remove (toEdit);
+			if(!this.editAsset)
+				pinList.Remove (toEdit);
 			goBack ();
 		}
-
 		/**
 		 * Builds interface for data, sets calls for addPin and onCancel. 
 		 */
@@ -115,7 +124,9 @@ namespace EIMA
 				Text = "Add To Map",
 				BorderWidth = 1
 			};
-
+			if (this.editAsset) {
+				addToMap.Text = "Confirm Edit";
+			}
 
 			Button cancel = new Button
 			{
@@ -139,13 +150,25 @@ namespace EIMA
 					DisplayAlert("You must select a Unit Type!","","OK");
 					return;
 				}
-				unitName = unitNameEntry.Text;
-				unitType = unitTypes[unitPicker.SelectedIndex];
-				organziation = orgEntry.Text;
-				unitNum = unitEntry.Text;
-				currentStatus = statusEntry.Text;
+
+				toEdit.name = unitNameEntry.Text;
+				toEdit.unitType = unitTypes[unitPicker.SelectedIndex];
+				toEdit.organization = orgEntry.Text;
+				toEdit.unit = unitEntry.Text;
+				toEdit.status = statusEntry.Text;
+
+				myModel.removePin(toEdit);
 				addPin();
 			};
+
+			if (editAsset) {
+				unitNameEntry.Text = toEdit.name;
+				unitPicker.SelectedIndex = Array.IndexOf (unitTypes, toEdit.unitType);
+
+				if(toEdit.organization != null || toEdit.organization != "") orgEntry.Text = toEdit.organization;
+				if(toEdit.unit != null || toEdit.unit != "") unitEntry.Text = toEdit.unit;
+				if(toEdit.status != null || toEdit.status != "") statusEntry.Text = toEdit.status;
+			}
 
 			this.Content = new StackLayout
 			{
@@ -153,10 +176,10 @@ namespace EIMA
 				{
 					header,
 					unitNameEntry,
+					unitPicker,
 					unitEntry,
 					orgEntry,
 					statusEntry,
-					unitPicker,
 					new StackLayout()
 					{
 						HorizontalOptions = LayoutOptions.Center,
@@ -169,7 +192,13 @@ namespace EIMA
 				}
 			};
 		}
-			
+		public static string randomString(int length)
+		{
+			const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+			var random = new Random();
+			return new string(Enumerable.Repeat(chars, length)
+				.Select(s => s[random.Next(s.Length)]).ToArray());
+		}	
 	}
 }
 

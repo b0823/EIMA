@@ -15,6 +15,8 @@ namespace EIMA
 			new DataManager().dataStartup();
 			GmsPlace.Init("AIzaSyDGcU1OGx-VAwqn4s5fCgcmHkJJeWQjTJs"); //debug/testing key
 			GmsDirection.Init("AIzaSyDGcU1OGx-VAwqn4s5fCgcmHkJJeWQjTJs"); //debug/testing key
+
+
 			MainPage = new NavigationPage(new LoginPage ());
 		}
 		public static Page GetMainPage ()

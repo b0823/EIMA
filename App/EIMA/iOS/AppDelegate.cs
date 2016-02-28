@@ -1,6 +1,9 @@
 ﻿using Foundation;
 using TK.CustomMap.iOSUnified;
 using UIKit;
+using Xamarin;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 
 namespace EIMA.iOS
 {
@@ -9,13 +12,11 @@ namespace EIMA.iOS
 	{
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
-			global::Xamarin.Forms.Forms.Init ();
-			global::Xamarin.FormsMaps.Init();
-
+			Forms.Init();
 			TKCustomMapRenderer.InitMapRenderer();
 			NativePlacesApi.Init();
-
-			LoadApplication (new App ());
+			FormsMaps.Init();
+			LoadApplication(new App());
 
 			return base.FinishedLaunching (app, options);
 		}
