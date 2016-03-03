@@ -34,7 +34,7 @@ namespace EIMA
 			Icon = "Alerts.png";
 
 			var listView = new ListView();
-			listView.ItemsSource = new string[]{
+			listView.ItemsSource = new []{
 				"Message From X",
 				"Message From Y",
 				"Message From Z",

@@ -175,15 +175,17 @@ namespace EIMA
 			{
 				return new Command<Position>(async position => 
 					{
-						var action = await Application.Current.MainPage.DisplayActionSheet(
-							"",
-							"Cancel",
-							null,
-							"Create Asset",
-							"Add Danger Zone"
-						);
+						const string createDangerZone = "Create Danger Zone";
+						const string createAsset = "Create Asset";
+						var action = await Application.Current.MainPage.DisplayActionSheet (
+						              "",
+						              "Cancel",
+						              null,
+						              createAsset,
+						              createDangerZone
+					              );
 						
-						if (action == "Create Asset")
+						if (action == createAsset)
 						{
 							
 							var pin = new EIMAPin
@@ -195,12 +197,12 @@ namespace EIMA
 							await Application.Current.MainPage.Navigation.PushModalAsync(aToMapPage);
 
 						}
-						else if(action == "Add Danger Zone")
+						else if(action == createDangerZone)
 						{
 							var circle = new TKCircle 
 							{
 								Center = position,
-								Radius = 10000, 
+								Radius = 1000, 
 								//It's meters, tested w/ https://www.freemaptools.com/radius-around-point.htm
 								//If we're adding options to a menu before probably use miles and you'll have to convert.
 								Color = Color.FromRgba(100, 0, 0, 80)

@@ -14,9 +14,9 @@ namespace EIMA
 		TKCustomMap map;
 		Position defaultLocation = new Position (39.8, -84.08711552);
 		FilterPage multiPage; //Used in Filter function
-		private string[] uTypeOptions = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
-		private List<EIMAPin> assetList;
-		private MapModel myModel;
+		string[] uTypeOptions = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
+		List<EIMAPin> assetList;
+		MapModel myModel;
 
 		public MapPage ()
 		{		
@@ -31,11 +31,11 @@ namespace EIMA
 			 */
 			var data = new DataManager();
 
-			ToolbarItem filterTBI = null;
-			ToolbarItem mapTypeTBI = null;
+			ToolbarItem filterTBI;
+			ToolbarItem mapTypeTBI;
 
-			filterTBI = new ToolbarItem ("", "", () => {filterMapItems();}, 0, 0);
-			mapTypeTBI = new ToolbarItem ("", "", () => {changeMap();}, 0, 0);
+			filterTBI = new ToolbarItem ("", "", filterMapItems, 0, 0);
+			mapTypeTBI = new ToolbarItem ("", "", changeMap, 0, 0);
 
 			filterTBI.Icon = "Filter.png";
 			mapTypeTBI.Icon = "MapChange.png";
@@ -44,8 +44,8 @@ namespace EIMA
 			ToolbarItems.Add (mapTypeTBI);
 
 			if (data.isNetworked()) {
-				ToolbarItem refreshTBI = null;			
-				refreshTBI = new ToolbarItem ("", "", () => {refreshData();}, 0, 0);
+				ToolbarItem refreshTBI;			
+				refreshTBI = new ToolbarItem ("", "", refreshData, 0, 0);
 				refreshTBI.Icon = "Refresh.png";
 				ToolbarItems.Add (refreshTBI);
 			}
@@ -56,7 +56,7 @@ namespace EIMA
 		}
 
 		public void startAndBindMap(){
-			DataManager data = new DataManager ();
+			var data = new DataManager ();
 			var miles = data.getSpan ();
 			Position locationDef = data.getCenter ();
 			MapSpan ms;
@@ -98,12 +98,12 @@ namespace EIMA
 
 			myModel = new MapModel ();
 
-			this.BindingContext = myModel;
+			BindingContext = myModel;
 
 		}
 
 		public void loadData(){
-			DataManager data = new DataManager ();
+			var data = new DataManager ();
 			assetList = data.getAssets ();
 
 			foreach(EIMAPin element in assetList){ //add pins
@@ -145,7 +145,7 @@ namespace EIMA
 
 		public async void getAndSetLocation(double miles){
 			var position = await CrossGeolocator.Current.GetPositionAsync ();
-			Position parsed = new Position(position.Latitude,position.Longitude);
+			var parsed = new Position(position.Latitude,position.Longitude);
 			var curLoc = MapSpan.FromCenterAndRadius(parsed, Distance.FromMiles(miles));
 			map.MoveToRegion(curLoc);
 		}
