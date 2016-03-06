@@ -9,7 +9,7 @@ namespace EIMA
 			var header = new Label
 			{
 				Text = "Join/Create Incident",
-				FontSize = 40,
+				FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
 				FontAttributes = FontAttributes.Bold,
 				HorizontalOptions = LayoutOptions.Center
 			};

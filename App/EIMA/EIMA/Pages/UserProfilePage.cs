@@ -49,7 +49,7 @@ namespace EIMA
 			Label header = new Label
 			{
 				Text = "EIMA",
-				FontSize = 50,
+				FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
 				FontAttributes = FontAttributes.Bold,
 				HorizontalOptions = LayoutOptions.Center
 			};

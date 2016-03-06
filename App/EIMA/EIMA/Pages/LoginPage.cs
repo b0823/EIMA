@@ -10,7 +10,7 @@ namespace EIMA
 			var header = new Label
 			{
 				Text = "EIMA",
-				FontSize = 50,
+				FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)) + 20,
 				FontAttributes = FontAttributes.Bold,
 				HorizontalOptions = LayoutOptions.Center
 			};
@@ -18,22 +18,26 @@ namespace EIMA
 			var subheader = new Label
 			{
 				Text = "Emergency Incident Management Application",
-				FontSize = 16,
+				FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)),
 				FontAttributes = FontAttributes.Bold,
 				HorizontalOptions = LayoutOptions.Center
 			};
-			var usernameEntry = new Entry {Placeholder = "Username"};
+			var usernameEntry = new Entry {
+				Placeholder = "Username",
+				VerticalOptions = LayoutOptions.Center
+			};
 
 			var passwordEntry = new Entry {
 				Placeholder = "Password",
-				IsPassword = true
+				IsPassword = true,
+				VerticalOptions = LayoutOptions.Center
 			};
 
 			var loginButton = new Button
 			{
 				Text = "Login",
 				BorderWidth = 1,
-				HorizontalOptions = LayoutOptions.Center,
+				HorizontalOptions = LayoutOptions.Center
 			};
 
 			var standAloneButton = new Button

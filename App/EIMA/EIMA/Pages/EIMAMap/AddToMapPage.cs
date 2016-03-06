@@ -72,7 +72,7 @@ namespace EIMA
 			var header = new Label
 			{
 				Text = "Specify Asset",
-				FontSize = 50,
+				FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
 				FontAttributes = FontAttributes.Bold,
 				HorizontalOptions = LayoutOptions.Center
 			};

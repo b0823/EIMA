@@ -20,7 +20,7 @@ namespace EIMA
 			settings = new Label
 			{
 				Text = "Settings",
-				FontSize = 50,
+				FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
 				FontAttributes = FontAttributes.Bold,
 				HorizontalOptions = LayoutOptions.Center
 			};
@@ -42,7 +42,7 @@ namespace EIMA
 			var upSpeed = new Label
 			{
 				Text = "Update Speed",
-				FontSize = 16,
+				FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
 				FontAttributes = FontAttributes.Bold,
 			};
 
