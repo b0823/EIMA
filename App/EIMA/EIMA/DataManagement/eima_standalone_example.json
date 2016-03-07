@@ -1,0 +1,40 @@
+﻿This is not being actively used.
+
+This is an example file of what an eima data file might look like in a real situation
+This allows a flexible solution to data management. Administration would be an another object within this
+listing names/privledges levels etc.
+
+{
+  "username":"",
+  "secret":"",
+  "settings": {
+      "updateSpeed":"1 Minute",
+	  "filter":{"Fire":true,"Police":false, "Hazmat":true,"EMS":true,"Triage":true,"Rescue":false,"Command Post":true,"Other":true},
+	  "lastKnown":{"lat":-84.32,"long":39.43}
+  },
+  "userProfile": {
+	"name":"",
+	"unit":"",
+	"organization":"",
+	"status":"",
+	"unitType":""
+  },
+  "incident": {
+    "role": "user",
+    "incidentID":"null",
+    "incidentType": "standalone",
+	"meta-inf":{
+		"center":{"lat":-84.32,"long":39.43},
+		"span":"15"
+	 },
+    "mapData":[
+		{"type":"Rescue","username":"" ,location:{"lat":39.78, "long":-84.76},"status":"50% capacity","unit":"28","organization":"FEMA","isUser":false,"name":"FEMA Rescue", "creator":""},
+		{"type":"Command Post","username":"" ,location:{"lat":39.754, "long":-84.12},"status":"Well supplied","unit":"1","organization":"FEMA","isUser":false,"name":"FEMA Command", "creator":""}
+    ],	
+	"userList"[
+	],
+    "alerts":[
+    ]
+
+  }
+}

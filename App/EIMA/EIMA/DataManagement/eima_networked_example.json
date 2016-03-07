@@ -1,0 +1,41 @@
+﻿{
+  "username":"daytonPDCar32",
+  "secret":"ABCDEFGHIJKLMNOPQRSTUVWXYZ1235798765432",
+  "settings": {
+      "updateSpeed":"1 Minute",
+	  "filter":{"Fire":true,"Police":false, "Hazmat":true,"EMS":true,"Triage":true,"Rescue":true,"Command Post":true,"Other":true},
+	  "lastKnown":{"lat":-84.32,"long":39.43}
+  },
+  "userProfile": {
+	"name":"Officer james Z",
+    "unit":"731",
+    "organization":"Dayton PD",
+    "status":"Directing Traffic",
+    "unitType":"Police"
+  },
+  "incident": {
+    "role": "admin",
+    "incidentID":"138513",
+    "incidentType": "networked",
+	"meta-inf":{
+		"center":{"lat":-84.32,"long":39.43},
+		"span":"15"
+	 },
+    "mapData":[
+		{"type":"Police","username":"daytonPdCar5" ,location:{"lat":39.4353, "long":-84.14546},"status":"healthy","unit":"23","organization":"Dayton PD","isUser":true,"name":"Officer Jim Ballt"},
+		{"type":"Hazmat","username":"femaHazmat38" ,location:{"lat":39.9874, "long":-84.545445},"status":"safe","unit":"22","organization":"FEMA","isUser":true,"name":"FEMA HAZMAT TEAM 22"},
+		{"type":"Command Post","username":"femaCandC45" ,location:{"lat":39.456, "long":-84.123},"status":"thinly spread.","unit":"1","organization":"FEMA","isUser":true,"name":"FEMA ICS Command"},
+		{"type":"Rescue","username":"" ,location:{"lat":39.78, "long":-84.76},"status":"50% capacity","unit":"","organization":"FEMA","isUser":false,"name":"FEMA Rescue", "creator":"femaCandC45"}
+    ],
+	"userList"[
+		{"username":"daytonPdCar5","name":"Officer Jim Ballt","unit":"23","unitType":"Police","organization":"Dayton PD","status":"healthy","level":"user"},
+		{"username":"femaHazmat38","name":"FEMA HAZMAT TEAM 22","unit":"22","unitType":"Hazmat","organization":"FEMA","status":"safe","level":"user"},
+		{"username":"femaCandC45","name":"FEMA ICS Command","unit":"1","unitType":"Command Post","organization":"FEMA","status":"thinly spread.","level":"mapeditor"}
+	],
+    "alerts":[
+		{"alertType":"Danger", "sender":"SYSTEM", "message":"Within .2 Miles of Hazard Spill", "timestamp":1445634538},
+		{"alertType":"Message", "sender":"Fire Command", "message":"Fire is now East of 675",  "timestamp":1445634799},
+		{"alertType":"Message", "sender":"Triage Command", "message":"Triage Stations Overloaded, Go to Dayton Childrens", "timestamp":1445636653}
+    ]
+  }
+}
