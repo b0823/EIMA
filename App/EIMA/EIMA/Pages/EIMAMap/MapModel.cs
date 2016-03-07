@@ -175,17 +175,15 @@ namespace EIMA
 			{
 				return new Command<Position>(async position => 
 					{
-						const string createDangerZone = "Create Danger Zone";
-						const string createAsset = "Create Asset";
-						var action = await Application.Current.MainPage.DisplayActionSheet (
-						              "",
-						              "Cancel",
-						              null,
-						              createAsset,
-						              createDangerZone
-					              );
+						var action = await Application.Current.MainPage.DisplayActionSheet(
+							"",
+							"Cancel",
+							null,
+							"Create Asset",
+							"Add Danger Zone"
+						);
 						
-						if (action == createAsset)
+						if (action == "Create Asset")
 						{
 							
 							var pin = new EIMAPin
@@ -197,32 +195,160 @@ namespace EIMA
 							await Application.Current.MainPage.Navigation.PushModalAsync(aToMapPage);
 
 						}
-						else if(action == createDangerZone)
-						{
-							var circle = new TKCircle 
-							{
-								Center = position,
-								Radius = 1000, 
-								//It's meters, tested w/ https://www.freemaptools.com/radius-around-point.htm
-								//If we're adding options to a menu before probably use miles and you'll have to convert.
-								Color = Color.FromRgba(100, 0, 0, 80)
-							};
-							this._circles.Add(circle);
 
-							//polygon testing
-//							List<Position> polyPoints = new List<Position>();
-//
-//							polyPoints.Add(new Position(position.Latitude+.005,position.Longitude+.005));
-//							polyPoints.Add(new Position(position.Latitude+.005,position.Longitude-.005));
-//							polyPoints.Add(new Position(position.Latitude-.005,position.Longitude-.005));
-//							polyPoints.Add(new Position(position.Latitude-.005,position.Longitude+.005));
-//
-//							var poly = new TKPolygon{
-//								Coordinates = polyPoints,
-//								Color = Color.FromRgba(0, 0, 100, 80),
-//								StrokeWidth = 2f
-//
-//							};
+
+
+
+						else if(action == "Add Danger Zone")
+						{
+
+							var action2 = await Application.Current.MainPage.DisplayActionSheet(
+								"",
+								"Cancel",
+								null,
+								"Circular Area",
+								"Custom Area"
+							);
+							if (action2 == "Circular Area")
+							{
+
+								var text = new Label { 
+									Text = "Enter radius of the area (in miles)",
+									FontSize = 20
+								};
+								var radiusInMiles = new Entry { 
+									Placeholder = "Radius",
+									Keyboard = Keyboard.Numeric,
+									VerticalOptions = LayoutOptions.Center
+								};
+								var EnterButton = new Button { 
+									Text = "Enter",
+									VerticalOptions = LayoutOptions.Center
+								};
+								var CancelButton = new Button { 
+									Text = "Cancel",
+									VerticalOptions = LayoutOptions.Center
+								};
+								var stackLayout = new StackLayout (){
+									VerticalOptions = LayoutOptions.Center
+								};
+								stackLayout.Children.Add (text);
+								stackLayout.Children.Add (radiusInMiles);
+								var stackLayout2 = new StackLayout ();
+								stackLayout2.HorizontalOptions = LayoutOptions.Center;
+								stackLayout2.Orientation = StackOrientation.Horizontal;
+								stackLayout2.Children.Add (EnterButton);
+								stackLayout2.Children.Add (CancelButton);
+								stackLayout.Children.Add (stackLayout2);
+								ContentPage radius = new ContentPage(){
+									Content = stackLayout
+								};
+								await App.Current.MainPage.Navigation.PushModalAsync(radius);
+								EnterButton.Clicked += (sender, e) => makeCircularArea (position, radiusInMiles);
+								CancelButton.Clicked += (sender, e) => goBack ();
+							}
+
+							else if (action2 == "Custom Area"){
+								var stackLayout = new StackLayout (){
+									VerticalOptions = LayoutOptions.Center
+								};
+								var text1 = new Label { 
+									Text = "Vertex 1",
+									FontSize = 16
+								};
+								var v1distancenorth = new Entry { 
+									Placeholder = "Distance North (miles)",
+									Keyboard = Keyboard.Numeric,
+									VerticalOptions = LayoutOptions.Center
+								};
+								var v1distancewest = new Entry { 
+									Placeholder = "Distance West (miles)",
+									Keyboard = Keyboard.Numeric,
+									VerticalOptions = LayoutOptions.Center
+								};
+								var text2 = new Label { 
+									Text = "Vertex 2",
+									FontSize = 16
+								};
+								var v2distancenorth = new Entry { 
+									Placeholder = "Distance North (miles)",
+									Keyboard = Keyboard.Numeric,
+									VerticalOptions = LayoutOptions.Center
+								};
+								var v2distanceeast = new Entry { 
+									Placeholder = "Distance East (miles)",
+									Keyboard = Keyboard.Numeric,
+									VerticalOptions = LayoutOptions.Center
+								};
+								var text3 = new Label { 
+									Text = "Vertex 3",
+									FontSize = 16
+								};
+								var v3distancesouth = new Entry { 
+									Placeholder = "Distance South (miles)",
+									Keyboard = Keyboard.Numeric,
+									VerticalOptions = LayoutOptions.Center
+								};
+								var v3distancewest = new Entry { 
+									Placeholder = "Distance West (miles)",
+									Keyboard = Keyboard.Numeric,
+									VerticalOptions = LayoutOptions.Center
+								};
+								var text4 = new Label { 
+									Text = "Vertex 4",
+									FontSize = 16
+								};
+								var v4distancesouth = new Entry { 
+									Placeholder = "Distance South (miles)",
+									Keyboard = Keyboard.Numeric,
+									VerticalOptions = LayoutOptions.Center
+								};
+								var v4distanceeast = new Entry { 
+									Placeholder = "Distance East (miles)",
+									Keyboard = Keyboard.Numeric,
+									VerticalOptions = LayoutOptions.Center
+								};
+								var EnterButton = new Button { 
+									Text = "Enter",
+									VerticalOptions = LayoutOptions.Center
+								};
+								var CancelButton = new Button { 
+									Text = "Cancel",
+									VerticalOptions = LayoutOptions.Center
+								};
+								stackLayout.Children.Add (text1);
+								stackLayout.Children.Add (v1distancenorth);
+								stackLayout.Children.Add (v1distancewest);
+								stackLayout.Children.Add (text2);
+								stackLayout.Children.Add (v2distancenorth);
+								stackLayout.Children.Add (v2distanceeast);
+								stackLayout.Children.Add (text3);
+								stackLayout.Children.Add (v3distancesouth);
+								stackLayout.Children.Add (v3distancewest);
+								stackLayout.Children.Add (text4);
+								stackLayout.Children.Add (v4distancesouth);
+								stackLayout.Children.Add (v4distanceeast);
+
+								var stackLayout2 = new StackLayout ();
+								stackLayout2.HorizontalOptions = LayoutOptions.Center;
+								stackLayout2.Orientation = StackOrientation.Horizontal;
+								stackLayout2.Children.Add (EnterButton);
+								stackLayout2.Children.Add (CancelButton);
+								stackLayout.Children.Add (stackLayout2);
+
+
+								ContentPage radius = new ContentPage(){
+									Content = stackLayout
+								};
+								await App.Current.MainPage.Navigation.PushModalAsync(radius);
+
+
+								EnterButton.Clicked += (sender, e) => makeCustomArea (position, 
+									v1distancenorth, v1distancewest, v2distancenorth, v2distanceeast,
+									v3distancesouth, v3distancewest, v4distancesouth, v4distanceeast);
+								
+								CancelButton.Clicked += (sender, e) => goBack ();
+
 
 //							var poly = new TKPolygon 
 //							{
@@ -237,11 +363,57 @@ namespace EIMA
 //									})
 //							};
 
-//							this._polygons.Add(poly);
-						}
+				//	this._polygons.Add(poly);
+							}
 
+						}
 					});
 			}
+		}
+
+		public void makeCircularArea(Position position, Entry radiusInMiles){
+			var circle = new TKCircle 
+			{
+				Center = position,
+				Radius = Convert.ToDouble(radiusInMiles.Text) * 1609.344, // Convert miles to meters
+				Color = Color.FromRgba(100, 0, 0, 80)
+			};
+			this._circles.Add(circle);
+			goBack ();
+		}
+
+
+		public void makeCustomArea(Position position, Entry v1distancenorth, 
+			Entry v1distancewest, Entry v2distancenorth, Entry v2distanceeast,
+			Entry v3distancesouth, Entry v3distancewest, Entry v4distancesouth, 
+			Entry v4distanceeast){
+
+			List<Position> polyPoints = new List<Position>();
+
+			// 0.014493 and 0.018315 are used to convert miles to degrees of latitude and longitude
+			polyPoints.Add(new Position(position.Latitude+Convert.ToDouble(v2distancenorth.Text)*0.014493,
+				position.Longitude+Convert.ToDouble(v2distanceeast.Text)*0.018315)); //top right
+			polyPoints.Add(new Position(position.Latitude+Convert.ToDouble(v1distancenorth.Text)*0.014493,
+				position.Longitude-Convert.ToDouble(v1distancewest.Text)*0.018315)); //top left
+			polyPoints.Add(new Position(position.Latitude-Convert.ToDouble(v3distancesouth.Text)*0.014493,
+				position.Longitude-Convert.ToDouble(v3distancewest.Text)*0.018315)); //bottom left
+			polyPoints.Add(new Position(position.Latitude-Convert.ToDouble(v4distancesouth.Text)*0.014493,
+				position.Longitude+Convert.ToDouble(v4distanceeast.Text)*0.018315)); //bottom right
+
+			var poly = new TKPolygon{
+				Coordinates = polyPoints,
+				Color = Color.FromRgba(100, 0, 0, 80),
+				StrokeWidth = 2f
+			};
+			this._polygons.Add(poly);
+			goBack ();
+		}
+
+
+
+
+		public async void goBack(){
+			await App.Current.MainPage.Navigation.PopModalAsync();
 		}
 
 		/// <summary>
