@@ -1,9 +1,3 @@
-﻿This is not being actively used.
-
-This is an example file of what an eima data file might look like in a real situation
-This allows a flexible solution to data management. Administration would be an another object within this
-listing names/privledges levels etc.
-
 {
   "username":"",
   "secret":"",
