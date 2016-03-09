@@ -15,7 +15,6 @@ namespace EIMA
 		static string eimaInitalizeDataPath;
 		static JObject dataStore;
 
-		
 		public DataManager ()
 		{
 			if (Device.OS == TargetPlatform.Android) {
@@ -208,8 +207,33 @@ namespace EIMA
 		}
 		///Danger Zones
 		public void setDangerZonePoly(List<EIMAPolygon> list){
-				
+			JArray assets = new JArray ();
+
+			foreach (EIMAPolygon asset in list) {
+				JObject toAdd = new JObject ();
+
+				JArray coords = new JArray ();
+				foreach (Position pos in asset.Coordinates) {
+					JObject locObject = new JObject ();
+
+					locObject ["lat"] = pos.Latitude;
+					locObject ["long"] = pos.Longitude;
+
+					coords.Add (locObject);
+				}
+				toAdd ["coords"] = coords;
+				toAdd ["type"] = asset.type;
+				toAdd ["note"] = asset.note;
+				toAdd ["username"] = asset.username;
+
+				assets.Add (toAdd);
+			}
+
+			dataStore["incident"] ["mapPolygonDangerZones"] = assets;
+			rewriteObjectInMemory();
+
 		}
+
 		public void setDangerZoneCircle(List<EIMACircle> list){
 			
 			JArray assets = new JArray ();
@@ -255,6 +279,25 @@ namespace EIMA
 
 			JArray assets = (JArray)dataStore ["incident"] ["mapPolygonDangerZones"];
 
+			Application.Current.MainPage.DisplayAlert("he", assets.ToString() + " ", "can");
+
+
+			foreach (JObject item in assets.Children()) {
+				var poly = new EIMAPolygon();
+				poly.Color = CONSTANTS.colorOptions [Array.IndexOf (CONSTANTS.dzTypeOptions,(string) item ["type"])];
+				poly.note = (string)item ["note"];
+				poly.username = (string)item ["username"];
+				poly.type = (string)item ["type"];
+
+				var cordList = new List<Position> ();
+
+				JArray coords = (JArray)item ["coords"];
+				foreach (JObject pos in coords.Children()) {
+					cordList.Add(new Position((double)pos["long"],(double)pos["lat"]));
+				}
+				poly.Coordinates = cordList;
+				toRet.Add (poly);
+			}
 
 			return toRet;
 		}

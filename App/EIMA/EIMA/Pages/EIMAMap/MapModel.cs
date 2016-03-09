@@ -189,7 +189,7 @@ namespace EIMA
 							"Cancel",
 							null,
 							"Create Asset",
-							"Add Danger Zone"
+							"Create Danger Zone"
 						);
 						
 						if (action == "Create Asset")
@@ -208,7 +208,7 @@ namespace EIMA
 
 
 
-						else if(action == "Add Danger Zone")
+						else if(action == "Create Danger Zone")
 						{
 
 							var action2 = await Application.Current.MainPage.DisplayActionSheet(
@@ -386,6 +386,7 @@ namespace EIMA
 						_pins.Remove (element);
 					}
 					customAreaPolyPins = null;
+					saveData ();
 
 				} else if (action == "Add Another Point") {
 					return;
@@ -718,6 +719,10 @@ namespace EIMA
 
 		public void addCircle(EIMACircle circle){
 			this._circles.Add (circle);
+		}
+
+		public void addPoly(EIMAPolygon mypoly){
+			this._polygons.Add (mypoly);
 		}
 
 		public void addPin(EIMAPin pin){

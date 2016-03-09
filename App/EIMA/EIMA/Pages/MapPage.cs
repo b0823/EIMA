@@ -16,7 +16,6 @@ namespace EIMA
 		FilterPage multiPage; //Used in Filter function
 
 
-		List<EIMAPin> assetList;
 		MapModel myModel;
 
 		public MapPage ()
@@ -105,16 +104,21 @@ namespace EIMA
 
 		public void loadData(){
 			var data = new DataManager ();
-			assetList = data.getAssets ();
+			var assetList = data.getAssets ();
 			var circleList = data.getCircleDangerZone ();
+			var polyList = data.getPolyDangerZone ();
 
 
-			foreach(EIMAPin element in assetList){ //add pins
+			foreach(EIMAPin element in assetList){
 				myModel.addPin (element);
 			}
-			foreach(EIMACircle element in circleList){ //add circles
+			foreach(EIMACircle element in circleList){ 
 				myModel.addCircle (element);
 			}
+			foreach(EIMAPolygon element in polyList){ 
+				myModel.addPoly (element);
+			}
+
 			foreach (string element in CONSTANTS.uTypeOptions) { //set filter settings
 				myModel.filterPins (element, data.getFilter (element));
 			}
