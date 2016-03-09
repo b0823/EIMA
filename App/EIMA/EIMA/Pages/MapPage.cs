@@ -15,8 +15,6 @@ namespace EIMA
 		Position defaultLocation = new Position (39.8, -84.08711552);
 		FilterPage multiPage; //Used in Filter function
 
-		string[] uTypeOptions = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
-		string[] dzTypeOptions = {"Fire","Biohazard", "Gas","Weather","Other"};
 
 		List<EIMAPin> assetList;
 		MapModel myModel;
@@ -117,11 +115,11 @@ namespace EIMA
 			foreach(EIMACircle element in circleList){ //add circles
 				myModel.addCircle (element);
 			}
-			foreach (string element in uTypeOptions) { //set filter settings
+			foreach (string element in CONSTANTS.uTypeOptions) { //set filter settings
 				myModel.filterPins (element, data.getFilter (element));
 			}
 
-			foreach (string element in dzTypeOptions) { //set filter settings
+			foreach (string element in CONSTANTS.dzTypeOptions) { //set filter settings
 				myModel.filterDZ (element, data.getFilterDZ (element));
 			}
 
@@ -132,12 +130,12 @@ namespace EIMA
 			var dzItems = new List<FilterObject>();
 			var data = new DataManager ();
 
-			foreach (string element in uTypeOptions)
+			foreach (string element in CONSTANTS.uTypeOptions)
 			{
 				items.Add(new FilterObject{Name = element, IsSelected = data.getFilter(element)});
 			}
 
-			foreach (string element in dzTypeOptions)
+			foreach (string element in CONSTANTS.dzTypeOptions)
 			{
 				dzItems.Add(new FilterObject{Name = element, IsSelected = data.getFilterDZ(element)});
 			}

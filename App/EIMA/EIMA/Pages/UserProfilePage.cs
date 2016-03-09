@@ -6,8 +6,6 @@ namespace EIMA
 
 	public class UserProfilePage : ContentPage
 	{
-		readonly string[] uTypeOptions = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
-
 		Entry nameEntry;
 		Entry orgEntry;
 		Entry unitEntry;
@@ -29,7 +27,7 @@ namespace EIMA
 				if(statusEntry.Text != ""){data.setStatus(statusEntry.Text);}
 
 				if(picker.SelectedIndex > -1){
-					data.setUnitType(uTypeOptions[picker.SelectedIndex]);
+					data.setUnitType(CONSTANTS.uTypeOptions[picker.SelectedIndex]);
 				}
 				DisplayAlert("Saved!","Your Information Was Saved","OK");
 			};

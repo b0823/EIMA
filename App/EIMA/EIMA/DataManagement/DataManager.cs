@@ -6,7 +6,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using TK.CustomMap.Overlays;
 
 namespace EIMA
 {
@@ -15,17 +14,15 @@ namespace EIMA
 		const string eimaDataPath = "eima.jcfg";
 		static string eimaInitalizeDataPath;
 		static JObject dataStore;
-		string[] uTypeOptions = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
-		string[] dzTypeOptions = {"Fire","Biohazard", "Gas","Weather","Other"};
-		Color[] colorOptions = { Color.FromRgba(100, 0, 0, 80),Color.FromRgba(88, 96, 0, 80)
-			,Color.FromRgba(6, 96, 0, 80),Color.FromRgba(0, 77, 96, 80),Color.FromRgba(190,190,190, 80)};
+
 		
 		public DataManager ()
 		{
-			if(Device.OS == TargetPlatform.Android)
+			if (Device.OS == TargetPlatform.Android) {
 				eimaInitalizeDataPath = "EIMA.Droid.DataManagement.eima_default.json";
-			else if(Device.OS == TargetPlatform.iOS)
+			} else if (Device.OS == TargetPlatform.iOS) {
 				eimaInitalizeDataPath = "EIMA.iOS.DataManagement.eima_default.json";
+			}
 		}
 
 		public void resetStandAlone(){
@@ -242,7 +239,7 @@ namespace EIMA
 
 			foreach (JObject item in assets.Children()) {
 				var circle = new EIMACircle();
-				circle.Color = colorOptions [Array.IndexOf (dzTypeOptions,(string) item ["type"])];
+				circle.Color = CONSTANTS.colorOptions [Array.IndexOf (CONSTANTS.dzTypeOptions,(string) item ["type"])];
 				circle.note = (string)item ["note"];
 				circle.username = (string)item ["username"];
 				circle.Radius = (double)item ["radius"];

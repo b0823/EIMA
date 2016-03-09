@@ -33,6 +33,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\EIMAPolygon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\AddAssetToMapPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\AddDZToMapPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CONSTANTS.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)DataManagement\eima_networked_example.json" />

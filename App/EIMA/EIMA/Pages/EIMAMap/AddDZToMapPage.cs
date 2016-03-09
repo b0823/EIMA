@@ -8,9 +8,6 @@ namespace EIMA
 	public class AddDZToMapPage : ContentPage
 	{
 		MapModel myModel;
-		string[] dzTypeOptions = {"Fire","Biohazard", "Gas","Weather","Other"};
-		Color[] colorOptions = {Color.FromRgba(100, 0, 0, 80),Color.FromRgba(88, 96, 0, 80)
-			,Color.FromRgba(6, 96, 0, 80),Color.FromRgba(0, 77, 96, 80),Color.FromRgba(190,190,190, 80)};
 
 		public AddDZToMapPage (MapModel model, Position position) 
 		{
@@ -47,7 +44,7 @@ namespace EIMA
 			};
 
 
-			foreach (string s in dzTypeOptions) {
+			foreach (string s in CONSTANTS.dzTypeOptions) {
 				typePicker.Items.Add (s);
 			}
 
@@ -84,7 +81,7 @@ namespace EIMA
 					DisplayAlert("Must Select a Danger Zone Type","","Cancel");
 					return;
 				}
-				makeCircularArea (position, radiusInMiles.Text, info.Text, dzTypeOptions[typePicker.SelectedIndex], colorOptions[typePicker.SelectedIndex]);
+				makeCircularArea (position, radiusInMiles.Text, info.Text, CONSTANTS.dzTypeOptions[typePicker.SelectedIndex], CONSTANTS.colorOptions[typePicker.SelectedIndex]);
 			};
 			CancelButton.Clicked += (sender, e) => goBack ();
 		}
