@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using TK.CustomMap.Overlays;
 
 namespace EIMA
 {
@@ -14,7 +15,11 @@ namespace EIMA
 		const string eimaDataPath = "eima.jcfg";
 		static string eimaInitalizeDataPath;
 		static JObject dataStore;
-	
+		string[] uTypeOptions = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
+		string[] dzTypeOptions = {"Fire","Biohazard", "Gas","Weather","Other"};
+		Color[] colorOptions = { Color.FromRgba(100, 0, 0, 80),Color.FromRgba(88, 96, 0, 80)
+			,Color.FromRgba(6, 96, 0, 80),Color.FromRgba(0, 77, 96, 80),Color.FromRgba(190,190,190, 80)};
+		
 		public DataManager ()
 		{
 			if(Device.OS == TargetPlatform.Android)
@@ -206,17 +211,55 @@ namespace EIMA
 		}
 		///Danger Zones
 		public void setDangerZonePoly(List<EIMAPolygon> list){
-
+				
 		}
 		public void setDangerZoneCircle(List<EIMACircle> list){
-		
+			
+			JArray assets = new JArray ();
+			foreach (EIMACircle asset in list) {
+				JObject toAdd = new JObject ();
+
+				JObject locObject = new JObject ();
+				locObject ["lat"] = asset.Center.Latitude;
+				locObject ["long"] = asset.Center.Longitude;
+			
+				toAdd ["location"] = locObject;
+				toAdd ["type"] = asset.type;
+				toAdd ["note"] = asset.note;
+				toAdd ["username"] = asset.username;
+				toAdd ["radius"] = asset.Radius;
+
+				assets.Add (toAdd);
+			}
+			dataStore["incident"] ["mapCircleDangerZones"] = assets;
+			rewriteObjectInMemory();
 		}
 
 		public List<EIMACircle> getCircleDangerZone(){
-			return new List<EIMACircle> ();
+			var toRet =  new List<EIMACircle> ();
+
+			JArray assets = (JArray)dataStore ["incident"] ["mapCircleDangerZones"];
+
+			foreach (JObject item in assets.Children()) {
+				var circle = new EIMACircle();
+				circle.Color = colorOptions [Array.IndexOf (dzTypeOptions,(string) item ["type"])];
+				circle.note = (string)item ["note"];
+				circle.username = (string)item ["username"];
+				circle.Radius = (double)item ["radius"];
+				circle.type = (string)item ["type"];
+				circle.Center = new Position ((double)item["location"]["lat"],(double)item["location"]["long"]);
+
+				toRet.Add (circle);
+			}
+			return toRet;
 		}
 		public List<EIMAPolygon> getPolyDangerZone(){
-			return new List<EIMAPolygon> ();
+			var toRet = new List<EIMAPolygon> ();
+
+			JArray assets = (JArray)dataStore ["incident"] ["mapPolygonDangerZones"];
+
+
+			return toRet;
 		}
 
 		/*

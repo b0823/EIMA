@@ -24,7 +24,9 @@
 		},
 		"mapAssets":[
 		],
-		"mapDangerZones":[
+		"mapCircleDangerZones":[
+		],		
+		"mapPolygonDangerZones":[
 		],
 		"userList":[
 		],

@@ -108,12 +108,21 @@ namespace EIMA
 		public void loadData(){
 			var data = new DataManager ();
 			assetList = data.getAssets ();
+			var circleList = data.getCircleDangerZone ();
+
 
 			foreach(EIMAPin element in assetList){ //add pins
 				myModel.addPin (element);
 			}
+			foreach(EIMACircle element in circleList){ //add circles
+				myModel.addCircle (element);
+			}
 			foreach (string element in uTypeOptions) { //set filter settings
 				myModel.filterPins (element, data.getFilter (element));
+			}
+
+			foreach (string element in dzTypeOptions) { //set filter settings
+				myModel.filterDZ (element, data.getFilterDZ (element));
 			}
 
 		}
