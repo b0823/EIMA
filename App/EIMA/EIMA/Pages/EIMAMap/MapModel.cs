@@ -26,6 +26,11 @@ namespace EIMA
 		private ObservableCollection<TKPolyline> _lines;
 		private ObservableCollection<TKPolygon> _polygons;
 
+		//Used in creation of polygons.
+		private List<Position> customAreaPolyPoints;
+		private List<TKCustomMapPin> customAreaPolyPins;
+		private bool creatingPolygon = false;
+
 		//Backup list as polygons/circles have no visible field
 		private List<TKCircle> invisCircles;
 		private List<TKPolygon> invisPoly;
@@ -220,6 +225,24 @@ namespace EIMA
 							}
 
 							else if (action2 == "Custom Area"){
+								var tapMapPos = await Application.Current.MainPage.DisplayActionSheet(
+									"Tap the first three points of shape",
+									"Cancel",
+									null,
+									"Start"
+								);
+								
+								if(tapMapPos == "Cancel"){
+									return;
+								} else {
+									customAreaPolyPoints = new List<Position>();
+									customAreaPolyPins = new List<TKCustomMapPin>();
+									creatingPolygon = true;
+									return;
+								}
+							}
+							else if (action2 == "Custom Area1"){
+								
 								var stackLayout = new StackLayout (){
 									VerticalOptions = LayoutOptions.Center
 								};
@@ -311,7 +334,7 @@ namespace EIMA
 								ContentPage radius = new ContentPage(){
 									Content = stackLayout
 								};
-								await App.Current.MainPage.Navigation.PushModalAsync(radius);
+								await Application.Current.MainPage.Navigation.PushModalAsync(radius);
 
 
 								EnterButton.Clicked += (sender, e) => makeCustomArea (position, 
@@ -326,7 +349,56 @@ namespace EIMA
 			}
 		}
 			
+		public async void proceduralPolygonCall(Position pos){
+			TKCustomMapPin addedPin = new TKCustomMapPin ();
+			addedPin.IsDraggable = false;
+			addedPin.IsVisible = true;
+			addedPin.Image = "dot.png";
+			addedPin.Position = pos;
+			addedPin.ShowCallout = false;
 
+			_pins.Add (addedPin);
+			customAreaPolyPins.Add (addedPin);
+			customAreaPolyPoints.Add (pos);
+
+			if (customAreaPolyPoints.Count < 3) {
+				return;
+			} else {
+				var action = await Application.Current.MainPage.DisplayActionSheet(							
+					"Point Added",
+					null,
+					null,
+					"Create Custom Area",
+					"Add Another Point",
+					"Delete Area");
+				if (action == "Create Custom Area") {
+					EIMAPolygon result = new EIMAPolygon ();
+					result.Color = CONSTANTS.colorOptions [1];
+					result.Coordinates = customAreaPolyPoints;
+					result.username = "";
+					result.type = "Fire";
+					result.note = "The Fire Rises";
+					_polygons.Add (result);
+
+					creatingPolygon = false;
+					customAreaPolyPoints = null;
+					foreach (TKCustomMapPin element in customAreaPolyPins) {
+						_pins.Remove (element);
+					}
+					customAreaPolyPins = null;
+
+				} else if (action == "Add Another Point") {
+					return;
+				} else if (action == "Delete Area") {
+					creatingPolygon = false;
+					customAreaPolyPoints = null;
+					foreach (TKCustomMapPin element in customAreaPolyPins) {
+						_pins.Remove (element);
+					}
+					customAreaPolyPins = null;
+				}
+			}
+		}
 
 		public void makeCustomArea(Position position, Entry v1distancenorth, 
 			Entry v1distancewest, Entry v2distancenorth, Entry v2distanceeast,
@@ -354,6 +426,53 @@ namespace EIMA
 			goBack ();
 		}
 
+		//I have absoloutely ZERO idea how this works. It involves geometry Math. 
+		//http://stackoverflow.com/questions/4287780/detecting-whether-a-gps-coordinate-falls-within-a-polygon-on-a-map 
+		//First answer. was converted to C# from yava
+
+		static bool coordinate_is_inside_polygon(
+			double latitude, double longitude, 
+			List<Double> lat_array, List<Double> long_array)
+		{       
+			int i;
+			double angle=0;
+			double point1_lat;
+			double point1_long;
+			double point2_lat;
+			double point2_long;
+			int n = lat_array.Count;
+
+			for (i=0;i<n;i++) {
+				point1_lat = lat_array[i] - latitude;
+				point1_long = long_array[i] - longitude;
+				point2_lat = lat_array[(i+1)%n] - latitude; 
+				//you should have paid more attention in high school geometry.
+				point2_long = long_array[(i+1)%n] - longitude;
+				angle += Angle2D(point1_lat,point1_long,point2_lat,point2_long);
+			}
+
+			if (Math.Abs(angle) < Math.PI)
+				return false;
+			else
+				return true;
+		}
+
+		//util function for point in polygon.
+		static double Angle2D(double y1, double x1, double y2, double x2)
+		{
+			double dtheta,theta1,theta2;
+
+			theta1 = Math.Atan2(y1,x1);
+			theta2 = Math.Atan2(y2,x2);
+			dtheta = theta2 - theta1;
+			while (dtheta > Math.PI)
+				dtheta -= (2*Math.PI);
+			while (dtheta < -Math.PI)
+				dtheta += (2*Math.PI);
+
+			return(dtheta);
+		}
+
 
 		public async void goBack(){
 			await Application.Current.MainPage.Navigation.PopModalAsync();
@@ -369,6 +488,10 @@ namespace EIMA
 				
 				return new Command<Position>(async (positon) =>
 					{
+						if(creatingPolygon){
+							proceduralPolygonCall(positon);
+							return;
+						}
 						this.SelectedPin = null;
 
 						// Determine if a point was inside a circle
@@ -397,10 +520,44 @@ namespace EIMA
 								}	
 							}
 						}
+						foreach(TKPolygon element in _polygons){
+
+							var myObject = element as EIMAPolygon;
+
+							if (myObject != null)
+							{
+								var latList = new List<Double>();
+								var longList = new List<Double>();
+
+								foreach(Position point in element.Coordinates){
+									latList.Add(point.Latitude);
+									longList.Add(point.Longitude);
+								}
+
+								if(coordinate_is_inside_polygon(positon.Latitude, positon.Longitude, latList, longList)){
+									var action = await Application.Current.MainPage.DisplayActionSheet(							
+										"Danger : " + myObject.type + " (" + myObject.note + ")",
+										null,
+										null,
+										"OK",
+										"Delete Danger Zone");
+									if(action == "OK"){
+										return;
+									} else if(action == "Delete Danger Zone"){
+										_polygons.Remove(element);
+										saveData();
+										return;
+									} else {
+										return;
+									}
+								}
+							}
+						}
 							
 					});
 			}
 		}
+
 		/// <summary>
 		/// Command when a place got selected
 		/// </summary>

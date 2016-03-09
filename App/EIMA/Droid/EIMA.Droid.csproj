@@ -200,6 +200,7 @@
     <AndroidResource Include="Resources\drawable\Rescue.png" />
     <AndroidResource Include="Resources\drawable\Triage.png" />
     <AndroidResource Include="Resources\drawable\CommandPost.png" />
+    <AndroidResource Include="Resources\drawable\dot.png" />
   </ItemGroup>
   <Import Project="..\EIMA\EIMA.projitems" Label="Shared" Condition="Exists('..\EIMA\EIMA.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
