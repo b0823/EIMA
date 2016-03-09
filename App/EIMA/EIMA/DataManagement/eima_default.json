@@ -4,6 +4,7 @@
 	"settings": {
 	  "updateSpeed":"1 Minute",
 	  "filter":{"Fire":true,"Police":true, "Hazmat":true,"EMS":true,"Triage":true,"Rescue":true,"Command Post":true,"Other":true},
+	  "filterDZ":{"Fire":true,"Biohazard":true, "Gas":true,"Weather":true,"Other":true},
 	  "lastKnown":{"lat":-84.32,"long":39.43}
 	},
 	"userProfile": {
@@ -25,7 +26,7 @@
 		],
 		"mapDangerZones":[
 		],
-		"userList"[
+		"userList":[
 		],
 		"alerts":[
 		]

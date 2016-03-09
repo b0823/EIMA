@@ -14,7 +14,10 @@ namespace EIMA
 		TKCustomMap map;
 		Position defaultLocation = new Position (39.8, -84.08711552);
 		FilterPage multiPage; //Used in Filter function
+
 		string[] uTypeOptions = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
+		string[] dzTypeOptions = {"Fire","Biohazard", "Gas","Weather","Other"};
+
 		List<EIMAPin> assetList;
 		MapModel myModel;
 
@@ -117,6 +120,7 @@ namespace EIMA
 
 		public async void filterMapItems(){
 			var items = new List<FilterObject>();
+			var dzItems = new List<FilterObject>();
 			var data = new DataManager ();
 
 			foreach (string element in uTypeOptions)
@@ -124,8 +128,12 @@ namespace EIMA
 				items.Add(new FilterObject{Name = element, IsSelected = data.getFilter(element)});
 			}
 
+			foreach (string element in dzTypeOptions)
+			{
+				dzItems.Add(new FilterObject{Name = element, IsSelected = data.getFilterDZ(element)});
+			}
 			if (multiPage == null)
-				multiPage = new FilterPage (items, myModel);
+				multiPage = new FilterPage (items, dzItems, myModel);
 			//multiPage.SelectAll ();//Just for proof of concept. Would need to make this data driven.
 			await Navigation.PushAsync (multiPage);
 

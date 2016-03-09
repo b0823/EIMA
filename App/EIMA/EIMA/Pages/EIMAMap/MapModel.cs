@@ -26,6 +26,10 @@ namespace EIMA
 		private ObservableCollection<TKPolyline> _lines;
 		private ObservableCollection<TKPolygon> _polygons;
 
+		//Backup list as polygons/circles have no visible field
+		private List<TKCircle> invisCircles;
+		private List<TKPolygon> invisPoly;
+
 		public TKTileUrlOptions TilesUrlOptions
 		{
 			get 
@@ -191,7 +195,7 @@ namespace EIMA
 								Position = position,
 							};						
 
-							AddToMapPage aToMapPage = new AddToMapPage(pin,false,this);//is false because this is a new pin.
+							AddAssetToMapPage aToMapPage = new AddAssetToMapPage(pin,false,this);//is false because this is a new pin.
 							await Application.Current.MainPage.Navigation.PushModalAsync(aToMapPage);
 
 						}
@@ -211,41 +215,8 @@ namespace EIMA
 							);
 							if (action2 == "Circular Area")
 							{
-
-								var text = new Label { 
-									Text = "Enter radius of the area (in miles)",
-									FontSize = 20
-								};
-								var radiusInMiles = new Entry { 
-									Placeholder = "Radius",
-									Keyboard = Keyboard.Numeric,
-									VerticalOptions = LayoutOptions.Center
-								};
-								var EnterButton = new Button { 
-									Text = "Enter",
-									VerticalOptions = LayoutOptions.Center
-								};
-								var CancelButton = new Button { 
-									Text = "Cancel",
-									VerticalOptions = LayoutOptions.Center
-								};
-								var stackLayout = new StackLayout (){
-									VerticalOptions = LayoutOptions.Center
-								};
-								stackLayout.Children.Add (text);
-								stackLayout.Children.Add (radiusInMiles);
-								var stackLayout2 = new StackLayout ();
-								stackLayout2.HorizontalOptions = LayoutOptions.Center;
-								stackLayout2.Orientation = StackOrientation.Horizontal;
-								stackLayout2.Children.Add (EnterButton);
-								stackLayout2.Children.Add (CancelButton);
-								stackLayout.Children.Add (stackLayout2);
-								ContentPage radius = new ContentPage(){
-									Content = stackLayout
-								};
-								await App.Current.MainPage.Navigation.PushModalAsync(radius);
-								EnterButton.Clicked += (sender, e) => makeCircularArea (position, radiusInMiles);
-								CancelButton.Clicked += (sender, e) => goBack ();
+								AddDZToMapPage aToMapPage = new AddDZToMapPage(this,position);
+								await Application.Current.MainPage.Navigation.PushModalAsync(aToMapPage);
 							}
 
 							else if (action2 == "Custom Area"){
@@ -348,39 +319,13 @@ namespace EIMA
 									v3distancesouth, v3distancewest, v4distancesouth, v4distanceeast);
 								
 								CancelButton.Clicked += (sender, e) => goBack ();
-
-
-//							var poly = new TKPolygon 
-//							{
-//								StrokeColor = Color.Green,
-//								StrokeWidth = 2f,
-//								Color = Color.Red,
-//								Coordinates = new List<Position>(new Position[] 
-//									{
-//										new Position(40.716901, -74.055969),
-//										new Position(40.699878, -73.986296),
-//										new Position(40.636811, -74.076240)
-//									})
-//							};
-
-				//	this._polygons.Add(poly);
 							}
 
 						}
 					});
 			}
 		}
-
-		public void makeCircularArea(Position position, Entry radiusInMiles){
-			var circle = new TKCircle 
-			{
-				Center = position,
-				Radius = Convert.ToDouble(radiusInMiles.Text) * 1609.344, // Convert miles to meters
-				Color = Color.FromRgba(100, 0, 0, 80)
-			};
-			this._circles.Add(circle);
-			goBack ();
-		}
+			
 
 
 		public void makeCustomArea(Position position, Entry v1distancenorth, 
@@ -410,10 +355,8 @@ namespace EIMA
 		}
 
 
-
-
 		public async void goBack(){
-			await App.Current.MainPage.Navigation.PopModalAsync();
+			await Application.Current.MainPage.Navigation.PopModalAsync();
 		}
 
 		/// <summary>
@@ -430,7 +373,13 @@ namespace EIMA
 						// Determine if a point was inside a circle
 						if ((from c in this._circles let distanceInMeters = c.Center.DistanceTo(positon) * 1000 where distanceInMeters <= c.Radius select c).Any())
 						{
-							Application.Current.MainPage.DisplayAlert("Circle tap", "Circle was tapped", "OK");
+//							var myObject = circle as EIMACircle;
+//
+//							if (myObject != null)
+//							{
+//								Application.Current.MainPage.DisplayAlert("Danger : " + myObject.type, myObject.note, "OK");
+//							}
+
 						}
 					});
 			}
@@ -544,7 +493,7 @@ namespace EIMA
 							if (eimaPin != null)
 							{		
 								if(eimaPin.IsDraggable){
-									AddToMapPage editPage = new AddToMapPage(eimaPin,true,this);
+									AddAssetToMapPage editPage = new AddAssetToMapPage(eimaPin,true,this);
 									await Application.Current.MainPage.Navigation.PushModalAsync(editPage);
 								} else {
 									await Application.Current.MainPage.DisplayAlert("Cannot Modify Information","Asset is a user","OK");
@@ -588,7 +537,13 @@ namespace EIMA
 			this._pins = new ObservableCollection<TKCustomMapPin>();
 			this._circles = new ObservableCollection<TKCircle>();
 			this._polygons = new ObservableCollection<TKPolygon>();
-			 
+
+			this.invisPoly = new List<TKPolygon> ();
+			this.invisCircles = new List<TKCircle> ();
+		}
+
+		public void addCircle(EIMACircle circle){
+			this._circles.Add (circle);
 		}
 
 		public void addPin(EIMAPin pin){
@@ -602,6 +557,8 @@ namespace EIMA
 		public void saveData(){
 			DataManager data = new DataManager();
 			data.setAssets(eimaPinsList());
+			data.setDangerZoneCircle(eimaCircles());
+			data.setDangerZonePoly(eimaPolygons());
 		}
 
 		public List<EIMAPin> eimaPinsList(){
@@ -617,6 +574,48 @@ namespace EIMA
 			return toReturn;
 		}
 
+		public List<EIMACircle> eimaCircles(){
+			List<EIMACircle> toReturn = new List<EIMACircle> ();
+			foreach (TKCircle element in this._circles) {
+
+				var eimaC = element as EIMACircle;
+				if (eimaC != null)
+				{
+					toReturn.Add (eimaC);
+				}
+			}
+			foreach (TKCircle element in invisCircles) {
+
+				var eimaC = element as EIMACircle;
+				if (eimaC != null)
+				{
+					toReturn.Add (eimaC);
+				}
+			}
+			return toReturn;
+		}
+
+		public List<EIMAPolygon> eimaPolygons(){
+			List<EIMAPolygon> toReturn = new List<EIMAPolygon> ();
+			foreach (TKPolygon element in this._polygons) {
+
+				var eimaPoly = element as EIMAPolygon;
+				if (eimaPoly != null)
+				{
+					toReturn.Add (eimaPoly);
+				}
+			}
+			foreach (TKPolygon element in invisPoly) {
+
+				var eimaPoly = element as EIMAPolygon;
+				if (eimaPoly != null)
+				{
+					toReturn.Add (eimaPoly);
+				}
+			}
+			return toReturn;
+		}
+
 		public void filterPins(string pinType,bool setting){
 			foreach(TKCustomMapPin element in _pins){
 				var eimaPin = element as EIMAPin;
@@ -626,6 +625,60 @@ namespace EIMA
 						eimaPin.IsVisible = setting;
 					}
 				}
+			}
+		}
+		public void filterDZ(string dzType,bool setting){
+
+			if (setting) {
+				foreach (TKPolygon element in invisPoly.ToList()) {
+					
+					var myObject = element as EIMAPolygon;
+					if (myObject != null) {
+						if (myObject.type == dzType) {
+							_polygons.Add (myObject);
+							invisPoly.Remove (myObject);
+						}
+					}
+
+				}
+				foreach (TKCircle element in invisCircles.ToList()) {
+
+					var myObject = element as EIMACircle;
+					if (myObject != null) {
+						if (myObject.type == dzType) {
+							_circles.Add (myObject);
+							invisCircles.Remove (myObject);
+						}
+					}
+
+				}
+			} else {
+			
+				foreach (TKPolygon element in _polygons.ToList()) {
+
+					var myObject = element as EIMAPolygon;
+					if (myObject != null)
+					{
+						if (myObject.type == dzType) {
+							invisPoly.Add (myObject);
+							_polygons.Remove (myObject);
+						}
+					}
+
+				}
+				foreach (TKCircle element in _circles.ToList()) {
+
+					var myObject = element as EIMACircle;
+					if (myObject != null)
+					{
+						if (myObject.type == dzType) {
+							invisCircles.Add (myObject);
+							_circles.Remove (myObject);
+						}
+					}
+
+				}
+			
 			}
 		}
 

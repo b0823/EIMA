@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EIMA
 {
-	public class AddToMapPage : ContentPage
+	public class AddAssetToMapPage : ContentPage
 	{
 		
 		public bool hasCanceled { get; set; }
@@ -15,7 +15,7 @@ namespace EIMA
 		EIMAPin toEdit;
 		MapModel myModel;
 
-		public AddToMapPage (EIMAPin pin, bool editPin, MapModel model)
+		public AddAssetToMapPage (EIMAPin pin, bool editPin, MapModel model)
 		{
 			myModel = model;
 			editAsset = editPin;
@@ -44,7 +44,7 @@ namespace EIMA
 			hasCanceled = false;
 
 			if (!editAsset) {
-				toEdit.unique = randomString (16);
+				toEdit.username = randomString (16);
 				toEdit.IsDraggable = true;
 			}
 

@@ -96,6 +96,18 @@ namespace EIMA
 		}
 
 
+		//DANGER ZONE FILTERS
+
+		public void setDZFilter(string filterName, bool value){
+			dataStore["settings"]["filterDZ"][filterName] = value;
+			rewriteObjectInMemory ();
+		}
+
+		public bool getFilterDZ(string filterName){
+			return (bool)dataStore["settings"]["filterDZ"][filterName];
+		}
+
+
 		//FILTER
 
 		public void setFilter(string filterName, bool value){
@@ -146,7 +158,7 @@ namespace EIMA
 				EIMAPin toAdd = new EIMAPin ();
 
 				toAdd.name = (string)item["name"];
-				toAdd.unique = (string)item["unique"];
+				toAdd.username = (string)item["username"];
 				toAdd.status = (string)item["status"];
 				toAdd.organization = (string)item["organization"];
 				toAdd.unit = (string)item ["unit"];
@@ -179,7 +191,7 @@ namespace EIMA
 				locObject ["long"] = asset.Position.Longitude;
 
 				toAdd ["type"] = asset.unitType;
-				toAdd ["unique"] = asset.unique;
+				toAdd ["username"] = asset.username;
 				toAdd ["name"] = asset.name;
 				toAdd ["unit"] = asset.unit;
 				toAdd ["status"] = asset.status;
@@ -192,7 +204,20 @@ namespace EIMA
 			dataStore["incident"] ["mapAssets"] = assets;
 			rewriteObjectInMemory();
 		}
-			
+		///Danger Zones
+		public void setDangerZonePoly(List<EIMAPolygon> list){
+
+		}
+		public void setDangerZoneCircle(List<EIMACircle> list){
+		
+		}
+
+		public List<EIMACircle> getCircleDangerZone(){
+			return new List<EIMACircle> ();
+		}
+		public List<EIMAPolygon> getPolyDangerZone(){
+			return new List<EIMAPolygon> ();
+		}
 
 		/*
 		 * Block of is functions Relating to states and user privledges.
