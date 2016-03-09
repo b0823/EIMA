@@ -366,21 +366,38 @@ namespace EIMA
 		{
 			get
 			{
-				return new Command<Position>((positon) =>
+				
+				return new Command<Position>(async (positon) =>
 					{
 						this.SelectedPin = null;
 
 						// Determine if a point was inside a circle
-						if ((from c in this._circles let distanceInMeters = c.Center.DistanceTo(positon) * 1000 where distanceInMeters <= c.Radius select c).Any())
-						{
-//							var myObject = circle as EIMACircle;
-//
-//							if (myObject != null)
-//							{
-//								Application.Current.MainPage.DisplayAlert("Danger : " + myObject.type, myObject.note, "OK");
-//							}
 
+						foreach(TKCircle element in _circles){
+							if(element.Center.DistanceTo(positon) * 1000 <= element.Radius){
+								var myObject = element as EIMACircle;
+	
+								if (myObject != null)
+								{
+									var action = await Application.Current.MainPage.DisplayActionSheet(							
+										"Danger : " + myObject.type + " (" + myObject.note + ")",
+										null,
+										null,
+										"OK",
+										"Delete Danger Zone");
+									if(action == "OK"){
+										return;
+									} else if(action == "Delete Danger Zone"){
+										_circles.Remove(element);
+										saveData();
+										return;
+									} else {
+										return;
+									}
+								}	
+							}
 						}
+							
 					});
 			}
 		}

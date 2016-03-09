@@ -40,7 +40,7 @@ namespace EIMA
 			if (data.getUnitID() != "") unitEntry.Text = data.getUnitID();
 			if (data.getStatus() != "") statusEntry.Text = data.getStatus();
 			if (data.getUnitType() != "")
-				picker.SelectedIndex = Array.IndexOf (uTypeOptions, data.getUnitType());
+				picker.SelectedIndex = Array.IndexOf (CONSTANTS.uTypeOptions, data.getUnitType());
 		}
 
 		public void buildUI(){
@@ -76,7 +76,7 @@ namespace EIMA
 				VerticalOptions = LayoutOptions.Center
 			};
 
-			foreach (string element in uTypeOptions)
+			foreach (string element in CONSTANTS.uTypeOptions)
 			{
 				picker.Items.Add (element);
 			}
