@@ -279,8 +279,7 @@ namespace EIMA
 
 			JArray assets = (JArray)dataStore ["incident"] ["mapPolygonDangerZones"];
 
-			Application.Current.MainPage.DisplayAlert("he", assets.ToString() + " ", "can");
-
+			Application.Current.MainPage.DisplayAlert ("", assets.ToString (), "cancel");
 
 			foreach (JObject item in assets.Children()) {
 				var poly = new EIMAPolygon();
@@ -293,9 +292,10 @@ namespace EIMA
 
 				JArray coords = (JArray)item ["coords"];
 				foreach (JObject pos in coords.Children()) {
-					cordList.Add(new Position((double)pos["long"],(double)pos["lat"]));
+					cordList.Add(new Position((double)pos["lat"],(double)pos["long"]));
 				}
-				poly.Coordinates = cordList;
+				List<Position> copied = new List<Position>(cordList);
+				poly.Coordinates = copied;
 				toRet.Add (poly);
 			}
 

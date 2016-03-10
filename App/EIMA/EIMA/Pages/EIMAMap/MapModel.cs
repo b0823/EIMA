@@ -227,9 +227,10 @@ namespace EIMA
 							else if (action2 == "Custom Area"){
 								var tapMapPos = await Application.Current.MainPage.DisplayActionSheet(
 									"Tap the first three points of shape",
-									"Cancel",
 									null,
-									"Start"
+									null,
+									"Start",
+									"Cancel"
 								);
 								
 								if(tapMapPos == "Cancel"){
