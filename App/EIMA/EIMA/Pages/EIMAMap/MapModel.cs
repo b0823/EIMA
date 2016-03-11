@@ -29,7 +29,9 @@ namespace EIMA
 		//Used in creation of polygons.
 		private List<Position> customAreaPolyPoints;
 		private List<TKCustomMapPin> customAreaPolyPins;
-		private bool creatingPolygon = false;
+		public bool creatingPolygon = false;
+		public string polyType;
+		public string polyNote;
 
 		//Backup list as polygons/circles have no visible field
 		private List<TKCircle> invisCircles;
@@ -220,136 +222,38 @@ namespace EIMA
 							);
 							if (action2 == "Circular Area")
 							{
-								AddDZToMapPage aToMapPage = new AddDZToMapPage(this,position);
+								AddEditEIMACirclePage aToMapPage = new AddEditEIMACirclePage(this,position,false,null);
 								await Application.Current.MainPage.Navigation.PushModalAsync(aToMapPage);
 							}
 
 							else if (action2 == "Custom Area"){
-								var tapMapPos = await Application.Current.MainPage.DisplayActionSheet(
-									"Tap the first three points of shape",
-									null,
-									null,
-									"Start",
-									"Cancel"
-								);
 								
-								if(tapMapPos == "Cancel"){
-									return;
-								} else {
-									customAreaPolyPoints = new List<Position>();
-									customAreaPolyPins = new List<TKCustomMapPin>();
-									creatingPolygon = true;
-									return;
-								}
+								AddEditEIMAPolygonPage aToMapPage = new AddEditEIMAPolygonPage(this,false,null);
+								await Application.Current.MainPage.Navigation.PushModalAsync(aToMapPage);
 							}
-							else if (action2 == "Custom Area1"){
-								
-								var stackLayout = new StackLayout (){
-									VerticalOptions = LayoutOptions.Center
-								};
-								var text1 = new Label { 
-									Text = "Vertex 1",
-									FontSize = 16
-								};
-								var v1distancenorth = new Entry { 
-									Placeholder = "Distance North (miles)",
-									Keyboard = Keyboard.Numeric,
-									VerticalOptions = LayoutOptions.Center
-								};
-								var v1distancewest = new Entry { 
-									Placeholder = "Distance West (miles)",
-									Keyboard = Keyboard.Numeric,
-									VerticalOptions = LayoutOptions.Center
-								};
-								var text2 = new Label { 
-									Text = "Vertex 2",
-									FontSize = 16
-								};
-								var v2distancenorth = new Entry { 
-									Placeholder = "Distance North (miles)",
-									Keyboard = Keyboard.Numeric,
-									VerticalOptions = LayoutOptions.Center
-								};
-								var v2distanceeast = new Entry { 
-									Placeholder = "Distance East (miles)",
-									Keyboard = Keyboard.Numeric,
-									VerticalOptions = LayoutOptions.Center
-								};
-								var text3 = new Label { 
-									Text = "Vertex 3",
-									FontSize = 16
-								};
-								var v3distancesouth = new Entry { 
-									Placeholder = "Distance South (miles)",
-									Keyboard = Keyboard.Numeric,
-									VerticalOptions = LayoutOptions.Center
-								};
-								var v3distancewest = new Entry { 
-									Placeholder = "Distance West (miles)",
-									Keyboard = Keyboard.Numeric,
-									VerticalOptions = LayoutOptions.Center
-								};
-								var text4 = new Label { 
-									Text = "Vertex 4",
-									FontSize = 16
-								};
-								var v4distancesouth = new Entry { 
-									Placeholder = "Distance South (miles)",
-									Keyboard = Keyboard.Numeric,
-									VerticalOptions = LayoutOptions.Center
-								};
-								var v4distanceeast = new Entry { 
-									Placeholder = "Distance East (miles)",
-									Keyboard = Keyboard.Numeric,
-									VerticalOptions = LayoutOptions.Center
-								};
-								var EnterButton = new Button { 
-									Text = "Enter",
-									VerticalOptions = LayoutOptions.Center
-								};
-								var CancelButton = new Button { 
-									Text = "Cancel",
-									VerticalOptions = LayoutOptions.Center
-								};
-								stackLayout.Children.Add (text1);
-								stackLayout.Children.Add (v1distancenorth);
-								stackLayout.Children.Add (v1distancewest);
-								stackLayout.Children.Add (text2);
-								stackLayout.Children.Add (v2distancenorth);
-								stackLayout.Children.Add (v2distanceeast);
-								stackLayout.Children.Add (text3);
-								stackLayout.Children.Add (v3distancesouth);
-								stackLayout.Children.Add (v3distancewest);
-								stackLayout.Children.Add (text4);
-								stackLayout.Children.Add (v4distancesouth);
-								stackLayout.Children.Add (v4distanceeast);
-
-								var stackLayout2 = new StackLayout ();
-								stackLayout2.HorizontalOptions = LayoutOptions.Center;
-								stackLayout2.Orientation = StackOrientation.Horizontal;
-								stackLayout2.Children.Add (EnterButton);
-								stackLayout2.Children.Add (CancelButton);
-								stackLayout.Children.Add (stackLayout2);
-
-
-								ContentPage radius = new ContentPage(){
-									Content = stackLayout
-								};
-								await Application.Current.MainPage.Navigation.PushModalAsync(radius);
-
-
-								EnterButton.Clicked += (sender, e) => makeCustomArea (position, 
-									v1distancenorth, v1distancewest, v2distancenorth, v2distanceeast,
-									v3distancesouth, v3distancewest, v4distancesouth, v4distanceeast);
-								
-								CancelButton.Clicked += (sender, e) => goBack ();
-							}
-
 						}
 					});
 			}
 		}
+
+		public async void startProcedural(){
+			var tapMapPos = await Application.Current.MainPage.DisplayActionSheet(
+				"Tap the first three points of shape",
+				null,
+				null,
+				"Start",
+				"Cancel"
+			);
 			
+			if(tapMapPos == "Cancel"){
+				return;
+			} else {
+				customAreaPolyPoints = new List<Position>();
+				customAreaPolyPins = new List<TKCustomMapPin>();
+				return;
+			}
+		}
+
 		public async void proceduralPolygonCall(Position pos){
 			TKCustomMapPin addedPin = new TKCustomMapPin ();
 			addedPin.IsDraggable = false;
@@ -374,11 +278,13 @@ namespace EIMA
 					"Delete Area");
 				if (action == "Create Custom Area") {
 					EIMAPolygon result = new EIMAPolygon ();
-					result.Color = CONSTANTS.colorOptions [1];
+					result.Color = CONSTANTS.colorOptions[Array.IndexOf(CONSTANTS.dzTypeOptions, polyType)];
+
 					result.Coordinates = customAreaPolyPoints;
 					result.username = "";
-					result.type = "Fire";
-					result.note = "The Fire Rises";
+
+					result.type = polyType;
+					result.note = polyNote;
 					_polygons.Add (result);
 
 					creatingPolygon = false;
@@ -505,10 +411,11 @@ namespace EIMA
 								if (myObject != null)
 								{
 									var action = await Application.Current.MainPage.DisplayActionSheet(							
-										"Danger : " + myObject.type + " (" + myObject.note + ")",
+										myObject.type + " (" + myObject.note + ")",
 										null,
 										null,
 										"OK",
+										"Edit Danger Zone",
 										"Delete Danger Zone");
 									if(action == "OK"){
 										return;
@@ -516,7 +423,13 @@ namespace EIMA
 										_circles.Remove(element);
 										saveData();
 										return;
-									} else {
+									} else if(action == "Edit Danger Zone"){
+										AddEditEIMACirclePage aToMapPage = new AddEditEIMACirclePage(this,new Position(-1,-1),true,myObject);
+										await Application.Current.MainPage.Navigation.PushModalAsync(aToMapPage);
+										saveData();
+										return;
+									}
+									else {
 										return;
 									}
 								}	
@@ -538,13 +451,17 @@ namespace EIMA
 
 								if(coordinate_is_inside_polygon(positon.Latitude, positon.Longitude, latList, longList)){
 									var action = await Application.Current.MainPage.DisplayActionSheet(							
-										"Danger : " + myObject.type + " (" + myObject.note + ")",
+										myObject.type + " (" + myObject.note + ")",
 										null,
 										null,
 										"OK",
+										"Edit Danger Zone",
 										"Delete Danger Zone");
 									if(action == "OK"){
 										return;
+									} else if(action == "Edit Danger Zone"){
+										AddEditEIMAPolygonPage aToMapPage = new AddEditEIMAPolygonPage(this,true,myObject);
+										await Application.Current.MainPage.Navigation.PushModalAsync(aToMapPage);
 									} else if(action == "Delete Danger Zone"){
 										_polygons.Remove(element);
 										saveData();
