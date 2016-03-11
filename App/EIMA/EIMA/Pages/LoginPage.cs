@@ -37,7 +37,8 @@ namespace EIMA
 			{
 				Text = "Login",
 				BorderWidth = 1,
-				HorizontalOptions = LayoutOptions.Center
+				HorizontalOptions = LayoutOptions.Center,
+				IsEnabled = false
 			};
 
 			var standAloneButton = new Button

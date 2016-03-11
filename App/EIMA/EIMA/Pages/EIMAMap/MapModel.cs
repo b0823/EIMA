@@ -33,6 +33,15 @@ namespace EIMA
 		public string polyType;
 		public string polyNote;
 
+		//Used moving circles
+		private bool movingCircle = false;
+		private EIMACircle circleToMove;
+
+		//Used moving Polygons
+		private bool movingPoly = false;
+		private EIMAPolygon polyToMove;
+		private List<TKCustomMapPin> polyPinList;
+
 		//Backup list as polygons/circles have no visible field
 		private List<TKCircle> invisCircles;
 		private List<TKPolygon> invisPoly;
@@ -308,33 +317,7 @@ namespace EIMA
 			}
 		}
 
-		public void makeCustomArea(Position position, Entry v1distancenorth, 
-			Entry v1distancewest, Entry v2distancenorth, Entry v2distanceeast,
-			Entry v3distancesouth, Entry v3distancewest, Entry v4distancesouth, 
-			Entry v4distanceeast){
-
-			List<Position> polyPoints = new List<Position>();
-
-			// 0.014493 and 0.018315 are used to convert miles to degrees of latitude and longitude
-			polyPoints.Add(new Position(position.Latitude+Convert.ToDouble(v2distancenorth.Text)*0.014493,
-				position.Longitude+Convert.ToDouble(v2distanceeast.Text)*0.018315)); //top right
-			polyPoints.Add(new Position(position.Latitude+Convert.ToDouble(v1distancenorth.Text)*0.014493,
-				position.Longitude-Convert.ToDouble(v1distancewest.Text)*0.018315)); //top left
-			polyPoints.Add(new Position(position.Latitude-Convert.ToDouble(v3distancesouth.Text)*0.014493,
-				position.Longitude-Convert.ToDouble(v3distancewest.Text)*0.018315)); //bottom left
-			polyPoints.Add(new Position(position.Latitude-Convert.ToDouble(v4distancesouth.Text)*0.014493,
-				position.Longitude+Convert.ToDouble(v4distanceeast.Text)*0.018315)); //bottom right
-
-			var poly = new TKPolygon{
-				Coordinates = polyPoints,
-				Color = Color.FromRgba(100, 0, 0, 80),
-				StrokeWidth = 2f
-			};
-			this._polygons.Add(poly);
-			goBack ();
-		}
-
-		//I have absoloutely ZERO idea how this works. It involves geometry Math. 
+		//I have absoloutely ZERO idea how this works, but it does work. It involves geometry Math. 
 		//http://stackoverflow.com/questions/4287780/detecting-whether-a-gps-coordinate-falls-within-a-polygon-on-a-map 
 		//First answer. was converted to C# from yava
 
@@ -396,6 +379,13 @@ namespace EIMA
 				
 				return new Command<Position>(async (positon) =>
 					{
+						if(movingCircle){
+							circleToMove.Center = positon;
+							circleToMove = null;
+							movingCircle = false;
+							saveData();
+							return;
+						}
 						if(creatingPolygon){
 							proceduralPolygonCall(positon);
 							return;
@@ -415,15 +405,30 @@ namespace EIMA
 										null,
 										null,
 										"OK",
-										"Edit Danger Zone",
+										"Edit Danger Zone Size or Info",
+										"Move Center Of Danger Zone",
 										"Delete Danger Zone");
 									if(action == "OK"){
 										return;
+									} else if(action == "Move Center Of Danger Zone"){
+										var action2 = await Application.Current.MainPage.DisplayActionSheet(
+											"Tap the new location.",
+											"Cancel",
+											null,
+											"OK"
+										);
+										if(action2 == "OK"){
+											circleToMove = myObject;
+											movingCircle = true;
+											return;
+										} else { 
+											return;
+										}
 									} else if(action == "Delete Danger Zone"){
 										_circles.Remove(element);
 										saveData();
 										return;
-									} else if(action == "Edit Danger Zone"){
+									} else if(action == "Edit Danger Zone Size or Info"){
 										AddEditEIMACirclePage aToMapPage = new AddEditEIMACirclePage(this,new Position(-1,-1),true,myObject);
 										await Application.Current.MainPage.Navigation.PushModalAsync(aToMapPage);
 										saveData();
@@ -435,7 +440,7 @@ namespace EIMA
 								}	
 							}
 						}
-						foreach(TKPolygon element in _polygons){
+						foreach(TKPolygon element in _polygons.ToList()){
 
 							var myObject = element as EIMAPolygon;
 
@@ -455,11 +460,31 @@ namespace EIMA
 										null,
 										null,
 										"OK",
-										"Edit Danger Zone",
-										"Delete Danger Zone");
+										"Edit Danger Zone Info",
+										"Modify Points",
+										"Delete Danger Zone"
+									);
 									if(action == "OK"){
 										return;
-									} else if(action == "Edit Danger Zone"){
+									} else if(action == "Modify Points"){
+										movingPoly = true;
+										polyToMove = myObject;
+										polyPinList = new List<TKCustomMapPin>();
+
+										foreach(Position pos in myObject.Coordinates.ToList()){
+											TKCustomMapPin addedPin = new TKCustomMapPin ();
+											addedPin.IsDraggable = true;
+											addedPin.IsVisible = true;
+											addedPin.Image = "dot.png";
+											addedPin.Position = pos;
+											addedPin.ShowCallout = false;
+											this._pins.Add(addedPin);
+											polyPinList.Add(addedPin);
+										}
+
+										_polygons.Remove(myObject);
+
+									} else if(action == "Edit Danger Zone Info"){
 										AddEditEIMAPolygonPage aToMapPage = new AddEditEIMAPolygonPage(this,true,myObject);
 										await Application.Current.MainPage.Navigation.PushModalAsync(aToMapPage);
 									} else if(action == "Delete Danger Zone"){
@@ -537,13 +562,38 @@ namespace EIMA
 		{
 			get 
 			{
-				return new Command<TKCustomMapPin>(pin => 
+				return new Command<TKCustomMapPin>(async pin => 
 					{
 						var myObject = pin as EIMAPin;
 
 						if (myObject != null)
 						{
 							saveData();
+						} else if(movingPoly && polyPinList.Contains(pin)){
+							var answer = await Application.Current.MainPage.DisplayAlert (
+								"Contiue Editing?", "", 
+								"No, Confirm Edits.",
+								"Yes"
+							);
+							if(!answer){
+								return;
+							} else if (answer){
+
+								var lst = new List<Position>();
+
+								foreach(TKCustomMapPin polyPin in polyPinList.ToList()){
+									lst.Add(polyPin.Position);
+									_pins.Remove(polyPin);
+								}
+
+								polyToMove.Coordinates = lst;
+
+								_polygons.Add (polyToMove);
+								polyToMove = null;
+								polyPinList = null;
+								movingPoly = false;
+								saveData();
+							}
 						}
 					});
 			}
@@ -694,6 +744,9 @@ namespace EIMA
 
 		public List<EIMAPolygon> eimaPolygons(){
 			List<EIMAPolygon> toReturn = new List<EIMAPolygon> ();
+			if (this.polyToMove != null) {//Add the one that's removed for editing if user is trying to break stuff
+				toReturn.Add (polyToMove);
+			}
 			foreach (TKPolygon element in this._polygons) {
 
 				var eimaPoly = element as EIMAPolygon;
