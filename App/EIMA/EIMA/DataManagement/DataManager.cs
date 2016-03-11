@@ -279,7 +279,6 @@ namespace EIMA
 
 			JArray assets = (JArray)dataStore ["incident"] ["mapPolygonDangerZones"];
 
-			Application.Current.MainPage.DisplayAlert ("", assets.ToString (), "cancel");
 
 			foreach (JObject item in assets.Children()) {
 				var poly = new EIMAPolygon();
