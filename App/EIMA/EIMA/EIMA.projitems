@@ -35,6 +35,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)CONSTANTS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\AddEditEIMACirclePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\AddEditEIMAPolygonPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAAdmin\EIMAUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAAlerts\EIMAAlert.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)DataManagement\eima_networked_example.json" />
@@ -42,5 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)DataManagement\eima_default.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Pages\EIMAAlerts\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Pages\EIMAAdmin\" />
   </ItemGroup>
 </Project>

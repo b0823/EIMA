@@ -25,7 +25,7 @@ namespace EIMA
 				HorizontalOptions = LayoutOptions.Center
 			};
 
-			var data = new DataManager ();
+			var data = DataManager.getInstance ();
 			if (data.isStandAlone ()) {
 				standAloneUI ();
 			} else
@@ -33,7 +33,8 @@ namespace EIMA
 
 		}
 		public void setSettings(){
-			string speed = new DataManager ().getUpdateSpeed ();
+			var data = DataManager.getInstance ();
+			string speed = data.getUpdateSpeed ();
 			var index = Array.FindIndex(updateData, row => row == speed);
 			picker.SelectedIndex = index;
 		}
@@ -50,8 +51,10 @@ namespace EIMA
 			{
 				VerticalOptions = LayoutOptions.Center
 			};
+			var data = DataManager.getInstance ();
+
 			picker.SelectedIndexChanged += (sender, args) =>
-			new DataManager ().setUpdateSpeed (updateData [picker.SelectedIndex]);
+			data.setUpdateSpeed (updateData [picker.SelectedIndex]);
 
 			foreach (string datamember in updateData) {
 				picker.Items.Add (datamember);
@@ -75,7 +78,7 @@ namespace EIMA
 			);
 
 			if(action == "Yes"){
-				DataManager data = new DataManager();
+				var data = DataManager.getInstance ();
 				data.resetStandAlone();
 			}
 		}

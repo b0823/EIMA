@@ -1,4 +1,5 @@
 using Xamarin.Forms;
+using System.Collections.Generic;
 
 namespace EIMA
 {
@@ -7,16 +8,12 @@ namespace EIMA
 	{
 		public AlertsPage ()
 		{
+			//Alerts DAta, feel free to delete everything below.
+			var data = DataManager.getInstance ();
+			List<EIMAAlert> alertData = data.getAlerts ();
+
 			//TODO
 			//Core functionality of this class is clicking on messages and them opening in a new content page. 
-
-			//Content page Ref
-			//https://developer.xamarin.com/api/type/Xamarin.Forms.ContentPage/
-
-			//Navigation  references
-			//http://stackoverflow.com/questions/25165106/how-do-you-switch-pages-in-xamarin-forms
-			//https://developer.xamarin.com/api/type/Xamarin.Forms.NavigationPage/
-			//https://developer.xamarin.com/guides/xamarin-forms/getting-started/introduction-to-xamarin-forms/#Navigation
 
 			//Second core functionality is opening a new message window when the + button is clicked
 			//Should use the above references to create a new content page and navigate to it with a text box and a send, 

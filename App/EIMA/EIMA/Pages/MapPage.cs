@@ -29,7 +29,7 @@ namespace EIMA
 			/**
 			 * TOOLBAR RELATED CODE
 			 */
-			var data = new DataManager();
+			var data = DataManager.getInstance ();
 
 			ToolbarItem filterTBI;
 			ToolbarItem mapTypeTBI;
@@ -56,7 +56,7 @@ namespace EIMA
 		}
 
 		public void startAndBindMap(){
-			var data = new DataManager ();
+			var data = DataManager.getInstance ();
 			var miles = data.getSpan ();
 			Position locationDef = data.getCenter ();
 			MapSpan ms;
@@ -103,7 +103,7 @@ namespace EIMA
 		}
 
 		public void loadData(){
-			var data = new DataManager ();
+			var data = DataManager.getInstance ();
 			var assetList = data.getAssets ();
 			var circleList = data.getCircleDangerZone ();
 			var polyList = data.getPolyDangerZone ();
@@ -132,7 +132,7 @@ namespace EIMA
 		public async void filterMapItems(){
 			var items = new List<FilterObject>();
 			var dzItems = new List<FilterObject>();
-			var data = new DataManager ();
+			var data = DataManager.getInstance ();
 
 			foreach (string element in CONSTANTS.uTypeOptions)
 			{

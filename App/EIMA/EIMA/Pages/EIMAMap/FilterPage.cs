@@ -28,7 +28,7 @@ namespace EIMA
 		void switchedCellAsset(object sender, ToggledEventArgs e){
 			var switchSent = (SwitchCell)sender;
 
-			DataManager data = new DataManager ();
+			var data = DataManager.getInstance ();
 			data.setFilter (switchSent.Text, e.Value);
 			myModel.filterPins (switchSent.Text, e.Value);	
 		}
@@ -43,7 +43,7 @@ namespace EIMA
 		void switchedCellDZ(object sender, ToggledEventArgs e){
 			var switchSent = (SwitchCell)sender;
 
-			DataManager data = new DataManager ();
+			var data = DataManager.getInstance ();
 			data.setDZFilter (switchSent.Text, e.Value);
 			myModel.filterDZ (switchSent.Text, e.Value);	
 		}
@@ -106,6 +106,8 @@ namespace EIMA
 			foreach (SwitchCell element in dzSwitchList) {
 				element.On = true;
 			}
+			goBack();
+
 		}
 		public void allOff(){
 			foreach (SwitchCell element in switchList) {
@@ -114,7 +116,12 @@ namespace EIMA
 			foreach (SwitchCell element in dzSwitchList) {
 				element.On = false;
 			}
+			goBack();
 		}
+		public async void goBack(){
+			await Navigation.PopAsync();
+		}
+
 	}
 
 	//Util Classes to extend switch, and hold data

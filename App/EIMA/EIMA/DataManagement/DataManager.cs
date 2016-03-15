@@ -15,13 +15,17 @@ namespace EIMA
 		static string eimaInitalizeDataPath;
 		static JObject dataStore;
 
-		public DataManager ()
+		static DataManager instance;
+
+		private DataManager ()
 		{
-			if (Device.OS == TargetPlatform.Android) {
-				eimaInitalizeDataPath = "EIMA.Droid.DataManagement.eima_default.json";
-			} else if (Device.OS == TargetPlatform.iOS) {
-				eimaInitalizeDataPath = "EIMA.iOS.DataManagement.eima_default.json";
+		}
+
+		public static DataManager getInstance(){
+			if (instance == null) {
+				instance = new DataManager ();
 			}
+			return instance;
 		}
 
 		public void resetStandAlone(){
@@ -206,6 +210,8 @@ namespace EIMA
 			rewriteObjectInMemory();
 		}
 		///Danger Zones
+
+		//set polygon danger zones
 		public void setDangerZonePoly(List<EIMAPolygon> list){
 			JArray assets = new JArray ();
 
@@ -233,7 +239,7 @@ namespace EIMA
 			rewriteObjectInMemory();
 
 		}
-
+		//Set circle danger zones
 		public void setDangerZoneCircle(List<EIMACircle> list){
 			
 			JArray assets = new JArray ();
@@ -255,7 +261,7 @@ namespace EIMA
 			dataStore["incident"] ["mapCircleDangerZones"] = assets;
 			rewriteObjectInMemory();
 		}
-
+		//Get circles
 		public List<EIMACircle> getCircleDangerZone(){
 			var toRet =  new List<EIMACircle> ();
 
@@ -274,6 +280,7 @@ namespace EIMA
 			}
 			return toRet;
 		}
+		//Get polygons
 		public List<EIMAPolygon> getPolyDangerZone(){
 			var toRet = new List<EIMAPolygon> ();
 
@@ -300,6 +307,85 @@ namespace EIMA
 
 			return toRet;
 		}
+
+
+		//Get Users
+		public List<EIMAUser> getUsers(){
+			var toRet = new List<EIMAUser> ();
+			JArray users = (JArray)dataStore ["incident"] ["userList"];
+
+			foreach (JObject item in users.Children()) {
+				var toAdd = new EIMAUser ();
+
+				toAdd.level = (string)item ["level"];
+				toAdd.username = (string)item ["username"];
+				toAdd.name = (string)item ["name"];
+				toAdd.unit = (string)item ["unit"];
+				toAdd.unitType = (string)item ["unitType"];
+				toAdd.status = (string)item ["status"];
+				toAdd.organization = (string)item ["organization"];
+
+				toRet.Add (toAdd);
+			}
+			return toRet;
+		}
+
+		//SET Users
+		public void setUsers(List<EIMAUser> lst){
+			JArray users = new JArray ();
+			foreach (EIMAUser user in lst) {
+				JObject toAdd = new JObject ();
+
+				JObject locObject = new JObject ();
+				locObject ["username"] = user.username;
+				locObject ["name"] = user.name;
+				locObject ["unit"] = user.unit;
+				locObject ["unitType"] = user.unitType;
+				locObject ["organization"] = user.organization;
+				locObject ["status"] = user.status;
+				locObject ["level"] = user.level;
+
+				users.Add (toAdd);
+			}
+			dataStore["incident"] ["userList"] = users;
+			rewriteObjectInMemory();
+		}
+
+		//Get Alerts
+		public List<EIMAAlert> getAlerts(){
+			var toRet = new List<EIMAAlert> ();
+			JArray alerts = (JArray)dataStore ["incident"] ["alerts"];
+
+			foreach (JObject item in alerts.Children()) {
+				var toAdd = new EIMAAlert ();
+
+				toAdd.alertType = (string)item ["alertType"];
+				toAdd.sender = (string)item ["sender"];
+				toAdd.message = (string)item ["message"];
+				toAdd.timestamp = (long)item ["timestamp"];
+
+				toRet.Add (toAdd);
+			}
+			return toRet;
+		}
+		//Set Alerts
+		public void setAlerts(List<EIMAAlert> lst){
+			JArray users = new JArray ();
+			foreach (EIMAAlert alert in lst) {
+				JObject toAdd = new JObject ();
+
+				JObject locObject = new JObject ();
+				locObject ["alertType"] = alert.alertType;
+				locObject ["sender"] = alert.sender;
+				locObject ["message"] = alert.message;
+				locObject ["timestamp"] = alert.timestamp;
+
+				users.Add (toAdd);
+			}
+			dataStore["incident"] ["alerts"] = users;
+			rewriteObjectInMemory();
+		}
+
 
 		/*
 		 * Block of is functions Relating to states and user privledges.
@@ -344,6 +430,11 @@ namespace EIMA
 		 * It loads the data into datastore, if there is no file, it creates a new blank one.
 		 */
 		public void dataStartup(){
+			if (Device.OS == TargetPlatform.Android) {
+				eimaInitalizeDataPath = "EIMA.Droid.DataManagement.eima_default.json";
+			} else if (Device.OS == TargetPlatform.iOS) {
+				eimaInitalizeDataPath = "EIMA.iOS.DataManagement.eima_default.json";
+			}
 			verifyOrInitializeData ();	
 			string input = getDataFile (eimaDataPath);
 			dataStore = (JObject) JObject.Parse (input);

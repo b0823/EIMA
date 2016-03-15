@@ -39,8 +39,8 @@ namespace EIMA
 
 			var stackLayout = new StackLayout ();
 			stackLayout.Children.Add (header);
-			stackLayout.Children.Add (logout);
 			stackLayout.Children.Add (leaveIncident);
+			stackLayout.Children.Add (logout);
 			Content = stackLayout;
 
 

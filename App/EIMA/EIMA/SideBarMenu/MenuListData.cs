@@ -15,7 +15,7 @@ namespace EIMA
 
 		public MenuListData ()
 		{
-			var data = new DataManager ();
+			var data = DataManager.getInstance ();
 			//See marie's Spec for spreadsheet on why things are this way.
 			if (data.isStandAlone ()) {
 				standAloneMenu ();

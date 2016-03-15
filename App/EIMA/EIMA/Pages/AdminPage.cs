@@ -1,4 +1,5 @@
 ﻿using Xamarin.Forms;
+using System.Collections.Generic;
 
 namespace EIMA
 {
@@ -7,6 +8,11 @@ namespace EIMA
 		public AdminPage ()
 		{
 			Title = "Administration";
+
+			//User Data
+			var data = DataManager.getInstance ();
+
+			List<EIMAUser> userData = data.getUsers ();
 		}
 	}
 }

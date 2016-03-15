@@ -702,7 +702,7 @@ namespace EIMA
 		}
 
 		public void saveData(){
-			DataManager data = new DataManager();
+			var data = DataManager.getInstance ();
 			data.setAssets(eimaPinsList());
 			data.setDangerZoneCircle(eimaCircles());
 			data.setDangerZonePoly(eimaPolygons());

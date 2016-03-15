@@ -20,7 +20,7 @@ namespace EIMA
 			buildUI ();
 
 			update.Clicked  += (sender, e) => {
-				var data = new DataManager();
+				var data = DataManager.getInstance ();
 				if(nameEntry.Text != ""){data.setName(nameEntry.Text);}
 				if(orgEntry.Text != ""){data.setOrg(orgEntry.Text);}
 				if(unitEntry.Text != ""){data.setUnitID(unitEntry.Text);}
@@ -33,7 +33,7 @@ namespace EIMA
 			};
 		}
 		public void putExistingData(){
-			var data = new DataManager ();
+			var data = DataManager.getInstance ();
 
 			if (data.getName() != "") nameEntry.Text = data.getName();
 			if (data.getOrg() != "") orgEntry.Text = data.getOrg();

@@ -7,7 +7,7 @@ namespace EIMA
 	{
 		public App ()
 		{
-			new DataManager().dataStartup();
+			DataManager.getInstance ().dataStartup ();
 			GmsPlace.Init("AIzaSyDGcU1OGx-VAwqn4s5fCgcmHkJJeWQjTJs"); //debug/testing key
 			GmsDirection.Init("AIzaSyDGcU1OGx-VAwqn4s5fCgcmHkJJeWQjTJs"); //debug/testing key
 			MainPage = new NavigationPage(new LoginPage ());

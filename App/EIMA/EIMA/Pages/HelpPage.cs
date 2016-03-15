@@ -24,13 +24,7 @@ namespace EIMA
 
 
 			var listView = new ListView();
-			listView.ItemsSource = new []{
-				"Section 1 - QuickStart Guide",
-				"Section 2 - Users and Login",
-				"Section 3 - Event Creation and Login",
-				"Section 4 - Map Editing",
-				"Section 5 - Messaging and Alerts"
-			};
+			listView.ItemsSource = CONSTANTS.helpOptions;
 			Title = "Help Page";
 			Icon = "Help.png";
 			var stackLayout = new StackLayout ();
