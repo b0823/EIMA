@@ -18,10 +18,6 @@
 		"role": "admin",
 		"incidentID":"",
 		"incidentType": "networked",
-		"metainf":{
-			"center":"default",
-			"span":"5"
-		},
 		"mapAssets":[
 		],
 		"mapCircleDangerZones":[
