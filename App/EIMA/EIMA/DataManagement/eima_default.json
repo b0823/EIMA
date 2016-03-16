@@ -15,9 +15,9 @@
 		"unitType":""
 	},
 	"incident": {
-		"role": "user",
+		"role": "admin",
 		"incidentID":"",
-		"incidentType": "standalone",
+		"incidentType": "networked",
 		"metainf":{
 			"center":"default",
 			"span":"5"
