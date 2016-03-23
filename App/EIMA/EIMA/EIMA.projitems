@@ -37,6 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAMap\AddEditEIMAPolygonPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAAdmin\EIMAUser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAAlerts\EIMAAlert.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAAdmin\UserInfoPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)DataManagement\eima_networked_example.json" />

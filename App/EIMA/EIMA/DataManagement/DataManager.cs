@@ -131,10 +131,6 @@ namespace EIMA
 			rewriteObjectInMemory ();
 		}
 
-		public double getSpan(){
-			return (double)dataStore ["incident"] ["metainf"] ["span"];
-		}
-
 		//MAP DEFAULT LOCATION
 		public void setCenter(Position defLoc){
 			JObject pos = new JObject ();
@@ -144,15 +140,7 @@ namespace EIMA
 			dataStore["incident"]["metainf"]["center"] = pos;
 			rewriteObjectInMemory ();
 		}
-
-		public Position getCenter(){
-			string data = (string)dataStore ["incident"] ["metainf"] ["center"];
-			if (IsValidJson (data)) {
-				var obj = (JObject)dataStore ["incident"] ["metainf"] ["center"];
-				return new Position ((double)obj["lat"],(double)obj["long"]);
-			} 
-			return default(Position);
-		}
+			
 		//MAP ASSETS 
 		public List<EIMAPin> getAssets(){
 			List<EIMAPin> toReturn = new List<EIMAPin> ();
