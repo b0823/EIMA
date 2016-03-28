@@ -290,7 +290,7 @@ namespace EIMA
 					result.Color = CONSTANTS.colorOptions[Array.IndexOf(CONSTANTS.dzTypeOptions, polyType)];
 
 					result.Coordinates = customAreaPolyPoints;
-					result.username = "";
+					result.uid = CONSTANTS.generateUID();
 
 					result.type = polyType;
 					result.note = polyNote;

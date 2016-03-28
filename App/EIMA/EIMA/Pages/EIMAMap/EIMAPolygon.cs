@@ -4,7 +4,7 @@ namespace EIMA
 {
 	public class EIMAPolygon : TKPolygon
 	{
-		public string username;
+		public string uid;
 		public string type;
 		public string note;
 	}

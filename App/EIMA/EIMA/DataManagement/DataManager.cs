@@ -151,7 +151,7 @@ namespace EIMA
 				EIMAPin toAdd = new EIMAPin ();
 
 				toAdd.name = (string)item["name"];
-				toAdd.username = (string)item["username"];
+				toAdd.uid = (string)item["uid"];
 				toAdd.status = (string)item["status"];
 				toAdd.organization = (string)item["organization"];
 				toAdd.unit = (string)item ["unit"];
@@ -184,7 +184,7 @@ namespace EIMA
 				locObject ["long"] = asset.Position.Longitude;
 
 				toAdd ["type"] = asset.unitType;
-				toAdd ["username"] = asset.username;
+				toAdd ["uid"] = asset.uid;
 				toAdd ["name"] = asset.name;
 				toAdd ["unit"] = asset.unit;
 				toAdd ["status"] = asset.status;
@@ -218,7 +218,7 @@ namespace EIMA
 				toAdd ["coords"] = coords;
 				toAdd ["type"] = asset.type;
 				toAdd ["note"] = asset.note;
-				toAdd ["username"] = asset.username;
+				toAdd ["uid"] = asset.uid;
 
 				assets.Add (toAdd);
 			}
@@ -241,7 +241,7 @@ namespace EIMA
 				toAdd ["location"] = locObject;
 				toAdd ["type"] = asset.type;
 				toAdd ["note"] = asset.note;
-				toAdd ["username"] = asset.username;
+				toAdd ["uid"] = asset.uid;
 				toAdd ["radius"] = asset.Radius;
 
 				assets.Add (toAdd);
@@ -259,7 +259,7 @@ namespace EIMA
 				var circle = new EIMACircle();
 				circle.Color = CONSTANTS.colorOptions [Array.IndexOf (CONSTANTS.dzTypeOptions,(string) item ["type"])];
 				circle.note = (string)item ["note"];
-				circle.username = (string)item ["username"];
+				circle.uid = (string)item ["uid"];
 				circle.Radius = (double)item ["radius"];
 				circle.type = (string)item ["type"];
 				circle.Center = new Position ((double)item["location"]["lat"],(double)item["location"]["long"]);
@@ -279,7 +279,7 @@ namespace EIMA
 				var poly = new EIMAPolygon();
 				poly.Color = CONSTANTS.colorOptions [Array.IndexOf (CONSTANTS.dzTypeOptions,(string) item ["type"])];
 				poly.note = (string)item ["note"];
-				poly.username = (string)item ["username"];
+				poly.uid = (string)item ["uid"];
 				poly.type = (string)item ["type"];
 
 				var cordList = new List<Position> ();

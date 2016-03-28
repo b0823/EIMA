@@ -8,12 +8,12 @@ namespace EIMA
 	{
 		
 		public bool hasCanceled { get; set; }
-		bool editAsset; //true when editing, false when adding
+		readonly bool editAsset; //true when editing, false when adding
 
-		string[] unitTypes = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
+		readonly string[] unitTypes = {"Fire","Police", "Hazmat","EMS","Triage","Rescue","Command Post","Other"};
 
-		EIMAPin toEdit;
-		MapModel myModel;
+		readonly EIMAPin toEdit;
+		readonly MapModel myModel;
 
 		public AddAssetToMapPage (EIMAPin pin, bool editPin, MapModel model)
 		{
@@ -44,7 +44,7 @@ namespace EIMA
 			hasCanceled = false;
 
 			if (!editAsset) {
-				toEdit.username = randomString (16);
+				toEdit.uid = CONSTANTS.generateUID();
 				toEdit.IsDraggable = true;
 			}
 
@@ -172,13 +172,7 @@ namespace EIMA
 			stackLayout.Children.Add (stackLayout2);
 			Content = stackLayout;
 		}
-		public static string randomString(int length)
-		{
-			const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-			var random = new Random();
-			return new string(Enumerable.Repeat(chars, length)
-				.Select(s => s[random.Next(s.Length)]).ToArray());
-		}	
+
 	}
 }
 

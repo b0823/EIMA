@@ -118,6 +118,7 @@ namespace EIMA
 			var circle = new EIMACircle 
 			{
 				Center = position,
+				uid = CONSTANTS.generateUID(),
 				note = info,
 				type = type,
 				Radius = milesToMeters(Convert.ToDouble(radiusInMiles)), // Convert miles to meters
