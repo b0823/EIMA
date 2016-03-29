@@ -7,30 +7,29 @@ namespace EIMA
 	{
 		public HelpPage ()
 		{
-			var header = new Label
-			{
-				Text = "User Guide",
-				FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-				FontAttributes = FontAttributes.Bold,
-				HorizontalOptions = LayoutOptions.Center
-			};
 
-			//TODO
-			//Core functionality of this class is allowing each of these to open a
-			//new content page with a bunch of text that tells people how to use stuff.
+			var helpOptions = new TableSection ("User Guide");
+			foreach (string option in CONSTANTS.helpOptions) {
+				var cell = new TextCell {
+					Text = option, 
+					TextColor = Color.White,
+					Command = new Command (async o => await Application.Current.MainPage.Navigation.PushModalAsync (new HelpOptionPage(option))),
+				};
 
-			//Look into list view for handling their interaction with list, this is where handlers for each will be set up.
-			//https://developer.xamarin.com/guides/xamarin-forms/user-interface/listview/data-and-databinding/
+				helpOptions.Add (cell);
+			}
 
-
-			var listView = new ListView();
-			listView.ItemsSource = CONSTANTS.helpOptions;
 			Title = "Help Page";
 			Icon = "Help.png";
+
+			TableRoot root = new TableRoot ();
+			root.Add (helpOptions);
+			TableView tableView = new TableView (root);
+
 			var stackLayout = new StackLayout ();
-			stackLayout.Children.Add (header);
-			stackLayout.Children.Add (listView);
+			stackLayout.Children.Add (tableView);
 			Content = stackLayout;
+
 		}
 	}
 
