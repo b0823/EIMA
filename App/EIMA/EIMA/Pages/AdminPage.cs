@@ -21,7 +21,7 @@ namespace EIMA
 
 			// The following is user information for testing
 
-			/*
+
 			EIMAUser user1 = new EIMAUser ();
 			user1.username = "User 1's username";
 			user1.name = "User 1";
@@ -29,9 +29,8 @@ namespace EIMA
 			user1.unitType = "User 1's unit type";
 			user1.organization = "User 1's organization";
 			user1.status = "User 1's status";
-			user1.level = "Map Editor";
+			user1.level = "No Access";
 			list.Add (user1);
-
 			EIMAUser user2 = new EIMAUser ();
 			user2.username = "User 2's username";
 			user2.name = "User 2";
@@ -39,9 +38,8 @@ namespace EIMA
 			user2.unitType = "User 2's unit type";
 			user2.organization = "User 2's organization";
 			user2.status = "User 2's status";
-			user2.level = "Map Viewer";
+			user2.level = "Standard User";
 			list.Add (user2);
-
 			EIMAUser user3 = new EIMAUser ();
 			user3.username = "User 3's username";
 			user3.name = "User 3";
@@ -49,9 +47,8 @@ namespace EIMA
 			user3.unitType = "User 3's unit type";
 			user3.organization = "User 3's organization";
 			user3.status = "User 3's status";
-			user3.level = "Map Viewer";
+			user3.level = "No Access";
 			list.Add (user3);
-
 			EIMAUser user4 = new EIMAUser ();
 			user4.username = "User 4's username";
 			user4.name = "User 4";
@@ -61,7 +58,6 @@ namespace EIMA
 			user4.status = "User 4's status";
 			user4.level = "Admin";
 			list.Add (user4);
-
 			EIMAUser user5 = new EIMAUser ();
 			user5.username = "User 5's username";
 			user5.name = "User 5";
@@ -71,7 +67,6 @@ namespace EIMA
 			user5.status = "User 5's status";
 			user5.level = "Map Editor";
 			list.Add (user5);
-
 			EIMAUser user6 = new EIMAUser ();
 			user6.username = "User 6's username";
 			user6.name = "User 6";
@@ -79,20 +74,26 @@ namespace EIMA
 			user6.unitType = "User 6's unit type";
 			user6.organization = "User 6's organization";
 			user6.status = "User 6's status";
-			user6.level = "Map Viewer";
+			user6.level = "Map Editor";
 			list.Add (user6);
-
 			data.setUsers (list);
-			*/
+
 
 
 			List<EIMAUser> userData = data.getUsers ();
 
 			// Sort the users by privilege level
-			List<EIMAUser> mapViewers = new List<EIMAUser> ();
+			List<EIMAUser> noAccessUsers = new List<EIMAUser> ();
 			foreach (EIMAUser user in list) {
-				if (user.level == "Map Viewer") {
-					mapViewers.Add (user);
+				if (user.level == "No Access") {
+					noAccessUsers.Add (user);
+				}
+			}
+
+			List<EIMAUser> standardUsers = new List<EIMAUser> ();
+			foreach (EIMAUser user in list) {
+				if (user.level == "Standard User") {
+					standardUsers.Add (user);
 				}
 			}
 
@@ -110,15 +111,26 @@ namespace EIMA
 				}
 			}
 
-			var mapViewer = new TableSection ("Map Viewers");
-			foreach (EIMAUser user in mapViewers) {
+			var noAccess = new TableSection ("No Access");
+			foreach (EIMAUser user in noAccessUsers) {
 				var cell = new TextCell {
 					Text = user.name, 
 					TextColor = Color.White,
 					Command = new Command (async o => await Application.Current.MainPage.Navigation.PushModalAsync (new UserInfoPage (user))),
 				};
 
-				mapViewer.Add (cell);
+				noAccess.Add (cell);
+			}
+
+			var standardUser = new TableSection ("Standard Users");
+			foreach (EIMAUser user in standardUsers) {
+				var cell = new TextCell {
+					Text = user.name, 
+					TextColor = Color.White,
+					Command = new Command (async o => await Application.Current.MainPage.Navigation.PushModalAsync (new UserInfoPage (user))),
+				};
+
+				standardUser.Add (cell);
 			}
 
 			var mapEditor = new TableSection ("Map Editors");
@@ -144,7 +156,8 @@ namespace EIMA
 			}
 
 			TableRoot root = new TableRoot ();
-			root.Add (mapViewer);
+			root.Add (noAccess);
+			root.Add (standardUser);
 			root.Add (mapEditor);
 			root.Add (admin);
 			TableView tableView = new TableView (root);
@@ -154,4 +167,3 @@ namespace EIMA
 		}
 	}
 }
-
