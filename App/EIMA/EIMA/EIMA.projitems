@@ -38,6 +38,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAAdmin\EIMAUser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAAlerts\EIMAAlert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\EIMAAdmin\UserInfoPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Networking\RestCall.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)DataManagement\eima_networked_example.json" />
@@ -49,5 +50,6 @@
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Pages\EIMAAlerts\" />
     <Folder Include="$(MSBuildThisFileDirectory)Pages\EIMAAdmin\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Networking\" />
   </ItemGroup>
 </Project>
