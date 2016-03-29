@@ -75,19 +75,23 @@ namespace EIMA
 			var command1 = new Command (async o => await Application.Current.MainPage.Navigation.PopModalAsync ());
 			var command2 = new Command (async o => {
 				var action = await Application.Current.MainPage.DisplayActionSheet (
-					              "Enter New Privilege Level",
-					              "Cancel",
-					              null,
-					              "Map Viewer",
-					              "Map Editor",
-					              "Admin"
-				              );
+					"Enter New Privilege Level",
+					"Cancel",
+					null,
+					"No Access",
+					"Standard User",
+					"Map Editor",
+					"Admin"
+				);
 
 				// Still need to finish this section. Need to store the new privilege level and update the page
-				if (action == "Map Viewer") { 
-					user.level = "Map Viewer";
-					await Application.Current.MainPage.DisplayAlert ("(not fully implemented)", "The user is now a Map Viewer", "OK");
-				} else if (action == "Map Editor") { 
+				if (action == "No Access") { 
+					user.level = "No Access";
+					await Application.Current.MainPage.DisplayAlert ("(not fully implemented)", "The user is now a No Access User", "OK");
+				} else if (action == "Standard User") { 
+					user.level = "Standard User";
+					await Application.Current.MainPage.DisplayAlert ("(not fully implemented)", "The user is now a Standard User", "OK");
+				}	else if (action == "Map Editor") { 
 					user.level = "Map Editor";
 					await Application.Current.MainPage.DisplayAlert ("(not fully implemented)", "The user is now a Map Editor", "OK");
 				} else if (action == "Admin") { 
@@ -163,8 +167,7 @@ namespace EIMA
 			stackLayout4.Orientation = StackOrientation.Horizontal;
 			stackLayout3.Children.Add (stackLayout4);
 			Content = stackLayout3;
-		
+
 		}
 	}
 }
-
