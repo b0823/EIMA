@@ -7,6 +7,11 @@ using System.Linq;
 
 namespace EIMA
 {
+	public class Users
+	{
+		public static List<EIMAUser> userList = new List<EIMAUser>();
+	}
+
 	public class UserInfoPage : ContentPage
 	{
 		public UserInfoPage (EIMAUser user)
@@ -84,19 +89,22 @@ namespace EIMA
 					"Admin"
 				);
 
-				// Still need to finish this section. Need to store the new privilege level and update the page
 				if (action == "No Access") { 
 					user.level = "No Access";
-					await Application.Current.MainPage.DisplayAlert ("(not fully implemented)", "The user is now a No Access User", "OK");
+					Users.userList.Add (user);
+					await Application.Current.MainPage.DisplayAlert ("", "The user is now a No Access User", "OK");
 				} else if (action == "Standard User") { 
 					user.level = "Standard User";
-					await Application.Current.MainPage.DisplayAlert ("(not fully implemented)", "The user is now a Standard User", "OK");
+					Users.userList.Add (user);
+					await Application.Current.MainPage.DisplayAlert ("", "The user is now a Standard User", "OK");
 				}	else if (action == "Map Editor") { 
 					user.level = "Map Editor";
-					await Application.Current.MainPage.DisplayAlert ("(not fully implemented)", "The user is now a Map Editor", "OK");
+					Users.userList.Add (user);
+					await Application.Current.MainPage.DisplayAlert ("", "The user is now a Map Editor", "OK");
 				} else if (action == "Admin") { 
 					user.level = "Admin";
-					await Application.Current.MainPage.DisplayAlert ("(not fully implemented)", "The user is now an Admin", "OK");
+					Users.userList.Add (user);
+					await Application.Current.MainPage.DisplayAlert ("", "The user is now an Admin", "OK");
 				}
 			});
 
@@ -146,7 +154,6 @@ namespace EIMA
 			stackLayout1.Children.Add (stackLayout2);
 			stackLayout1.VerticalOptions = LayoutOptions.Center;
 
-			// make a new content page for sending messages
 			ContentPage contentpage = new ContentPage ();
 			contentpage.Content = stackLayout1;
 
