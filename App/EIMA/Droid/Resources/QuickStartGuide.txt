@@ -1,0 +1,10 @@
+Section 1 - QuickStart Guide
+
+Standalone vs. Networked Event: 
+**needs to be written**
+
+Logging in to an Event:
+**needs to be written**
+
+Viewing Resource(Icon) Details:
+**needs to be written**

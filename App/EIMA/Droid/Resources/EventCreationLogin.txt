@@ -1,0 +1,15 @@
+Section 3 - Event Creation and Login
+
+This function is reserved for Administrators in a networked event or User/Admins in standalone events. 
+
+Creating an Event: 
+**needs to be written**
+
+Saving an Event:
+**needs to be written**
+
+Closing an Event:
+**needs to be written**
+
+Logging in to an Event: 
+**needs to be written**

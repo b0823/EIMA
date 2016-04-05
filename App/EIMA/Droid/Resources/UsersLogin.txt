@@ -1,0 +1,15 @@
+Section 2 - Users and Login
+
+When creating a profile, users will be prompted to enter their name, unit #, organization, current status, and unit type. This information can be edited at any time from the main side menu.
+
+User Types:
+Administrator: This type of user functions as the Administrator or Commander of a networked event. The Administrator can edit the map, create users, assign user privileges, manage event users, send alerts, and terminate a networked event. 
+	
+Map Editor: The map editor privilege is assigned by an administrator to a standard user. Map Editors can add or remove resource icons and danger zones from the map, as well as perform all other Standard User Functions. 
+	
+Standard User: This type of user is able to view the map, view resource details, receive alerts, and send messages to the Administrator.
+	
+User/Admin: This type of user functions as the sole operator of the EIMA application operating in Standalone. This user type has the ability to edit the map and create events. 
+	
+Login:
+Users can log into the application from the login screen, by typing in their username and password.

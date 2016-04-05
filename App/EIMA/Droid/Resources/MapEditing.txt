@@ -1,0 +1,22 @@
+Section 4 - Map Editing
+
+Map Editing functionality is only available to Administrators and users granted the Map Editing privilege working in a networked event. User/Admins working in a standalone event, will have Map Editing functionality by default.
+
+Accessing the Map Edit Window:
+From the side menu, select the "Edit Map" button. 
+	
+Placing Icons on the Map:
+To place an icon, press and hold on the desired location. A window will appear with a list of icon types. Scroll through the list and select the desired icon type and click continue. The next screen allows for additional details to be entered for resource. Click "Add to Map" when finished. 
+	
+Editing and Removing Icons:
+Icon information can be modified by tapping the icon on the map, tapping the information box above the icon, and selecting "Modify Asset Info". From this menu the asset can also be removed from the map by selecting "Delete Asset".
+
+Adding a Danger Zone to the Map:
+Danger Zones can be added to the map by tapping and holding anywhere and selecting "Create Danger Zone". From this menu a circular or custom danger zone can be selected. 
+
+For circular danger zones, a window will appear after selecting the danger zone which will ask for the radius of the danger zone. Enter the radius and danger zone type and select "Enter" to add the danger zone to the map.
+
+For custom danger zones, a window will appear after selecting the danger zone which will ask for the vertices of the danger zone. The user can add vertices by tapping anywhere on the map. After three vertices are placed on the map, a menu will appear where more points can be added by selecting "Add Another Point". Once all desired vertices are entered onto the map, the danger zone can be created by selecting "Create Custom Area".
+
+Editing and Removing a Danger Zones:
+Danger zones can be edited by tapping the danger zone and selecting the edit button. Circular danger zones can be moved by selecting the "Move Center Of Danger Zone" option, and tapping a new location. The vertices of custom danger zones can be moved by selecting the "Modify Points" option, and tapping the new points for the zone. Both types of danger zones can be removed from the map by tapping the danger zone and selecting "Delete Danger Zone".

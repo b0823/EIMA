@@ -1,0 +1,22 @@
+Section 6 - Administrator Guide
+
+The functions described in this section are only available to Administrators in a networked event. 
+
+All administrator functions can be accessed from the Admin page, which can be accessed from the sidebar by all administrators in an event
+
+Accepting Users in an Event:
+**needs to be written**
+
+Removing Users from an Event:
+**needs to be written**
+
+Managing User Privileges:
+User privileges can be modified by selecting the user in the Admin page, and selecting the "Change Privilege" button at the bottom-left corner of the page
+
+Sending an Alert:
+All alerts are sent from the Messages and Alerts page, accessed by clicking the ! icon from the side menu. To send an alert, click the "Send Message" button in the lower-right corner of the Messages and Alerts page. This will open the Alert window. When the alert is finished, click the "Send" button on the left side of the window.
+	
+To exit the alert window, click the "Cancel" in the bottom-right corner to return to the main Messages and Alerts page. 
+
+Viewing a Message:
+All messages from users to the command post are viewable on the Messages and Alerts page. This is accessed by clicking the ! icon from the side menu. From the Messages and Alerts page, simply click the message preview to view the full text of the message. Click the "Back" button in the bottom-right corner to return to the main Messages and Alerts page.

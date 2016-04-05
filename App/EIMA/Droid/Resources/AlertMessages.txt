@@ -1,0 +1,15 @@
+Section 5 - Messaging and Alerts
+
+The Messages and Alerts page allows for communication between Users and Administrators in networked event scenario. This function is disabled when using the standalone function of EIMA. 
+
+All alerts from the command post are viewable on the Messages and Alerts page. This is accessed by clicking the ! icon from the side menu. 
+
+Viewing an Alert:
+From the alerts page, simply click the alert preview to view the full text of the alert. Click the "Back" button in the bottom-right corner to return to the main Messages and Alerts page. 
+
+All messages sent from the Messages and Alerts page by a Map Editor or Standard User are routed directly to the Administrator of an event.  
+
+Sending a Message:
+To send a message, click the "Send Message" button in the lower-right corner of the Messages and Alerts page. This will open the Message window. When the message is finished, click the "Send" button on the left side of the window.
+	
+To exit the message window, click the "Cancel" in the the bottom-right to return to the main Messages and Alerts page. 
