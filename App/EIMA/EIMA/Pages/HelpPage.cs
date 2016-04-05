@@ -13,7 +13,7 @@ namespace EIMA
 				var cell = new TextCell {
 					Text = option, 
 					TextColor = Color.White,
-					Command = new Command (async o => await Application.Current.MainPage.Navigation.PushModalAsync (new HelpOptionPage(option))),
+					Command = new Command (async o => await Application.Current.MainPage.Navigation.PushModalAsync (new HelpOptionPage(option[8]))),
 				};
 
 				helpOptions.Add (cell);
