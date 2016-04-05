@@ -1,33 +1,29 @@
 ﻿using System;
 using System.Net;
 using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace EIMA
 {
 	public static class RestCall
 	{
-		static void POST(string url, string jsonContent) 
+		public static JObject POST(string url, JObject jsonContent) 
 		{
-			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+			var request = (HttpWebRequest)WebRequest.Create(url);
+			request.ContentType = "application/json";
 			request.Method = "POST";
 
-			System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-			Byte[] byteArray = encoding.GetBytes(jsonContent);
-
-			request.ContentLength = byteArray.Length;
-			request.ContentType = @"application/json";
-
-			using (Stream dataStream = request.GetRequestStream()) {
-				dataStream.Write(byteArray, 0, byteArray.Length);
+			using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+			{
+				streamWriter.Write(jsonContent.ToString());
 			}
-			long length = 0;
-			try {
-				using (HttpWebResponse response = (HttpWebResponse)request.GetResponse()) {
-					length = response.ContentLength;
-				}
-			}
-			catch (WebException ex) {
-				// Log exception and throw as for GET example above
+
+			var response = (HttpWebResponse)request.GetResponse();
+			using (var streamReader = new StreamReader(response.GetResponseStream()))
+			{
+				var result = streamReader.ReadToEnd();
+				var toRet = (JObject) JObject.Parse (result);
+				return toRet;
 			}
 		}
 	}

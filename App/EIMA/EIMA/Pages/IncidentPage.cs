@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
+using Newtonsoft.Json.Linq;
 
 namespace EIMA
 {
@@ -37,6 +39,15 @@ namespace EIMA
 				VerticalOptions = LayoutOptions.CenterAndExpand
 			};
 
+			var logoutButton = new Button
+			{
+				Text = "Logout",
+				BorderWidth = 1,
+				HorizontalOptions = LayoutOptions.Center,
+				VerticalOptions = LayoutOptions.CenterAndExpand
+			};
+			logoutButton.Clicked += onLogout;
+
 			createIncidentButton.Clicked += (sender, e) => DisplayAlert ("Warning", "This is yet to be implemented", "Acknowledge");
 
 			var stackLayout = new StackLayout ();
@@ -44,7 +55,14 @@ namespace EIMA
 			stackLayout.Children.Add (incId);
 			stackLayout.Children.Add (joinInc);
 			stackLayout.Children.Add (createIncidentButton);
+			stackLayout.Children.Add (logoutButton);
 			Content = stackLayout;
+		}
+
+		async void onLogout(object sender, EventArgs e)
+		{
+			
+			
 		}
 
 	}

@@ -48,6 +48,24 @@ namespace EIMA
 			rewriteObjectInMemory ();
 		}
 
+		public string getSecret(){
+			return (string)dataStore["secret"];
+		}
+
+		public void setSecret(string value){
+			dataStore["secret"] = value;
+			rewriteObjectInMemory ();
+		}
+
+
+		public string getUsername(){
+			return (string)dataStore["username"];
+		}
+
+		public void setUsername(string value){
+			dataStore["username"] = value;
+			rewriteObjectInMemory ();
+		}
 
 		//public profilename
 		public string getName(){

@@ -15,9 +15,9 @@
 		"unitType":""
 	},
 	"incident": {
-		"role": "admin",
+		"role": "user",
 		"incidentID":"",
-		"incidentType": "networked",
+		"incidentType": "standalone",
 		"mapAssets":[
 		],
 		"mapCircleDangerZones":[
@@ -25,14 +25,8 @@
 		"mapPolygonDangerZones":[
 		],
 		"userList":[
-			{"username":"daytonPdCar5","name":"Officer Jim Ballt","unit":"23","unitType":"Police","organization":"Dayton PD","status":"healthy","level":"user"},
-			{"username":"femaHazmat38","name":"FEMA HAZMAT TEAM 22","unit":"22","unitType":"Hazmat","organization":"FEMA","status":"safe","level":"user"},
-			{"username":"femaCandC45","name":"FEMA ICS Command","unit":"1","unitType":"Command Post","organization":"FEMA","status":"thinly spread.","level":"mapeditor"}
 		],
 	    "alerts":[
-			{"alertType":"Danger", "sender":"FEMA ICS Command", "message":"Within .2 Miles of Hazard Spill", "timestamp":1445634538},
-			{"alertType":"Message", "sender":"FEMA HAZMAT TEAM 22", "message":"Fire is now East of 675",  "timestamp":1445634799},
-			{"alertType":"Message", "sender":"[SYSTEM]", "message":"Triage Stations Overloaded, Go to Dayton Childrens", "timestamp":1445636653}
 	    ]
   	}
 }

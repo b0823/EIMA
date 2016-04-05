@@ -1,12 +1,21 @@
 ﻿using System;
 using Xamarin.Forms;
+using Newtonsoft.Json.Linq;
 
 namespace EIMA
 {
 	public class LoginPage : ContentPage
 	{
+		readonly Entry passwordEntry;
+		readonly Entry usernameEntry;
+
 		public LoginPage ()
 		{
+
+			if(!String.IsNullOrEmpty(DataManager.getInstance().getSecret())){
+				Navigation.PushAsync (new IncidentPage ());
+			}
+
 			var header = new Label
 			{
 				Text = "EIMA",
@@ -22,12 +31,12 @@ namespace EIMA
 				FontAttributes = FontAttributes.Bold,
 				HorizontalOptions = LayoutOptions.Center
 			};
-			var usernameEntry = new Entry {
+			usernameEntry = new Entry {
 				Placeholder = "Username",
 				VerticalOptions = LayoutOptions.Center
 			};
 
-			var passwordEntry = new Entry {
+			passwordEntry = new Entry {
 				Placeholder = "Password",
 				IsPassword = true,
 				VerticalOptions = LayoutOptions.Center
@@ -37,8 +46,7 @@ namespace EIMA
 			{
 				Text = "Login",
 				BorderWidth = 1,
-				HorizontalOptions = LayoutOptions.Center,
-				IsEnabled = false
+				HorizontalOptions = LayoutOptions.Center
 			};
 
 			var standAloneButton = new Button
@@ -51,11 +59,19 @@ namespace EIMA
 			loginButton.Clicked += OnLoginButtonClicked;
 
 			standAloneButton.Clicked += async (sender, e) => {
+			
 				standAloneButton.IsEnabled = false;
 				await Navigation.PushModalAsync (new RootPage ());
 				standAloneButton.IsEnabled = true;
 			};
 
+			if(!String.IsNullOrEmpty(DataManager.getInstance().getSecret())){
+				usernameEntry.Text = DataManager.getInstance ().getUsername ();
+				passwordEntry.Text = "123456";
+				usernameEntry.IsEnabled = false;
+				passwordEntry.IsEnabled = false;
+				loginButton.Text = "Go To Lobby";
+			}
 
 			Padding = new Thickness (10, Device.OnPlatform (20, 0, 0), 10, 5);
 
@@ -69,10 +85,32 @@ namespace EIMA
 			stackLayout.Children.Add (standAloneButton);
 			Content = stackLayout;
 		}
+
 		async void OnLoginButtonClicked(object sender, EventArgs e)
 		{
-			await DisplayAlert ("Warning", "No Username/Password Auth done yet", "Acknowledge");
-			await Navigation.PushModalAsync (new IncidentPage ());
+
+			if (!String.IsNullOrEmpty (DataManager.getInstance ().getSecret ())) {
+				await Navigation.PushAsync (new IncidentPage ());
+				return;
+			}
+	
+
+			var postData = new JObject ();
+			postData ["username"] = usernameEntry.Text;
+			postData ["password"] = passwordEntry.Text;
+
+			var result = RestCall.POST (URLs.LOGIN, postData);
+
+			if (((bool)result ["result"]) == true) {
+				DataManager.getInstance ().setSecret ((string) result ["token"]);
+				DataManager.getInstance ().setUsername (usernameEntry.Text);
+				await Navigation.PushAsync (new IncidentPage ());
+				return;
+			} else {
+				await DisplayAlert ("Invalid Username or Password", "", "OK");
+			}
+
+
 			//This would contain validiation of account.
 		}
 	}
