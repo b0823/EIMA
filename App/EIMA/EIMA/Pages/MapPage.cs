@@ -56,8 +56,8 @@ namespace EIMA
 		}
 
 		public void startAndBindMap(){
-			var data = DataManager.getInstance ();
-			var miles = 5;
+			//var data = DataManager.getInstance ();
+			const int miles = 5;
 			Position locationDef = defaultLocation;
 			MapSpan ms;
 

@@ -80,7 +80,7 @@ namespace EIMA
 
 
 
-			List<EIMAUser> userData = data.getUsers ();
+			//List<EIMAUser> userData = data.getUsers ();
 
 			// Sort the users by privilege level
 			List<EIMAUser> noAccessUsers = new List<EIMAUser> ();

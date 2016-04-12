@@ -40,6 +40,16 @@ namespace EIMA
 		 * Getters just get from the JsonObject in memory.
 		 */
 
+
+		public string getIncidentID(){
+			return (string)dataStore["incident"]["incidentID"];
+		}
+
+		public void setIncidentID(string value){
+			dataStore["incident"]["incidentID"] = value;
+			rewriteObjectInMemory ();
+		}
+
 		public string getUpdateSpeed(){
 			return (string)dataStore["settings"]["updateSpeed"];
 		}
@@ -143,21 +153,21 @@ namespace EIMA
 		}
 
 
-		//MAP SPAN
-		public void setSpan(double num){
-			dataStore["incident"]["metainf"]["span"] = num;
-			rewriteObjectInMemory ();
-		}
-
-		//MAP DEFAULT LOCATION
-		public void setCenter(Position defLoc){
-			JObject pos = new JObject ();
-			pos ["lat"] = defLoc.Latitude;
-			pos ["long"] = defLoc.Longitude;
-
-			dataStore["incident"]["metainf"]["center"] = pos;
-			rewriteObjectInMemory ();
-		}
+//		//MAP SPAN
+//		public void setSpan(double num){
+//			dataStore["incident"]["metainf"]["span"] = num;
+//			rewriteObjectInMemory ();
+//		}
+//
+//		//MAP DEFAULT LOCATION
+//		public void setCenter(Position defLoc){
+//			JObject pos = new JObject ();
+//			pos ["lat"] = defLoc.Latitude;
+//			pos ["long"] = defLoc.Longitude;
+//
+//			dataStore["incident"]["metainf"]["center"] = pos;
+//			rewriteObjectInMemory ();
+//		}
 			
 		//MAP ASSETS 
 		public List<EIMAPin> getAssets(){

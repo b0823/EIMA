@@ -11,11 +11,6 @@ namespace EIMA
 
 		public LoginPage ()
 		{
-
-			if(!String.IsNullOrEmpty(DataManager.getInstance().getSecret())){
-				Navigation.PushAsync (new IncidentPage ());
-			}
-
 			var header = new Label
 			{
 				Text = "EIMA",
@@ -60,18 +55,30 @@ namespace EIMA
 
 			standAloneButton.Clicked += async (sender, e) => {
 			
-				standAloneButton.IsEnabled = false;
-				await Navigation.PushModalAsync (new RootPage ());
-				standAloneButton.IsEnabled = true;
-			};
+				var incident = DataManager.getInstance().getIncidentID();
 
-			if(!String.IsNullOrEmpty(DataManager.getInstance().getSecret())){
-				usernameEntry.Text = DataManager.getInstance ().getUsername ();
-				passwordEntry.Text = "123456";
-				usernameEntry.IsEnabled = false;
-				passwordEntry.IsEnabled = false;
-				loginButton.Text = "Go To Lobby";
-			}
+				if(String.IsNullOrEmpty(incident)){
+					standAloneButton.IsEnabled = false;
+					await Navigation.PushModalAsync (new RootPage ());
+					standAloneButton.IsEnabled = true;
+				} else {
+					var res = await DisplayActionSheet(
+						"Going into standalone mode will remove you from your current incident, Continue?",
+						"",
+						"",
+						"Continue",
+						"No"
+					);
+					if(res == "continue"){
+						standAloneButton.IsEnabled = false;
+						await Navigation.PushModalAsync (new RootPage ());
+						standAloneButton.IsEnabled = true;
+						//leaveIncident();
+					}
+				}
+
+
+			};
 
 			Padding = new Thickness (10, Device.OnPlatform (20, 0, 0), 10, 5);
 
@@ -84,6 +91,15 @@ namespace EIMA
 			stackLayout.Children.Add (loginButton);
 			stackLayout.Children.Add (standAloneButton);
 			Content = stackLayout;
+
+			if(!String.IsNullOrEmpty(DataManager.getInstance().getSecret())){
+				usernameEntry.Text = DataManager.getInstance ().getUsername ();
+				passwordEntry.Text = "123456";
+				usernameEntry.IsEnabled = false;
+				passwordEntry.IsEnabled = false;
+				loginButton.Text = "Go To Lobby";
+			}
+
 		}
 
 		async void OnLoginButtonClicked(object sender, EventArgs e)
@@ -101,10 +117,14 @@ namespace EIMA
 
 			var result = RestCall.POST (URLs.LOGIN, postData);
 
+
 			if (((bool)result ["result"]) == true) {
 				DataManager.getInstance ().setSecret ((string) result ["token"]);
 				DataManager.getInstance ().setUsername (usernameEntry.Text);
-				await Navigation.PushAsync (new IncidentPage ());
+
+				Navigation.InsertPageBefore(new IncidentPage (), this);
+				await Navigation.PopAsync().ConfigureAwait(false);
+
 				return;
 			} else {
 				await DisplayAlert ("Invalid Username or Password", "", "OK");

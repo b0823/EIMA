@@ -62,7 +62,17 @@ namespace EIMA
 		async void onLogout(object sender, EventArgs e)
 		{
 			
-			
+			var postData = new JObject ();
+			postData ["token"] = DataManager.getInstance().getSecret();
+
+			RestCall.POST (URLs.LOGOUT, postData);
+
+			DataManager.getInstance ().setSecret ("");
+
+			Navigation.InsertPageBefore(new LoginPage (), this);
+			await Navigation.PopAsync().ConfigureAwait(false);
+		
+
 		}
 
 	}

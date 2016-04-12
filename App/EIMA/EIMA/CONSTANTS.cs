@@ -1,4 +1,5 @@
 ﻿using Xamarin.Forms;
+using System;
 
 namespace EIMA
 {
@@ -6,6 +7,13 @@ namespace EIMA
 	{
 		//Universal constants go here. Most useful for lists used in various locations. 
 		//also keeps things fairly easy to edit from once place
+		public static string generateUID(){
+			long milliseconds = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+
+			Guid guid = Guid.NewGuid();
+			string str = guid.ToString();
+			return milliseconds + "-" + str;
+		}
 
 		public static string[] helpOptions = {
 			"Section 1 - QuickStart Guide",
