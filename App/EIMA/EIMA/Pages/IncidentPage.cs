@@ -52,6 +52,7 @@ namespace EIMA
 
 
 			if (!String.IsNullOrEmpty (DataManager.getInstance ().getIncidentID ())) {
+				incId.Text = DataManager.getInstance ().getIncidentID ();
 				incId.IsEnabled = false;
 			}
 
@@ -73,6 +74,7 @@ namespace EIMA
 
 			if (!String.IsNullOrEmpty (DataManager.getInstance ().getIncidentID ())) {
 				await Navigation.PushModalAsync (new RootPage ());
+				joinInc.IsEnabled = true;
 				return;
 			}
 

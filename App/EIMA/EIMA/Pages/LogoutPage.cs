@@ -1,10 +1,15 @@
 ﻿using Xamarin.Forms;
+using System;
 
 namespace EIMA
 {
 
 	public class LogoutPage : ContentPage
 	{
+		public async void goBack(object sender, EventArgs e){
+			await Navigation.PopModalAsync();
+		}
+
 		public LogoutPage ()
 		{
 
@@ -25,21 +30,14 @@ namespace EIMA
 
 			var logout = new Button
 			{
-				Text = "Logout",
+				Text = "Go Back To Lobby",
 				BorderWidth = 1,
 				HorizontalOptions = LayoutOptions.Center,
 			};
-
-			var leaveIncident = new Button
-			{
-				Text = "Leave Incident",
-				BorderWidth = 1,
-				HorizontalOptions = LayoutOptions.Center,
-			};
+			logout.Clicked += goBack;
 
 			var stackLayout = new StackLayout ();
 			stackLayout.Children.Add (header);
-			stackLayout.Children.Add (leaveIncident);
 			stackLayout.Children.Add (logout);
 			Content = stackLayout;
 
@@ -47,6 +45,7 @@ namespace EIMA
 			Title = "Logout";
 			Icon = "Logout.png";
 		}
+			
 	}
 
 }

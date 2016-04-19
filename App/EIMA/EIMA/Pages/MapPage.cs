@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 using Xamarin.Forms;
@@ -151,8 +150,9 @@ namespace EIMA
 		}
 
 		public void refreshData(){
-			//TODO
-			//This won't be implemented for a while.
+			DataNetworkCalls.updateNetworkedData ();
+
+			//TODO ADD ASSET INFO
 		}
 
 		public void changeMap(){

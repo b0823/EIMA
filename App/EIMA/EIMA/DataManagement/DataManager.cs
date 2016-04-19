@@ -375,7 +375,6 @@ namespace EIMA
 			foreach (JObject item in alerts.Children()) {
 				var toAdd = new EIMAAlert ();
 
-				toAdd.alertType = (string)item ["alertType"];
 				toAdd.sender = (string)item ["sender"];
 				toAdd.message = (string)item ["message"];
 				toAdd.timestamp = (long)item ["timestamp"];
@@ -391,7 +390,6 @@ namespace EIMA
 				JObject toAdd = new JObject ();
 
 				JObject locObject = new JObject ();
-				locObject ["alertType"] = alert.alertType;
 				locObject ["sender"] = alert.sender;
 				locObject ["message"] = alert.message;
 				locObject ["timestamp"] = alert.timestamp;

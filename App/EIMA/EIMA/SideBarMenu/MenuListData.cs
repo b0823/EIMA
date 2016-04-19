@@ -11,7 +11,7 @@ namespace EIMA
 		static readonly MenuItem settings = new MenuItem () {Title = "Settings", IconSource = "SettingsIcon.png", TargetType = typeof(SettingsPage)};
 		static readonly MenuItem admin = new MenuItem () {Title = "Admin", IconSource = "Admin.png", TargetType = typeof(AdminPage)};
 		static readonly MenuItem help = new MenuItem () {Title = "Help", IconSource = "Help.png", TargetType = typeof(HelpPage)};
-		static readonly MenuItem logout = new MenuItem () {Title = "Logout", IconSource = "Logout.png", TargetType = typeof(LogoutPage)};
+		static readonly MenuItem logout = new MenuItem () {Title = "Exit", IconSource = "Logout.png", TargetType = typeof(LogoutPage)};
 
 		public MenuListData ()
 		{
@@ -27,6 +27,8 @@ namespace EIMA
 					networkedMapEditor ();
 				} else if (data.isUser ()) {
 					networkedUserMenu ();
+				} else if (data.isNoAccess() ) {
+					logoutOnly ();
 				}
 			}
 				
@@ -53,6 +55,9 @@ namespace EIMA
 			Add (userProf);
 			Add (settings);
 			Add (help);
+			Add (logout);
+		}		
+		public void logoutOnly(){
 			Add (logout);
 		}
 		public void networkedUserMenu(){
