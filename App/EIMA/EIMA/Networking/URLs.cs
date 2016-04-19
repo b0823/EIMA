@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace EIMA
 {
 	public static class URLs

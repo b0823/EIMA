@@ -402,6 +402,9 @@ namespace EIMA
 			rewriteObjectInMemory();
 		}
 
+		public void setIncidentType(string Type){
+			dataStore ["incident"] ["incidentType"] = Type;
+		}
 
 		/*
 		 * Block of is functions Relating to states and user privledges.
@@ -418,6 +421,9 @@ namespace EIMA
 
 
 		//User Groups
+		public bool isNoAccess(){
+			return "noAccess".Equals((string)dataStore ["incident"] ["role"]);
+		}
 		public bool isUser(){
 			return "user".Equals((string)dataStore ["incident"] ["role"]);
 		}

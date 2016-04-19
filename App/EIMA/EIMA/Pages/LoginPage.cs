@@ -69,7 +69,7 @@ namespace EIMA
 						"Continue",
 						"No"
 					);
-					if(res == "continue"){
+					if(res == "Continue"){
 						standAloneButton.IsEnabled = false;
 						await Navigation.PushModalAsync (new RootPage ());
 						standAloneButton.IsEnabled = true;

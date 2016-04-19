@@ -11,11 +11,12 @@ namespace EIMA
 			DataManager.getInstance ().dataStartup ();
 			GmsPlace.Init("AIzaSyDGcU1OGx-VAwqn4s5fCgcmHkJJeWQjTJs"); //debug/testing key
 			GmsDirection.Init("AIzaSyDGcU1OGx-VAwqn4s5fCgcmHkJJeWQjTJs"); //debug/testing key
-			MainPage = new NavigationPage(new LoginPage ());
+
 
 			if (String.IsNullOrEmpty (DataManager.getInstance ().getSecret ())) {
 				MainPage = new NavigationPage(new LoginPage ());
-			} else {
+			} 
+			else {
 				MainPage = new NavigationPage(new IncidentPage ());
 			}
 
