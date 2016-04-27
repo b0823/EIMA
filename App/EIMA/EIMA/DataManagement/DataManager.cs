@@ -21,6 +21,10 @@ namespace EIMA
 		{
 		}
 
+		public JObject getD(){
+			return dataStore;
+		}
+
 		public static DataManager getInstance(){
 			if (instance == null) {
 				instance = new DataManager ();
@@ -350,8 +354,6 @@ namespace EIMA
 		public void setUsers(List<EIMAUser> lst){
 			JArray users = new JArray ();
 			foreach (EIMAUser user in lst) {
-				JObject toAdd = new JObject ();
-
 				JObject locObject = new JObject ();
 				locObject ["username"] = user.username;
 				locObject ["name"] = user.name;
@@ -361,7 +363,7 @@ namespace EIMA
 				locObject ["status"] = user.status;
 				locObject ["level"] = user.level;
 
-				users.Add (toAdd);
+				users.Add (locObject);
 			}
 			dataStore["incident"] ["userList"] = users;
 			rewriteObjectInMemory();

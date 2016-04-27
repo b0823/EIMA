@@ -1,5 +1,6 @@
 using System;
 using Xamarin.Forms;
+using Newtonsoft.Json.Linq;
 
 namespace EIMA
 {
@@ -29,6 +30,16 @@ namespace EIMA
 				if(picker.SelectedIndex > -1){
 					data.setUnitType(CONSTANTS.uTypeOptions[picker.SelectedIndex]);
 				}
+
+				var postData = new JObject ();
+
+				postData ["token"] = data.getSecret();
+				postData ["name"] = nameEntry.Text;
+				postData ["organization"] = orgEntry.Text;
+				postData ["status"] = statusEntry.Text;
+				postData ["unit"] = unitEntry.Text;
+				postData ["unitType"] = picker.SelectedIndex > -1 ? CONSTANTS.uTypeOptions [picker.SelectedIndex] : null;
+				RestCall.POST (URLs.SETPROFILE, postData);
 				DisplayAlert("Saved!","Your Information Was Saved","OK");
 			};
 		}

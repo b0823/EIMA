@@ -14,8 +14,10 @@ namespace EIMA
 
 			postData ["token"] = data.getSecret();
 
-			var accessRes = RestCall.POST (URLs.MAPDATA, postData);
+			var accessRes = RestCall.POST (URLs.ACCESSLEVEL, postData);
 			if ((bool)accessRes ["result"]) {
+				Console.WriteLine (accessRes);
+
 				data.setRole ((string)accessRes ["accessLevel"]);
 			}
 
@@ -26,24 +28,22 @@ namespace EIMA
 
 			var MapData = RestCall.POST (URLs.MAPDATA, postData);
 			if ((bool)MapData ["result"]) {
+				Console.WriteLine (MapData);
 				updateMapData (MapData);
 			}
 
 			var AlertsData = RestCall.POST (URLs.ALERTS, postData);
 			if ((bool)MapData ["result"]) {
+				Console.WriteLine (AlertsData);
 				updateAlertsData (AlertsData);
 			}
-
-
-			if (data.isMapEditor() || data.isAdmin()) {
-				//TODO map edit info
-			}
-
+				
 			if (data.isAdmin ()) {
 				//user list
 				var result = RestCall.POST (URLs.USERLIST, postData);
+				Console.WriteLine (result);
 
-				if((bool)result["result"]){
+				if(!(bool)result["result"]){
 					return;
 				}
 				var userList = (JArray)result ["userList"];
@@ -63,10 +63,12 @@ namespace EIMA
 
 					addTo.Add (user);
 				}
+				addTo.ForEach(Console.WriteLine);
+
 				data.setUsers (addTo);
 			}
 
-
+			Console.WriteLine (data.getD());
 
 
 		}

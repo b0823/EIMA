@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace EIMA
 {
 	public class EIMAUser
@@ -10,6 +11,11 @@ namespace EIMA
 		public string organization;
 		public string status;
 		public string level;
+
+		public override string ToString()
+		{
+			return username + " " + name;
+		}
 	}
 }
 
