@@ -52,14 +52,23 @@ namespace EIMA
 				foreach (JObject item in userList.Children()) {
 					
 					var user = new EIMAUser ();
-					user.level = (string)item ["level"];
-					user.username = (string)item ["username"];
-					user.name = (string)item ["name"];
+					var unparsed = (int)item ["privLevel"];
+//					user.username = (string)item ["username"];
+					user.username = (string)item ["name"];
 					user.unit = (string)item ["unit"];
 					user.unitType = (string)item ["unitType"];
 					user.status = (string)item ["status"];
 					user.organization = (string)item ["organization"];
 
+					if (unparsed == 3)
+						user.level = "admin";
+					else if (unparsed == 2) {
+						user.level = "mapEditor";
+					} else if (unparsed == 1) {
+						user.level = "user";
+					} else if (unparsed == 0) {
+						user.level = "noAccess";
+					}
 
 					addTo.Add (user);
 				}
