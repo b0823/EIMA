@@ -389,14 +389,12 @@ namespace EIMA
 		public void setAlerts(List<EIMAAlert> lst){
 			JArray users = new JArray ();
 			foreach (EIMAAlert alert in lst) {
-				JObject toAdd = new JObject ();
-
 				JObject locObject = new JObject ();
 				locObject ["sender"] = alert.sender;
 				locObject ["message"] = alert.message;
 				locObject ["timestamp"] = alert.timestamp;
 
-				users.Add (toAdd);
+				users.Add (locObject);
 			}
 			dataStore["incident"] ["alerts"] = users;
 			rewriteObjectInMemory();

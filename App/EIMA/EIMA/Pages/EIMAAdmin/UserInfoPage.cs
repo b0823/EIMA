@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace EIMA
 {
@@ -90,22 +91,30 @@ namespace EIMA
 				);
 
 				if (action == "No Access") { 
-					user.level = "No Access";
+					user.level = "noAccess";
 					Users.userList.Add (user);
 					await Application.Current.MainPage.DisplayAlert ("", "The user is now a No Access User", "OK");
 				} else if (action == "Standard User") { 
-					user.level = "Standard User";
+					user.level = "user";
 					Users.userList.Add (user);
 					await Application.Current.MainPage.DisplayAlert ("", "The user is now a Standard User", "OK");
 				}	else if (action == "Map Editor") { 
-					user.level = "Map Editor";
+					user.level = "mapEditor";
 					Users.userList.Add (user);
 					await Application.Current.MainPage.DisplayAlert ("", "The user is now a Map Editor", "OK");
 				} else if (action == "Admin") { 
-					user.level = "Admin";
+					user.level = "admin";
 					Users.userList.Add (user);
 					await Application.Current.MainPage.DisplayAlert ("", "The user is now an Admin", "OK");
 				}
+
+				var postData = new JObject ();
+
+				postData ["token"] = data.getSecret();
+				postData ["privLevel"] = user.level;
+				postData ["username"] = user.username;
+
+				Console.WriteLine(RestCall.POST (URLs.EDITPRIV, postData));
 			});
 
 
@@ -130,14 +139,26 @@ namespace EIMA
 				Placeholder = "Message"
 			};
 
+			var sendCommands = new Command (async o => {
+				var postData = new JObject ();
+
+				postData ["token"] = data.getSecret();
+				postData ["message"] = entry.Text;
+				postData ["username"] = user.username;
+
+				Console.WriteLine(RestCall.POST (URLs.SENDMESSAGE, postData));
+				await Application.Current.MainPage.Navigation.PopModalAsync ();
+			});
+
 			var sendButton = new Button {
 				Text = "Send",
 
 				// insert code to send message
 
-				Command = new Command (async o => await Application.Current.MainPage.Navigation.PopModalAsync ()),
+				Command = sendCommands
 			};
 
+				
 			var cancelButton = new Button {
 				Text = "Cancel",
 				Command = new Command (async o => await Application.Current.MainPage.Navigation.PopModalAsync ()),
