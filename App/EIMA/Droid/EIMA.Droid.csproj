@@ -161,16 +161,9 @@
     <Compile Include="MainApplication.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="packages.config" />
-    <None Include="Resources\AdminGuide.txt" />
-    <None Include="Resources\AlertMessages.txt" />
-    <None Include="Resources\EventCreationLogin.txt" />
-    <None Include="Resources\MapEditing.txt" />
-    <None Include="Resources\QuickStartGuide.txt" />
-    <None Include="Resources\UsersLogin.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\layout\" />
@@ -211,4 +204,13 @@
   <Import Project="..\EIMA\EIMA.projitems" Label="Shared" Condition="Exists('..\EIMA\EIMA.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.0.1.6505\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.0.1.6505\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AboutResources.txt" />
+    <EmbeddedResource Include="Resources\AdminGuide.txt" />
+    <EmbeddedResource Include="Resources\AlertMessages.txt" />
+    <EmbeddedResource Include="Resources\EventCreationLogin.txt" />
+    <EmbeddedResource Include="Resources\MapEditing.txt" />
+    <EmbeddedResource Include="Resources\QuickStartGuide.txt" />
+    <EmbeddedResource Include="Resources\UsersLogin.txt" />
+  </ItemGroup>
 </Project>
