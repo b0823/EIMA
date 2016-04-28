@@ -113,7 +113,7 @@ namespace EIMA
 				postData ["token"] = data.getSecret();
 				postData ["privLevel"] = user.level;
 				postData ["username"] = user.username;
-
+				Console.WriteLine(postData);
 				Console.WriteLine(RestCall.POST (URLs.EDITPRIV, postData));
 			});
 

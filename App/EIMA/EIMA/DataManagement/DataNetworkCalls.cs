@@ -105,7 +105,6 @@ namespace EIMA
 		static void updateMapData (JObject mapData)
 		{
 			var data = DataManager.getInstance ();
-
 			var assetJArr = (JArray)mapData ["mapAssets"];
 			var circJArr = (JArray)mapData ["mapCircles"];
 			var polyJArr = (JArray)mapData ["mapPolygons"];
@@ -143,8 +142,8 @@ namespace EIMA
 
 				toAdd.Subtitle = "Status:" + toAdd.status;
 
-
-				toAdd.Position = new Position ((double)item["position"]["Latitude"],(double)item["position"]["Longitude"]);
+				JObject pos = (JObject)item ["position"];
+				toAdd.Position = new Position ((double)pos["latitude"],(double)pos["longitude"]);
 				toAdd.unitType = (string)item ["type"];
 
 				assetList.Add (toAdd);
@@ -171,14 +170,12 @@ namespace EIMA
 			var postitionData = (JObject) postData.DeepClone ();
 			var position = await CrossGeolocator.Current.GetPositionAsync ();
 
-			postitionData ["latitude"] = position.Latitude;
-			postitionData ["longitude"] = position.Longitude;
+			postitionData ["latit"] = position.Latitude;
+			postitionData ["longit"] = position.Longitude;
 
-			RestCall.POST (URLs.MAPDATA, postitionData);
+			RestCall.POST (URLs.LOCATION, postitionData);
+
 		}
-
-		public static void sendMessage(){}
-		public static void setPrivlege(){}
 
 	}
 }
