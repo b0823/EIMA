@@ -68,7 +68,12 @@ namespace EIMA
 
 				postData ["token"] = data.getSecret();
 				postData ["message"] = entry.Text;
-				postData ["username"] = "ADMINS";
+
+				if(data.isAdmin()){
+					postData ["username"] = "USERS";
+				} else{
+					postData ["username"] = "ADMINS";
+				}
 
 				Console.WriteLine(RestCall.POST (URLs.SENDMESSAGE, postData));
 				await Application.Current.MainPage.Navigation.PopModalAsync ();

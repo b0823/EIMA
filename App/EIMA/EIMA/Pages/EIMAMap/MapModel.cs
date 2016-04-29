@@ -51,10 +51,6 @@ namespace EIMA
 			get 
 			{
 				return this._tileUrlOptions;
-				//return new TKTileUrlOptions(
-				//    "http://a.basemaps.cartocdn.com/dark_all/{2}/{0}/{1}.png", 256, 256, 0, 18);
-				//return new TKTileUrlOptions(
-				//    "http://a.tile.openstreetmap.org/{2}/{0}/{1}.png", 256, 256, 0, 18);
 			}
 			set
 			{
@@ -195,6 +191,8 @@ namespace EIMA
 			{
 				return new Command<Position>(async position => 
 					{
+						if(DataManager.getInstance().isUser() && DataManager.getInstance().isNoAccess())
+							return;
 						var action = await Application.Current.MainPage.DisplayActionSheet(
 							"",
 							"Cancel",
@@ -607,6 +605,8 @@ namespace EIMA
 			{
 				return new Command(async (object a) => 
 					{
+						if(DataManager.getInstance().isUser() && DataManager.getInstance().isNoAccess())
+							return;
 						var action = await Application.Current.MainPage.DisplayActionSheet(
 							"Asset Selected",
 							"Cancel",
@@ -706,6 +706,9 @@ namespace EIMA
 			data.setAssets(eimaPinsList());
 			data.setDangerZoneCircle(eimaCircles());
 			data.setDangerZonePoly(eimaPolygons());
+			if (DataManager.getInstance ().isNetworked ()) {
+				DataNetworkCalls.updateAssets (eimaPinsList (), eimaCircles (), eimaPolygons ());
+			}
 		}
 
 		public List<EIMAPin> eimaPinsList(){

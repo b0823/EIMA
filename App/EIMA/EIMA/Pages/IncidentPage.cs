@@ -119,6 +119,9 @@ namespace EIMA
 						dater.setRole ((string)accessRes ["accessLevel"]);
 					}
 					Console.WriteLine(accessRes.ToString());
+
+					DataNetworkCalls.updateNetworkedData ();
+
 					incId.IsEnabled = false;
 					await Navigation.PushModalAsync (new RootPage ());
 

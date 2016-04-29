@@ -193,6 +193,8 @@ namespace EIMA
 
 
 				toAdd.IsDraggable = !(bool)item["isUser"];
+
+
 				toAdd.IsVisible = true;
 				toAdd.Position = new Position ((double)item["location"]["lat"],(double)item["location"]["long"]);
 				var name = ((string)item ["type"]);

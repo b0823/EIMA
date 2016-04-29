@@ -19,6 +19,7 @@ namespace EIMA
 
 		public MapPage ()
 		{		
+			DataNetworkCalls.updateNetworkedData ();
 			startAndBindMap();
 			setToolBar ();
 			loadData ();

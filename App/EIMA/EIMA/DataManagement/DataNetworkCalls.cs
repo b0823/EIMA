@@ -82,6 +82,87 @@ namespace EIMA
 
 		}
 
+		public static void updateAssets(List<EIMAPin> assets,List<EIMACircle> circles, List<EIMAPolygon> poly){
+			var data = DataManager.getInstance();
+			var postData = new JObject ();
+
+			if (!data.isAdmin () && !data.isMapEditor ()) {
+				return;
+			}
+			JArray mapAssets = new JArray();
+			JArray mapCircles = new JArray();
+			JArray mapPolygons = new JArray();
+
+			foreach (EIMAPin asset in assets) {
+				if (asset.IsDraggable) {
+					JObject toAdd = new JObject ();
+
+					JObject locObject = new JObject ();
+					locObject ["lat"] = asset.Position.Latitude;
+					locObject ["long"] = asset.Position.Longitude;
+
+					toAdd ["type"] = asset.unitType;
+					toAdd ["uid"] = asset.uid;
+					toAdd ["name"] = asset.name;
+					toAdd ["unit"] = asset.unit;
+					toAdd ["status"] = asset.status;
+					toAdd ["organization"] = asset.organization;
+					toAdd ["location"] = locObject;
+					toAdd ["isUser"] = !asset.IsDraggable;
+					mapAssets.Add (toAdd);
+				}
+
+			}
+
+			foreach (EIMACircle asset in circles) {
+				JObject toAdd = new JObject ();
+
+				JObject locObject = new JObject ();
+				locObject ["lat"] = asset.Center.Latitude;
+				locObject ["long"] = asset.Center.Longitude;
+
+				toAdd ["location"] = locObject;
+				toAdd ["type"] = asset.type;
+				toAdd ["note"] = asset.note;
+				toAdd ["uid"] = asset.uid;
+				toAdd ["radius"] = asset.Radius;
+
+				mapCircles.Add (toAdd);
+			}
+
+			foreach (EIMAPolygon asset in poly) {
+				JObject toAdd = new JObject ();
+
+				JArray coords = new JArray ();
+				foreach (Position pos in asset.Coordinates) {
+					JObject locObject = new JObject ();
+
+					locObject ["lat"] = pos.Latitude;
+					locObject ["long"] = pos.Longitude;
+
+					coords.Add (locObject);
+				}
+				toAdd ["coords"] = coords;
+				toAdd ["type"] = asset.type;
+				toAdd ["note"] = asset.note;
+				toAdd ["uid"] = asset.uid;
+
+				mapPolygons.Add (toAdd);
+			}
+
+			postData ["token"] = data.getSecret();
+			postData ["assets"] = mapAssets;
+			postData ["circles"] = mapCircles;
+			postData ["polygons"] = mapPolygons;
+
+			Console.WriteLine (postData);
+			var MapData = RestCall.POST (URLs.MAPEDIT, postData);
+			DataNetworkCalls.updateNetworkedData ();
+			Console.WriteLine (MapData);
+				
+
+		}
+
 		static void updateAlertsData (JObject alertsData)
 		{
 			var data = DataManager.getInstance ();
