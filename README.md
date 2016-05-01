@@ -8,7 +8,5 @@ Clone REPO, open Project in Xamarin studio or Visual Studio (Xamarin Studio is e
 
 For maps to work, you must have Google play installed on your emulated device ( https://university.xamarin.com/resources/how-to-install-google-play-on-android-emulator )
 
-With Login option
-
 ![state of  it](https://i.gyazo.com/965ed41f03579eaf29f71a3cc6a60681.gif)
 
